@@ -24,6 +24,8 @@ export = class OutputDcatUs11 {
   model: any;
 
   public async serve(req: Request, res: Response) {
+    res.set('Content-Type', 'application/json');
+
     try {
       const dcatStream = getDataStreamDcatUs11({} as IItem);
 
