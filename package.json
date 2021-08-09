@@ -1,0 +1,68 @@
+{
+  "name": "@koopjs/koop-output-dcat-us-11",
+  "version": "1.0.0",
+  "description": "A Koop output plugin for the DCAT-AP 2.0.1 specification",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">= 12.0 <15"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:koopjs/koop-output-dcat-ap-201.git"
+  },
+  "devDependencies": {
+    "@types/config": "0.0.39",
+    "@types/express": "^4.17.13",
+    "@types/faker": "^5.5.7",
+    "@types/jest": "~26.0.23",
+    "@types/lodash": "^4.14.171",
+    "@types/node": "~14.14.45",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "~4.28.2",
+    "@typescript-eslint/parser": "~4.28.2",
+    "eslint": "~7.30.0",
+    "eslint-config-prettier": "~8.3.0",
+    "eslint-plugin-jest": "~24.3.6",
+    "express": "^4.17.1",
+    "faker": "^5.5.3",
+    "fetch-mock-jest": "^1.5.1",
+    "jest": "~27.0.6",
+    "prettier": "~2.3.2",
+    "rimraf": "~3.0.2",
+    "supertest": "^6.1.4",
+    "ts-jest": "^27.0.4",
+    "tsutils": "~3.21.0",
+    "typescript": "~4.3.5"
+  },
+  "scripts": {
+    "start": "node build/src/index.js",
+    "dev": "npm run build && cd example-app && npm i && node src/index.js",
+    "clean": "rimraf coverage build tmp",
+    "prebuild": "rm -rf ./build && npm run lint",
+    "build": "npm run prebuild && tsc -p tsconfig.release.json",
+    "release": "npm run build && npm publish ./build --access=public",
+    "build:watch": "tsc -w -p tsconfig.release.json",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "prepack": "cp ../README.md ../LICENSE ./"
+  },
+  "author": "Andrew Tate <atate@esri.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@esri/arcgis-rest-auth": "^3.2.1",
+    "@esri/arcgis-rest-portal": "^3.2.1",
+    "@esri/arcgis-rest-request": "^3.2.1",
+    "@esri/hub-common": "^8.13.2",
+    "@esri/hub-initiatives": "^8.13.2",
+    "@esri/hub-search": "^8.14.0",
+    "@esri/hub-sites": "^8.13.2",
+    "@esri/hub-teams": "^8.13.2",
+    "config": "^3.3.6",
+    "lodash": "^4.17.21",
+    "tslib": "~2.3.0"
+  },
+  "volta": {
+    "node": "14.16.1"
+  }
+}
