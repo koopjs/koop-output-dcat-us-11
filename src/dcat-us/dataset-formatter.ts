@@ -3,8 +3,8 @@ import { adlib, TransformsList } from 'adlib';
 import { isPage } from '@esri/hub-sites';
 import { baseTemplate } from './base-template';
 
-export function formatDcatDataset (dataset: any, dcatCustomizations: any = {}) {
-  const landingPage = 'undefined://undefined/datasets/00000000000000000000000000000000_0';
+export function formatDcatDataset (dataset: any, siteUrl: string, dcatCustomizations: any = {}) {
+  const landingPage = `${siteUrl}/datasets/${dataset.id}`;
 
   const template = dcatTemplate(dcatCustomizations);
 
