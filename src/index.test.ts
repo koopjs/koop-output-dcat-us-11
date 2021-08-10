@@ -5,15 +5,17 @@ import * as express from 'express';
 import * as request from 'supertest';
 
 import * as mockDataset from './test-helpers/mock-dataset.json';
+import * as mockSiteModel from './test-helpers/mock-site-model.json';
 
 describe('Output Plugin', () => {
+  let mockFetchSite;
   let mockConfigModule;
   let plugin;
   let app: express.Application;
 
   const siteHostName = 'download-test-qa-pre-a-hub.hubqa.arcgis.com';
 
-  function buildPluginAndApp () {
+  function buildPluginAndApp() {
     const Output = require('./');
 
     const plugin = new Output();
@@ -24,36 +26,31 @@ describe('Output Plugin', () => {
     app = express();
     app.get('/dcat', plugin.serve.bind(plugin));
 
-    return [ plugin, app ];
+    return [plugin, app];
   }
 
   beforeEach(() => {
     jest.resetModules();
 
-    // const {
-    //   lookupDomain,
-    //   getSiteById,
-    // } = require('@esri/hub-common');
-    // // this fancy code is just to _only_ mock some fns
-    // // and leave the rest alone
-    // jest.mock('@esri/hub-common', () => ({
-    //   ...(jest.requireActual('@esri/hub-common') as object),
-    //   getSiteById: jest.fn(),
-    //   lookupDomain: jest.fn()
-    // }));
+    const { fetchSite } = require('@esri/hub-common');
+
+    // this fancy code is just to _only_ mock some fns
+    // and leave the rest alone
+    jest.mock('@esri/hub-common', () => ({
+      ...(jest.requireActual('@esri/hub-common') as object),
+      fetchSite: jest.fn(),
+    }));
 
     mockConfigModule = mocked(require('config'), true);
     jest.mock('config');
 
-    // mockLookupDomain = mocked(lookupDomain);
-    // mockGetSite = mocked(getSiteById);
+    mockFetchSite = mocked(fetchSite);
 
-    // mockLookupDomain.mockResolvedValue(mockDomainRecord);
-    // mockGetSite.mockResolvedValue(mockSiteModel);
+    mockFetchSite.mockResolvedValue(mockSiteModel);
   });
 
   it('is configured correctly', () => {
-    [ plugin, app ] = buildPluginAndApp();
+    [plugin, app] = buildPluginAndApp();
 
     expect(plugin.constructor.type).toBe('output');
     expect(plugin.constructor.version).toBeDefined();
@@ -67,14 +64,14 @@ describe('Output Plugin', () => {
   });
 
   it('handles a DCAT request', async () => {
-    [ plugin, app ] = buildPluginAndApp();
+    [plugin, app] = buildPluginAndApp();
 
     await request(app)
       .get('/dcat')
       .set('host', siteHostName)
       .expect('Content-Type', /application\/json/)
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body).toBeDefined();
 
         // perform some basic checks to make sure we have
@@ -84,16 +81,26 @@ describe('Output Plugin', () => {
         expect(dcatStream['@type']).toBe('dcat:Catalog');
         expect(dcatStream['dataset']).toBeInstanceOf(Array);
         expect(dcatStream['dataset'].length).toBe(1);
-        // TODO - expect(dcatStream['dcat:dataset'][0]['dcat:distribution']).toBeInstanceOf(Array);
+        expect(dcatStream['dataset'][0]['distribution']).toBeInstanceOf(Array);
       });
 
-    const expressRequest: express.Request = plugin.model.pullStream.mock.calls[0][0];
+    const expressRequest: express.Request =
+      plugin.model.pullStream.mock.calls[0][0];
     expect(expressRequest.res.locals.searchRequest).toEqual({
+      filter: {
+        group: [
+          '3b9ffb00851f47dab74494018ffa00fb',
+          '95cc82a857fb40038628eea0dfc0210f',
+          '671f07ab39bc4ea5a345d523328ccc06',
+          'e79e2021e843428e9e0dab77eadbd507',
+          '28a62e584bf04d5e8ade7e23467b7457',
+        ],
+        orgid: 'Xj56SBi2udA78cC9',
+      },
       options: {
         portal: 'https://www.arcgis.com',
-        site: siteHostName
-        // TODO - fields: 'id,url,owner,name,type,typeKeywords,tags,description,culture,created,metadata,server,geometryType'
-      }
+        fields: '',
+      },
     });
   });
 
@@ -104,7 +111,7 @@ describe('Output Plugin', () => {
     mockConfigModule.get.mockReturnValue(qaPortal);
 
     // rebuild plugin to trigger initialization code
-    [ plugin, app ] = buildPluginAndApp();
+    [plugin, app] = buildPluginAndApp();
 
     await request(app)
       .get('/dcat')
@@ -115,12 +122,15 @@ describe('Output Plugin', () => {
     expect(mockConfigModule.has).toHaveBeenCalledWith('arcgisPortal');
     expect(mockConfigModule.get).toHaveBeenCalledWith('arcgisPortal');
 
-    const expressRequest: express.Request = plugin.model.pullStream.mock.calls[0][0];
-    expect(expressRequest.res.locals.searchRequest.options.portal).toBe(qaPortal);
+    const expressRequest: express.Request =
+      plugin.model.pullStream.mock.calls[0][0];
+    expect(expressRequest.res.locals.searchRequest.options.portal).toBe(
+      qaPortal,
+    );
   });
 
   it('sets status to 500 if something blows up', async () => {
-    [ plugin, app ] = buildPluginAndApp();
+    [plugin, app] = buildPluginAndApp();
 
     plugin.model.pullStream.mockRejectedValue(Error('Couldnt get stream'));
 
@@ -129,11 +139,10 @@ describe('Output Plugin', () => {
       .set('host', siteHostName)
       .expect('Content-Type', /application\/json/)
       .expect(500)
-      .expect(res => {
+      .expect((res) => {
         expect(res.body).toEqual({ error: 'Couldnt get stream' });
       });
 
     // TODO test stream error
   });
-
 });

@@ -1,0 +1,1007 @@
+{
+  "item": {
+    "id": "6250d80d445740cc83e03a15d72229b5",
+    "owner": "thervey_qa_pre_a_hub",
+    "orgId": "Xj56SBi2udA78cC9",
+    "created": 1597959175000,
+    "modified": 1626794631000,
+    "guid": null,
+    "name": null,
+    "title": "download test",
+    "type": "Hub Site Application",
+    "typeKeywords": [
+      "Hub",
+      "hubSite",
+      "hubSolution",
+      "JavaScript",
+      "Map",
+      "Mapping Site",
+      "Metadata",
+      "Online Map",
+      "OpenData",
+      "Ready To Use",
+      "selfConfigured",
+      "Web Map",
+      "Registered App"
+    ],
+    "description": "Create your own initiative by combining existing applications with a custom site. Use this initiative to form teams around a problem and invite your community to participate.",
+    "tags": ["Hub Site"],
+    "snippet": "Create your own initiative by combining existing applications with a custom site. Use this initiative to form teams around a problem and invite your community to participate.",
+    "thumbnail": "thumbnail/ago_downloaded.png",
+    "documentation": null,
+    "extent": [
+      [-134.7472926179282, 23.560962423770285],
+      [-55.695547615410334, 50.309217030289695]
+    ],
+    "categories": [],
+    "spatialReference": null,
+    "accessInformation": null,
+    "licenseInfo": null,
+    "culture": "en-au",
+    "properties": {
+      "createdFrom": "premiumDefaultSite Solution Template (embedded)",
+      "schemaVersion": 1.4,
+      "hasSeenGlobalNav": true,
+      "collaborationGroupId": "0608dffbd45b4d38872f92e9be73341d",
+      "contentGroupId": "3b9ffb00851f47dab74494018ffa00fb",
+      "followersGroupId": "d2d63f3ee27e4bc3b989c7ee76099082",
+      "parentId": "embedded-premium-default-site",
+      "source": "embedded-premium-default-site",
+      "children": [],
+      "parentInitiativeId": "202cd2723179474d86444c18ac94ebd2",
+      "teams": ["3df458a51ec74095b9344f36474dda7d"]
+    },
+    "advancedSettings": null,
+    "url": "https://download-test-qa-pre-a-hub.hubqa.arcgis.com",
+    "proxyFilter": null,
+    "access": "public",
+    "size": 18620,
+    "subInfo": 0,
+    "appCategories": [],
+    "industries": [],
+    "languages": [],
+    "largeThumbnail": null,
+    "banner": null,
+    "screenshots": [],
+    "listed": false,
+    "commentsEnabled": true,
+    "numComments": 0,
+    "numRatings": 0,
+    "avgRating": 0,
+    "numViews": 9808,
+    "scoreCompleteness": 61,
+    "groupDesignations": null
+  },
+  "data": {
+    "source": "embedded-premium-default-site",
+    "values": {
+      "title": "downloadSidebar",
+      "defaultHostname": "download-test-qa-pre-a-hub.hubqa.arcgis.com",
+      "subdomain": "download-test",
+      "public": false,
+      "faviconUrl": "https://hubqacdn.arcgis.com/opendata-ui/assets/assets/images/favicon-45a5f6cdc7f23c52b20204d54a7d9ca2.ico",
+      "uiVersion": "2.3",
+      "map": {
+        "basemaps": {
+          "primary": {
+            "baseMapLayers": [
+              {
+                "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
+                "layerType": "ArcGISTiledMapServiceLayer",
+                "resourceInfo": {
+                  "currentVersion": 10.3,
+                  "mapName": "Layers",
+                  "supportsDynamicLayers": false,
+                  "layers": [
+                    {
+                      "id": 0,
+                      "name": "Citations",
+                      "parentLayerId": -1,
+                      "defaultVisibility": false,
+                      "subLayerIds": null,
+                      "minScale": 0,
+                      "maxScale": 0
+                    }
+                  ],
+                  "tables": [],
+                  "spatialReference": { "wkid": 102100, "latestWkid": 3857 },
+                  "singleFusedMapCache": true,
+                  "tileInfo": {
+                    "rows": 256,
+                    "cols": 256,
+                    "dpi": 96,
+                    "format": "JPEG",
+                    "compressionQuality": 90,
+                    "origin": { "x": -20037508.342787, "y": 20037508.342787 },
+                    "spatialReference": {
+                      "wkid": 102100,
+                      "latestWkid": 3857
+                    },
+                    "lods": [
+                      {
+                        "level": 0,
+                        "resolution": 156543.03392800014,
+                        "scale": 591657527.591555
+                      },
+                      {
+                        "level": 1,
+                        "resolution": 78271.51696399994,
+                        "scale": 295828763.795777
+                      },
+                      {
+                        "level": 2,
+                        "resolution": 39135.75848200009,
+                        "scale": 147914381.897889
+                      },
+                      {
+                        "level": 3,
+                        "resolution": 19567.87924099992,
+                        "scale": 73957190.948944
+                      },
+                      {
+                        "level": 4,
+                        "resolution": 9783.93962049996,
+                        "scale": 36978595.474472
+                      },
+                      {
+                        "level": 5,
+                        "resolution": 4891.96981024998,
+                        "scale": 18489297.737236
+                      },
+                      {
+                        "level": 6,
+                        "resolution": 2445.98490512499,
+                        "scale": 9244648.868618
+                      },
+                      {
+                        "level": 7,
+                        "resolution": 1222.992452562495,
+                        "scale": 4622324.434309
+                      },
+                      {
+                        "level": 8,
+                        "resolution": 611.4962262813797,
+                        "scale": 2311162.217155
+                      },
+                      {
+                        "level": 9,
+                        "resolution": 305.74811314055756,
+                        "scale": 1155581.108577
+                      },
+                      {
+                        "level": 10,
+                        "resolution": 152.87405657041106,
+                        "scale": 577790.554289
+                      },
+                      {
+                        "level": 11,
+                        "resolution": 76.43702828507324,
+                        "scale": 288895.277144
+                      },
+                      {
+                        "level": 12,
+                        "resolution": 38.21851414253662,
+                        "scale": 144447.638572
+                      },
+                      {
+                        "level": 13,
+                        "resolution": 19.10925707126831,
+                        "scale": 72223.819286
+                      },
+                      {
+                        "level": 14,
+                        "resolution": 9.554628535634155,
+                        "scale": 36111.909643
+                      },
+                      {
+                        "level": 15,
+                        "resolution": 4.77731426794937,
+                        "scale": 18055.954822
+                      },
+                      {
+                        "level": 16,
+                        "resolution": 2.388657133974685,
+                        "scale": 9027.977411
+                      },
+                      {
+                        "level": 17,
+                        "resolution": 1.1943285668550503,
+                        "scale": 4513.988705
+                      },
+                      {
+                        "level": 18,
+                        "resolution": 0.5971642835598172,
+                        "scale": 2256.994353
+                      },
+                      {
+                        "level": 19,
+                        "resolution": 0.29858214164761665,
+                        "scale": 1128.497176
+                      },
+                      {
+                        "level": 20,
+                        "resolution": 0.14929107082380833,
+                        "scale": 564.248588
+                      },
+                      {
+                        "level": 21,
+                        "resolution": 0.07464553541190416,
+                        "scale": 282.124294
+                      },
+                      {
+                        "level": 22,
+                        "resolution": 0.03732276770595208,
+                        "scale": 141.062147
+                      },
+                      {
+                        "level": 23,
+                        "resolution": 0.01866138385297604,
+                        "scale": 70.5310735
+                      }
+                    ]
+                  },
+                  "initialExtent": {
+                    "xmin": -28848255.049479112,
+                    "ymin": -2077452.082122866,
+                    "xmax": 28848255.049479112,
+                    "ymax": 16430757.376790084,
+                    "spatialReference": { "wkid": 102100, "latestWkid": 3857 }
+                  },
+                  "fullExtent": {
+                    "xmin": -20037507.067161843,
+                    "ymin": -19971868.880408604,
+                    "xmax": 20037507.067161843,
+                    "ymax": 19971868.88040863,
+                    "spatialReference": { "wkid": 102100, "latestWkid": 3857 }
+                  },
+                  "minScale": 591657527.591555,
+                  "maxScale": 70.5310735,
+                  "units": "esriMeters",
+                  "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+                  "capabilities": "Map,Tilemap,Query,Data",
+                  "supportedQueryFormats": "JSON, AMF",
+                  "exportTilesAllowed": false,
+                  "maxRecordCount": 100,
+                  "maxImageHeight": 4096,
+                  "maxImageWidth": 4096,
+                  "supportedExtensions": "KmlServer"
+                }
+              }
+            ],
+            "title": "Topographic"
+          }
+        }
+      },
+      "defaultExtent": {
+        "xmin": -15000000,
+        "ymin": 2700000,
+        "xmax": -6200000,
+        "ymax": 6500000,
+        "spatialReference": { "wkid": 102100 }
+      },
+      "pages": [
+        {
+          "id": "9eb13b4973ed4c889c4936229ea7424f",
+          "title": "aSecondPage",
+          "slug": "asecondpage"
+        },
+        {
+          "id": "eb1ee64a12ca489e97c226102a9456a0",
+          "title": "trying another page",
+          "slug": "trying-another-page"
+        },
+        {
+          "id": "e150bf76da6f4804933102243a18b40a",
+          "title": "lets try a third page",
+          "slug": "lets-try-a-third-page"
+        },
+        {
+          "id": "4e2e2695e8ff40a197dacdc4e136ea66",
+          "title": "a private page",
+          "slug": "a-private-page"
+        }
+      ],
+      "headerSass": ".first-tier {\n  height: 80px;\n  margin-bottom: 0px;\n  background-color: #005e95;\n}\n\n.first-tier .nav > li > a {\n  margin-top: 5px;\n  padding: 3px 6px;\n  color: #fff;\n}\n\n.first-tier .nav > li > a:focus,\n.first-tier .nav>li>a:hover {\n  background-color: #136fbf;\n  color: #fff;\n}\n\n.first-tier .site-logo img {\n  vertical-align: middle;\n}\n\n.first-tier h1 {\n  display: inline;\n  font-size: 25px;\n}\n\n.second-tier {\n  margin-bottom: 0px;\n  background-color: #05466c;\n}\n\n.site-header .navbar-header img {\n  vertical-align: middle;\n  height: 50px;\n  padding: 5px;\n}\n\n@media (max-width: 768px) {\n  .first-tier {\n    height: 100px;\n  }\n}\n\n@media (max-width: 498px) {\n  .navbar-brand {\n    padding: 0px;\n  }\n}\n\n.navbar-inverse .navbar-toggle {\n  border-color: #ffffff;\n}\n\n.navbar-inverse .navbar-toggle:hover {\n  background-color: transparent;\n}\n\n.navbar-inverse .navbar-toggle .icon-bar {\n  background-color: #ffffff;\n}\n\n",
+      "footerSass": "\n  .footer-background {\n    padding-top: 20px;\n    padding-bottom: 20px;\n    background-color: #e7e7e7;\n  }\n\n  .logo, .nav {\n    margin-bottom: 10px;\n  }\n\n  .nav-pills {\n      display: flex;\n      flex-wrap: wrap;\n      justify-content: center;\n  }\n",
+      "updatedAt": "2021-07-20T15:23:50.056Z",
+      "updatedBy": "thervey_qa_pre_a_hub",
+      "capabilities": [
+        "api_explorer",
+        "pages",
+        "my_data",
+        "social_logins",
+        "json_chart_card",
+        "document_iframes",
+        "app_page",
+        "globalNav",
+        "projection",
+        "downloadSidebar"
+      ],
+      "layout": {
+        "header": {
+          "showEditor": false,
+          "component": {
+            "settings": {
+              "iframeHeight": "150px",
+              "iframeUrl": "",
+              "links": [],
+              "logoUrl": "",
+              "markdown": "<nav class=\"navbar navbar-default navbar-static-top first-tier\">\n  <div class=\"container\">\n    <ul class=\"nav nav-pills pull-right\" role=\"navigation\">\n      <li><a href=\"#\">Terms of Use</a></li>\n      <li><a href=\"#\">Twitter</a></li>\n      <li><a href=\"#\">Blog</a></li>\n    </ul>\n    <div class=\"navbar-brand\">\n      <div class=\"site-logo\">\n        <img src=\"https://placehold.it/50x50\" alt=\"logo\">\n        <h1>My Organization</h1>\n      </div>\n    </div>\n  </div>\n</nav>\n<nav class=\"navbar navbar-inverse navbar-static-top second-tier\" role=\"navigation\">\n  <div class=\"navbar-header\">\n    <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n      <span class=\"sr-only\">Toggle navigation</span>\n      <span class=\"icon-bar\"></span>\n      <span class=\"icon-bar\"></span>\n      <span class=\"icon-bar\"></span>\n    </button>\n  </div>\n  <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n    <div class=\"container\">\n      <div class=\"navbar\">\n        <ul class=\"nav navbar-nav\">\n          <li class=\"active\"><a href=\"#\">Home</a></li>\n          <li><a href=\"#about\">About</a></li>\n          <li><a href=\"#contact\">Contact</a></li>\n          <li><a href=\"#contact\">Contact</a></li>\n          <li><a href=\"#contact\">Contact</a></li>\n          <li><a href=\"#contact\">Contact</a></li>\n          <li><a href=\"#contact\">Contact</a></li>\n        </ul>\n      </div>\n    </div>\n  </div>\n</nav>\n",
+              "schemaVersion": 3,
+              "fullWidth": false,
+              "headerType": "default",
+              "logo": { "display": {}, "state": "valid" },
+              "showLogo": true,
+              "title": "downloadSidebar",
+              "showTitle": true,
+              "shortTitle": "",
+              "menuLinks": [
+                {
+                  "id": "4e2e2695e8ff40a197dacdc4e136ea66",
+                  "type": "Hub Page",
+                  "name": "a private page",
+                  "external": false
+                }
+              ],
+              "socialLinks": {
+                "facebook": {},
+                "twitter": {},
+                "instagram": {},
+                "youtube": {}
+              }
+            },
+            "name": "site-header"
+          }
+        },
+        "footer": {
+          "showEditor": false,
+          "component": {
+            "name": "site-footer",
+            "settings": {
+              "footerType": "custom",
+              "markdown": "<div class=\"footer-background\">\n  <div class=\"container-fluid\">\n    <div class=\"col-xs-12\">\n      <img src=\"https://placehold.it/50x50?text=\" alt=\"\" class=\"center-block logo\">\n    </div>\n    <div class=\"col-xs-6 center-block\">\n      <ul class=\"nav nav-pills\">\n\n        <li><a href=\"\">URL</a></li>\n\n        <li><a href=\"\">URL</a></li>\n\n        <li><a href=\"\">URL</a></li>\n\n        <li><a href=\"\">URL</a></li>\n\n      </ul>\n    </div>\n    <div class=\"col-xs-6 center-block\">\n      <ul class=\"nav nav-pills\" style=\"float:right;\">\n        <li><a href=\"#\">Terms of Service</a></li>\n        <li><a href=\"#\">Privacy Policy</a></li>\n      </ul>\n    </div>\n    <div class=\"col-xs-12\">\n      <div class=\"text-white\" style=\"padding-top: 3rem; text-align: center;\">\n        <p>&copy; Custom Initiative Template. All photos used on this site are from <a href=\"https://unsplash.com/\">Unsplash</a>.</p>\n      </div>\n    </div>\n  </div>\n</div>",
+              "schemaVersion": 1
+            }
+          }
+        },
+        "sections": [
+          {
+            "style": {
+              "color": "#ffffff",
+              "background": {
+                "isFile": false,
+                "isUrl": true,
+                "state": "valid",
+                "display": {},
+                "transparency": 60,
+                "position": { "x": "center", "y": "center" },
+                "darken": true,
+                "color": "#000000",
+                "image": "https://s3.amazonaws.com/geohub-assets/templates/public-engagement/city-architecture.jpg"
+              }
+            },
+            "isFooter": false,
+            "containment": "fixed",
+            "rows": [
+              {
+                "cards": [
+                  {
+                    "showEditor": false,
+                    "width": 12,
+                    "component": {
+                      "name": "markdown-card",
+                      "settings": {
+                        "markdown": "\n<br>\n<br>\n<br>\n<br>\n<br><h1 style=\"text-align: center;\">downloadSidebar</h1><p style=\"text-align: center;\"><br></p><p style=\"text-align: center;\"><br></p><p style=\"text-align: center;\">What will this initiative achieve if successful?</p>\n\n\n<br>\n<br>\n<br>\n<br>\n<br>",
+                        "schemaVersion": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "style": {
+              "color": "#ffffff",
+              "background": {
+                "isFile": false,
+                "isUrl": true,
+                "state": "",
+                "display": {},
+                "transparency": 0,
+                "position": { "x": "center", "y": "center" },
+                "color": "#3276ae",
+                "image": ""
+              }
+            },
+            "isFooter": false,
+            "containment": "fixed",
+            "rows": [
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "category-card",
+                      "settings": {
+                        "category": "Category Link",
+                        "type": "keyword",
+                        "keyword": ["content group"],
+                        "searchCategories": [],
+                        "iconName": "tag",
+                        "iconType": "library",
+                        "iconColor": "#0079c1",
+                        "customAltText": "",
+                        "groupId": "671f07ab39bc4ea5a345d523328ccc06"
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "search-card",
+                      "settings": {
+                        "showLocation": false,
+                        "size": "long",
+                        "searchPlaceholder": "Search for some things"
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "showEditor": false,
+                    "width": 12,
+                    "component": {
+                      "name": "markdown-card",
+                      "settings": {
+                        "markdown": "<h1 style=\"text-align: center;\">Public | non-hosted</h1><h5 style=\"text-align: center;\">\n</h5><p style=\"text-align: center;\"></p>",
+                        "schemaVersion": 2.1
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "items/gallery-card",
+                      "settings": {
+                        "query": {
+                          "mode": "manual",
+                          "num": 4,
+                          "types": ["application"],
+                          "tags": [],
+                          "categories": [],
+                          "groups": [],
+                          "catalogs": ["6250d80d445740cc83e03a15d72229b5"],
+                          "ids": ["b1084ecf9e1c4c83ab1ea5ed161eccaa"],
+                          "sort": "numviews",
+                          "access": [],
+                          "orgId": "Xj56SBi2udA78cC9"
+                        },
+                        "display": {
+                          "imageType": "Thumbnails",
+                          "viewText": "Explore",
+                          "dropShadow": "none",
+                          "cornerStyle": "square",
+                          "buttonType": "primary",
+                          "newTab": false,
+                          "includeButtons": false
+                        },
+                        "version": 7
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "items/gallery-card",
+                      "settings": {
+                        "query": {
+                          "mode": "manual",
+                          "num": 1,
+                          "types": ["application"],
+                          "tags": [],
+                          "categories": [],
+                          "groups": [],
+                          "catalogs": ["6250d80d445740cc83e03a15d72229b5"],
+                          "ids": [
+                            "455285d6276d4a549e16003c767f75d0",
+                            "f64f81196b3c4e7eaf1aedd9e91dd984",
+                            "85c565e8463e4359bad0ba4fc5521b5c",
+                            "b4fd07846bf94edfbcc50e613e760948",
+                            "69ae33f9c0db48318005a0f28a3be593",
+                            "bb1158edb5b0432ead7e03fedc2ba974",
+                            "c51a35c4218e4e03b463666d7f740d4a",
+                            "dad1620ee08e4570ad3d170123ded316",
+                            "35f15f7ebb4d493d8b25e8bdb56591de"
+                          ],
+                          "sort": "numviews",
+                          "access": [],
+                          "orgId": "Xj56SBi2udA78cC9"
+                        },
+                        "display": {
+                          "imageType": "Thumbnails",
+                          "viewText": "Explore",
+                          "dropShadow": "medium",
+                          "cornerStyle": "square",
+                          "buttonType": "primary",
+                          "newTab": true,
+                          "includeButtons": false
+                        },
+                        "version": 7
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "markdown-card",
+                      "settings": {
+                        "schemaVersion": 2.1,
+                        "markdown": "<h1 style=\"text-align: center;\">Public | hosted</h1>"
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "items/gallery-card",
+                      "settings": {
+                        "query": {
+                          "mode": "manual",
+                          "num": 4,
+                          "types": ["application"],
+                          "tags": [],
+                          "categories": [],
+                          "groups": [],
+                          "catalogs": ["6250d80d445740cc83e03a15d72229b5"],
+                          "ids": [
+                            "f4bcc1035b7d46cba95e977f4affb6be",
+                            "76211fa2cfe148d690caa5f10a3e9cdb",
+                            "182a893451bd4eceb3b189b3e7d572e2",
+                            "5c4cc7631bb74d14a6fd85f1ebf7233f",
+                            "e22404f554fb455aa8b53c30ea7fc7f8"
+                          ],
+                          "sort": "numviews",
+                          "access": [],
+                          "orgId": "Xj56SBi2udA78cC9"
+                        },
+                        "display": {
+                          "imageType": "Thumbnails",
+                          "viewText": "Explore",
+                          "dropShadow": "none",
+                          "cornerStyle": "square",
+                          "buttonType": "primary",
+                          "newTab": false,
+                          "includeButtons": false
+                        },
+                        "version": 7
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "markdown-card",
+                      "settings": {
+                        "schemaVersion": 2.1,
+                        "markdown": "<h1>Published Items </h1><h4>(from public hosted Feature Services)</h4>"
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "items/gallery-card",
+                      "settings": {
+                        "query": {
+                          "mode": "manual",
+                          "num": 4,
+                          "types": ["application"],
+                          "tags": [],
+                          "categories": [],
+                          "groups": [],
+                          "catalogs": ["6250d80d445740cc83e03a15d72229b5"],
+                          "ids": [
+                            "def6e6ffe62148658ff95c1b78710717",
+                            "1fe3c95286694360856f2e25fb43a734",
+                            "c27176f041c247d6b070c5efcb41ccf0",
+                            "5e572e709bea41d0941b87fa53e6d777"
+                          ],
+                          "sort": "numviews",
+                          "access": [],
+                          "orgId": "Xj56SBi2udA78cC9"
+                        },
+                        "display": {
+                          "imageType": "Thumbnails",
+                          "viewText": "Explore",
+                          "dropShadow": "none",
+                          "cornerStyle": "square",
+                          "buttonType": "primary",
+                          "newTab": false,
+                          "includeButtons": false
+                        },
+                        "version": 7
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "markdown-card",
+                      "settings": {
+                        "schemaVersion": 2.1,
+                        "markdown": "<h1 style=\"color: rgb(255, 255, 255); text-align: center;\">private | non-hosted</h1>"
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "items/gallery-card",
+                      "settings": {
+                        "query": {
+                          "mode": "manual",
+                          "num": 4,
+                          "types": ["application"],
+                          "tags": [],
+                          "categories": [],
+                          "groups": [],
+                          "catalogs": ["6250d80d445740cc83e03a15d72229b5"],
+                          "ids": ["616d7e9c58a747958ddb633800657825"],
+                          "sort": "numviews",
+                          "access": [],
+                          "orgId": "Xj56SBi2udA78cC9"
+                        },
+                        "display": {
+                          "imageType": "Thumbnails",
+                          "viewText": "Explore",
+                          "dropShadow": "none",
+                          "cornerStyle": "square",
+                          "buttonType": "primary",
+                          "newTab": false,
+                          "includeButtons": false
+                        },
+                        "version": 7
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "markdown-card",
+                      "settings": {
+                        "schemaVersion": 2.1,
+                        "markdown": "<h1 style=\"color: rgb(255, 255, 255); text-align: center;\">private | hosted</h1>"
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "items/gallery-card",
+                      "settings": {
+                        "query": {
+                          "mode": "manual",
+                          "num": 4,
+                          "types": ["application"],
+                          "tags": [],
+                          "categories": [],
+                          "groups": [],
+                          "catalogs": ["6250d80d445740cc83e03a15d72229b5"],
+                          "ids": [
+                            "9b6f92c00f9e4c3684e2328a5b20aa03",
+                            "e6d1f1562ed34a4696582bf82572eb9d",
+                            "b9621475e6354a15a91abd61654e743a",
+                            "2fac2f2fe8964ef8a10c1557888ea464"
+                          ],
+                          "sort": "numviews",
+                          "access": [],
+                          "orgId": "Xj56SBi2udA78cC9"
+                        },
+                        "display": {
+                          "imageType": "Thumbnails",
+                          "viewText": "Explore",
+                          "dropShadow": "none",
+                          "cornerStyle": "square",
+                          "buttonType": "primary",
+                          "newTab": false,
+                          "includeButtons": false
+                        },
+                        "version": 7
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "markdown-card",
+                      "settings": {
+                        "schemaVersion": 2.1,
+                        "markdown": "<h1 style=\"color: rgb(255, 255, 255); text-align: center;\">updated frequently | hosted</h1>"
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "items/gallery-card",
+                      "settings": {
+                        "query": {
+                          "mode": "manual",
+                          "num": 4,
+                          "types": [],
+                          "tags": [],
+                          "categories": [],
+                          "groups": [],
+                          "catalogs": ["6250d80d445740cc83e03a15d72229b5"],
+                          "ids": [
+                            "09070d301eb74e90a3f341a50234cc53",
+                            "1f04a5e0d5e1470da202fe4824e6cb80"
+                          ],
+                          "sort": "numviews",
+                          "access": [],
+                          "orgId": "Xj56SBi2udA78cC9",
+                          "siteId": ""
+                        },
+                        "display": {
+                          "imageType": "Thumbnails",
+                          "viewText": "Explore",
+                          "dropShadow": "none",
+                          "cornerStyle": "square",
+                          "buttonType": "primary",
+                          "newTab": false,
+                          "includeButtons": false
+                        },
+                        "version": 7
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "survey-card",
+                      "settings": {
+                        "embed": false,
+                        "appearance": {
+                          "thumbnail": true,
+                          "palette": "theme",
+                          "corners": "squared",
+                          "shadow": "heavy",
+                          "buttonType": "filled",
+                          "customStyle": {
+                            "textColor": "#000000",
+                            "backgroundColor": "#ffffff"
+                          }
+                        },
+                        "options": {
+                          "height": "500",
+                          "sameTab": true,
+                          "buttonText": "Take Survey",
+                          "embedOpts": {
+                            "showHeader": true,
+                            "showDescription": true,
+                            "showFooter": true,
+                            "disableTheme": false
+                          }
+                        },
+                        "surveyId": "175d2f3b99ff43a7bd1090d9adf0d06c"
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              },
+              {
+                "cards": [
+                  {
+                    "component": {
+                      "name": "items/gallery-card",
+                      "settings": {
+                        "query": {
+                          "mode": "manual",
+                          "num": 4,
+                          "types": ["application"],
+                          "tags": [],
+                          "categories": [],
+                          "groups": [],
+                          "catalogs": ["6250d80d445740cc83e03a15d72229b5"],
+                          "ids": ["6f446272887d41c4b762bad11e6ebe44"],
+                          "sort": "numviews",
+                          "access": [],
+                          "orgId": "Xj56SBi2udA78cC9"
+                        },
+                        "display": {
+                          "imageType": "Thumbnails",
+                          "viewText": "Explore",
+                          "dropShadow": "none",
+                          "cornerStyle": "square",
+                          "buttonType": "primary",
+                          "newTab": false,
+                          "includeButtons": false
+                        },
+                        "version": 7
+                      }
+                    },
+                    "width": 12
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "clientId": "lynU5vV3hIra11jA",
+      "theme": {
+        "header": { "background": "#a80090", "text": "#55ff00" },
+        "button": { "background": "#55ff00", "text": "#a80079" },
+        "fonts": {
+          "base": { "url": "", "family": "Avenir Next" },
+          "heading": { "url": "", "family": "Avenir Next" }
+        },
+        "globalNav": { "background": "#8600a8", "text": "#55ff00" },
+        "body": {
+          "background": "#ffffff",
+          "text": "#242424",
+          "link": "#a80095"
+        },
+        "logo": {
+          "small": "https://qa-pre-a-hub.mapsqa.arcgis.com/sharing/rest/content/items/445ae744056646caadeb5961b121676f/data"
+        }
+      },
+      "internalUrl": "download-test-qa-pre-a-hub.hubqa.arcgis.com",
+      "customHostname": null,
+      "dcatConfig": {
+        "title": "{{default.name}}",
+        "description": "{{default.description}}",
+        "keyword": "{{item.tags}}",
+        "issued": "{{item.created:toISO}}",
+        "modified": "{{item.modified:toISO}}",
+        "publisher": { "name": "{{default.source.source}}" },
+        "contactPoint": {
+          "fn": "{{item.owner}}",
+          "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
+        },
+        "anotherThing": "again",
+        "landingPage": "some silly standard",
+        "bureauCode": ["010:86", "010:04"],
+        "programCode": ["015:001", "015:002"]
+      },
+      "telemetry": {
+        "consentNotice": {
+          "isTheme": true,
+          "consentText": "",
+          "policyURL": ""
+        },
+        "customAnalytics": {
+          "ga": { "customerTracker": { "enabled": false } }
+        }
+      },
+      "searchCategories": [
+        {
+          "key": "components.search.category_tabs.initiatives",
+          "queryParams": {
+            "collection": "Site",
+            "type": null,
+            "categories": null,
+            "tags": null
+          },
+          "hidden": true,
+          "title": "Initiatives",
+          "overrideText": "Initiatives"
+        },
+        {
+          "key": "components.search.category_tabs.events",
+          "queryParams": {
+            "collection": "Event",
+            "type": null,
+            "categories": null,
+            "tags": null
+          },
+          "title": "Events",
+          "overrideText": "Events"
+        },
+        {
+          "key": "components.search.category_tabs.data",
+          "queryParams": {
+            "collection": "Dataset",
+            "type": null,
+            "categories": null,
+            "tags": null
+          },
+          "title": "Data",
+          "overrideText": "Data"
+        },
+        {
+          "key": "components.search.category_tabs.documents",
+          "queryParams": {
+            "collection": "Document",
+            "type": null,
+            "categories": null,
+            "tags": null
+          },
+          "title": "Documents",
+          "overrideText": "Documents"
+        },
+        {
+          "key": "components.search.category_tabs.apps_and_maps",
+          "queryParams": {
+            "collection": "App,Map",
+            "type": null,
+            "categories": null,
+            "tags": null
+          },
+          "title": "Apps & Maps",
+          "overrideText": "Apps & Maps"
+        }
+      ]
+    },
+    "catalog": {
+      "groups": [
+        "3b9ffb00851f47dab74494018ffa00fb",
+        "95cc82a857fb40038628eea0dfc0210f",
+        "671f07ab39bc4ea5a345d523328ccc06",
+        "e79e2021e843428e9e0dab77eadbd507",
+        "28a62e584bf04d5e8ade7e23467b7457"
+      ],
+      "orgId": "Xj56SBi2udA78cC9"
+    }
+  }
+}

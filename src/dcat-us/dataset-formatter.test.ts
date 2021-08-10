@@ -64,11 +64,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       license: 'No license provided. Request permission to use.',
-      landingPage:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -83,8 +81,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -134,7 +131,7 @@ describe('formatDcatDataset', () => {
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = formatDcatDataset(dataset, siteUrl);
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
     expect(actual).toEqual(expected);
   });
 
@@ -164,11 +161,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       license: 'No license provided. Request permission to use.',
-      landingPage:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -183,8 +178,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -199,38 +193,34 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
         },
       ],
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = formatDcatDataset(dataset, siteUrl);
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
     expect(actual).toEqual(expected);
   });
 
@@ -260,11 +250,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       license: 'No license provided. Request permission to use.',
-      landingPage:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -279,8 +267,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -295,38 +282,36 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
         },
       ],
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = formatDcatDataset(dataset, siteUrl, { theme: [] });
+    const actual = JSON.parse(
+      formatDcatDataset(dataset, siteUrl, { theme: [] }),
+    );
     expect(actual).toEqual(expected);
   });
 
@@ -356,11 +341,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       license: 'No license provided. Request permission to use.',
-      landingPage:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -375,8 +358,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -391,38 +373,36 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
         },
       ],
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['my theme'],
     };
-    const actual = formatDcatDataset(dataset, siteUrl, { theme: ['my theme'] });
+    const actual = JSON.parse(
+      formatDcatDataset(dataset, siteUrl, { theme: ['my theme'] }),
+    );
     expect(actual).toEqual(expected);
   });
 
@@ -456,11 +436,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       license: 'No license provided. Request permission to use.',
-      landingPage:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -475,8 +453,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -491,38 +468,34 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson?outSR=%7B%22wkid%22%3A3310%7D`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson?outSR=%7B%22wkid%22%3A3310%7D`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.csv?outSR=%7B%22wkid%22%3A3310%7D`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv?outSR=%7B%22wkid%22%3A3310%7D`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.kml?outSR=%7B%22wkid%22%3A3310%7D`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml?outSR=%7B%22wkid%22%3A3310%7D`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL:
-            `${siteUrl}/datasets/00000000000000000000000000000000_0.zip?outSR=%7B%22wkid%22%3A3310%7D`,
+          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip?outSR=%7B%22wkid%22%3A3310%7D`,
         },
       ],
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = formatDcatDataset(dataset, siteUrl);
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
     expect(actual).toEqual(expected);
   });
 
@@ -558,7 +531,7 @@ describe('formatDcatDataset', () => {
     };
     const expectedLicense = 'structuredLicense text';
 
-    const actual = formatDcatDataset(dataset, siteUrl);
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
     expect(actual.license).toEqual(expectedLicense);
   });
 
@@ -593,7 +566,7 @@ describe('formatDcatDataset', () => {
     };
     const expectedLicense = 'licenseInfo text';
 
-    const actual = formatDcatDataset(dataset, siteUrl);
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
     expect(actual.license).toEqual(expectedLicense);
   });
 
@@ -637,14 +610,17 @@ describe('formatDcatDataset', () => {
       licenseInfo: 'licenseInfo text',
     };
     const expectedKeyword = 'ArcGIS Hub page';
-    expect(formatDcatDataset(datasetWithNoTags, siteUrl).keyword[0]).toBe(
-      expectedKeyword,
-    );
     expect(
-      formatDcatDataset({ ...datasetWithNoTags, tags: [] }, siteUrl).keyword[0],
+      JSON.parse(formatDcatDataset(datasetWithNoTags, siteUrl)).keyword[0],
     ).toBe(expectedKeyword);
     expect(
-      formatDcatDataset({ ...datasetWithNoTags, tags: [''] }, siteUrl).keyword[0],
+      JSON.parse(formatDcatDataset({ ...datasetWithNoTags, tags: [] }, siteUrl))
+        .keyword[0],
+    ).toBe(expectedKeyword);
+    expect(
+      JSON.parse(
+        formatDcatDataset({ ...datasetWithNoTags, tags: [''] }, siteUrl),
+      ).keyword[0],
     ).toBe(expectedKeyword);
   });
 
@@ -683,8 +659,7 @@ describe('formatDcatDataset', () => {
                 {
                   protocol: 'GeoService REST API',
                   orDesc: 'endpoint',
-                  linkage:
-                    `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+                  linkage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
                   orName: 'ArcGIS GeoService',
                 },
               ],
@@ -697,12 +672,11 @@ describe('formatDcatDataset', () => {
       '@type': 'dcat:Distribution',
       title: 'ArcGIS GeoService',
       format: 'GeoService REST API',
-      accessURL:
-        `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       description: 'endpoint',
     };
 
-    const actual = formatDcatDataset(dataset, siteUrl);
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
     expect(actual.distribution.pop()).toEqual(expectedDistribution);
   });
 
@@ -752,4 +726,4 @@ describe('formatDcatDataset', () => {
       fail('Should not throw!');
     }
   });
-})
+});

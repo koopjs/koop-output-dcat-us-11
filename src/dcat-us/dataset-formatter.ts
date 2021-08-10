@@ -50,7 +50,13 @@ export function formatDcatDataset (dataset: any, siteUrl: string, dcatCustomizat
     }
   }
 
-  return dcatDataset;
+  return indent(JSON.stringify(dcatDataset, null, '\t'), 2);
+}
+
+// HUBJS CANDIDATE
+function indent(str: string, nTabs = 1) {
+  const tabs = new Array(nTabs).fill('\t').join('');
+  return tabs + str.replace(/\n/g, `\n${tabs}`);
 }
 
 // remove customizations that attempt to overwrite special or required fields
