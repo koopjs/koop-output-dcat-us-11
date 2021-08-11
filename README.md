@@ -9,7 +9,84 @@ This is a Koop output plugin that transforms datasets from the ArcGIS Hub Search
 
 Here is an example feed:
 ```json
-TODO
+{
+  "@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld",
+  "@type": "dcat:Catalog",
+  "conformsTo": "https://project-open-data.cio.gov/v1.1/schema",
+  "describedBy": "https://project-open-data.cio.gov/v1.1/schema/catalog.json",
+  "dataset": [
+    {
+      "@type": "dcat:Dataset",
+      "identifier": "https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0",
+      "license": "No license provided. Request permission to use.",
+      "landingPage": "https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0",
+      "title": "Tahoe places of interest",
+      "description": "Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.<div><br /></div><div>with more words</div><div><br /></div><div>adding a few more to test how long it takes for our jobs to execute.</div><div><br /></div><div>Tom was here!</div>",
+      "keyword": [
+        "Data collection",
+        "just modified"
+      ],
+      "issued": "2021-01-29T15:34:38.000Z",
+      "modified": "2021-07-27T20:25:19.723Z",
+      "publisher": {
+        "name": "QA Premium Alpha Hub"
+      },
+      "contactPoint": {
+        "@type": "vcard:Contact",
+        "fn": "thervey_qa_pre_a_hub"
+      },
+      "accessLevel": "public",
+      "distribution": [
+        {
+          "@type": "dcat:Distribution",
+          "title": "ArcGIS Hub Dataset",
+          "format": "Web Page",
+          "mediaType": "text/html",
+          "accessURL": "https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0"
+        },
+        {
+          "@type": "dcat:Distribution",
+          "title": "ArcGIS GeoService",
+          "format": "ArcGIS GeoServices REST API",
+          "mediaType": "application/json",
+          "accessURL": "https://servicesqa.arcgis.com/Xj56SBi2udA78cC9/arcgis/rest/services/Tahoe_Things/FeatureServer/0"
+        },
+        {
+          "@type": "dcat:Distribution",
+          "title": "GeoJSON",
+          "format": "GeoJSON",
+          "mediaType": "application/vnd.geo+json",
+          "accessURL": "https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0.geojson?outSR=%7B%22latestWkid%22%3A3857%2C%22wkid%22%3A102100%7D"
+        },
+        {
+          "@type": "dcat:Distribution",
+          "title": "CSV",
+          "format": "CSV",
+          "mediaType": "text/csv",
+          "accessURL": "https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0.csv?outSR=%7B%22latestWkid%22%3A3857%2C%22wkid%22%3A102100%7D"
+        },
+        {
+          "@type": "dcat:Distribution",
+          "title": "KML",
+          "format": "KML",
+          "mediaType": "application/vnd.google-earth.kml+xml",
+          "accessURL": "https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0.kml?outSR=%7B%22latestWkid%22%3A3857%2C%22wkid%22%3A102100%7D"
+        },
+        {
+          "@type": "dcat:Distribution",
+          "title": "Shapefile",
+          "format": "ZIP",
+          "mediaType": "application/zip",
+          "accessURL": "https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0.zip?outSR=%7B%22latestWkid%22%3A3857%2C%22wkid%22%3A102100%7D"
+        }
+      ],
+      "spatial": "-121.118,38.7754,-119.009,39.359",
+      "theme": [
+        "geospatial"
+      ]
+    }
+  ]
+}
 ```
 
 See the [DCAT-US specification](https://resources.data.gov/resources/dcat-us/) for more information.
