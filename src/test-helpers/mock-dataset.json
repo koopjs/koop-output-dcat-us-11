@@ -1,0 +1,1692 @@
+{
+  "errors": [],
+  "access": "public",
+  "additionalResources": [
+    {
+      "url": "https://servicesqa.arcgis.com/Xj56SBi2udA78cC9/arcgis/rest/services/Tahoe_Things/FeatureServer"
+    },
+    {
+      "name": "MD Covid",
+      "url": "https://coronavirus.maryland.gov"
+    },
+    {
+      "name": "Vaccine regions",
+      "url": "https://opendata.arcgis.com/datasets/89ba148c3e494f298167278f606f17bf_0.csv"
+    }
+  ],
+  "advancedQueryCapabilities": {
+    "supportsSqlExpression": true,
+    "supportsQueryWithResultType": true,
+    "supportsQueryRelatedPagination": true,
+    "supportsQueryWithCacheHint": true,
+    "supportsQueryWithDatumTransformation": true,
+    "supportsOutFieldSQLExpression": true,
+    "supportsQueryAttachmentsWithReturnUrl": true,
+    "supportsQueryWithLodSR": false,
+    "supportsPaginationOnAggregatedQueries": true,
+    "supportsPagination": true,
+    "supportsMaxRecordCountFactor": true,
+    "supportsStatistics": true,
+    "supportsOrderBy": true,
+    "supportsDisjointSpatialRel": true,
+    "supportsQueryWithDistance": true,
+    "supportsLod": true,
+    "supportsCountDistinct": true,
+    "supportedLodTypes": ["geohash"],
+    "supportsAdvancedQueryRelated": true,
+    "supportsQueryAttachments": true,
+    "supportsReturningQueryExtent": true,
+    "supportsTopFeaturesQuery": true,
+    "supportsDistinct": true,
+    "supportsReturningGeometryCentroid": false,
+    "supportsQueryAnalytic": true,
+    "supportsPercentileStatistics": true,
+    "supportsHavingClause": true
+  },
+  "collection": ["Dataset"],
+  "categories": [],
+  "commentsEnabled": true,
+  "composeStatus": {
+    "retries": 0,
+    "pass": true,
+    "lastRetriedAt": 1627442053839
+  },
+  "composedAt": 1627442053833,
+  "content": "Feature Service",
+  "contentSecurityPolicy": null,
+  "created": 1611934478000,
+  "currentVersion": 10.81,
+  "description": "Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.<div><br /></div><div>with more words</div><div><br /></div><div>adding a few more to test how long it takes for our jobs to execute.</div><div><br /></div><div>Tom was here!</div>",
+  "displayField": "",
+  "downloadable": true,
+  "enrichCoverage": "regional",
+  "enrichQuality": 71,
+  "extent": {
+    "coordinates": [
+      [-121.118, 38.7754],
+      [-119.009, 39.359]
+    ],
+    "type": "envelope"
+  },
+  "fieldNames": [
+    "OBJECTID",
+    "GlobalID",
+    "",
+    "CreationDate",
+    "Creator",
+    "EditDate",
+    "Editor",
+    "name",
+    "anotherField",
+    "popularity",
+    "anotherOne_places",
+    "color",
+    "anotherThang",
+    "rating",
+    "somthang",
+    "somethingg",
+    "another_thang"
+  ],
+  "fields": [
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": false,
+      "editable": false,
+      "defaultValue": null,
+      "domain": null,
+      "name": "OBJECTID",
+      "alias": "OBJECTID",
+      "description": "{\"value\":\"this is the objectId\",\"fieldValueType\":\"\"}",
+      "type": "esriFieldTypeOID"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": false,
+      "editable": false,
+      "defaultValue": null,
+      "domain": null,
+      "name": "GlobalID",
+      "length": 38,
+      "alias": "",
+      "type": "esriFieldTypeGlobalID"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": false,
+      "defaultValue": null,
+      "domain": null,
+      "name": "CreationDate",
+      "length": 8,
+      "alias": "CreationDate",
+      "type": "esriFieldTypeDate"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": false,
+      "defaultValue": null,
+      "domain": null,
+      "name": "Creator",
+      "length": 128,
+      "alias": "Creator",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": false,
+      "defaultValue": null,
+      "domain": null,
+      "name": "EditDate",
+      "length": 8,
+      "alias": "EditDate",
+      "type": "esriFieldTypeDate"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": false,
+      "defaultValue": null,
+      "domain": null,
+      "name": "Editor",
+      "length": 128,
+      "alias": "Editor",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "name",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "anotherField",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "popularity",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "anotherOne_places",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "color",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "anotherThang",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "rating",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "somthang",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "somethingg",
+      "length": 256,
+      "alias": "",
+      "description": "{\"value\":\"this is a field description\",\"fieldValueType\":\"\"}",
+      "type": "esriFieldTypeString"
+    },
+    {
+      "sqlType": "sqlTypeOther",
+      "nullable": true,
+      "editable": true,
+      "defaultValue": null,
+      "domain": null,
+      "name": "another_thang",
+      "length": 256,
+      "alias": "",
+      "type": "esriFieldTypeString"
+    }
+  ],
+  "geometryType": "esriGeometryPoint",
+  "groupIds": [
+    "3b9ffb00851f47dab74494018ffa00fb",
+    "d2d63f3ee27e4bc3b989c7ee76099082"
+  ],
+  "hasApi": true,
+  "hubType": "Feature Layer",
+  "id": "f4bcc1035b7d46cba95e977f4affb6be_0",
+  "itemModified": 1627417486000,
+  "itemExtent": [
+    [-121.11799999999793, 38.77540321106225],
+    [-119.00899999999801, 39.37030746927015]
+  ],
+  "layer": {
+    "extent": {
+      "ymin": 4689550.881166993,
+      "xmin": -13482794.08589948,
+      "ymax": 4773226.4828513805,
+      "xmax": -13248021.279816473,
+      "spatialReference": {
+        "latestWkid": 3857,
+        "wkid": 102100
+      }
+    },
+    "supportedContingentValuesFormats": "JSON, PBF",
+    "supportsApplyEditsWithGlobalIds": true,
+    "maxRecordCount": 2000,
+    "attachmentProperties": [
+      {
+        "fieldName": "ATTACHMENTID",
+        "isEnabled": true,
+        "name": "id"
+      },
+      {
+        "fieldName": "AttachmentGlobalID",
+        "isEnabled": true,
+        "name": "globalId"
+      },
+      {
+        "fieldName": "ATT_NAME",
+        "isEnabled": true,
+        "name": "name"
+      },
+      {
+        "fieldName": "DATA_SIZE",
+        "isEnabled": true,
+        "name": "size"
+      },
+      {
+        "fieldName": "CONTENT_TYPE",
+        "isEnabled": true,
+        "name": "contentType"
+      },
+      {
+        "fieldName": "Keywords",
+        "isEnabled": true,
+        "name": "keywords"
+      },
+      {
+        "fieldName": "ExifInfo",
+        "isEnabled": true,
+        "name": "exifInfo"
+      }
+    ],
+    "type": "Feature Layer",
+    "hasStaticData": false,
+    "editingInfo": {
+      "lastEditDate": 1627417519723
+    },
+    "supportsAttachmentsByUploadId": true,
+    "relationships": [],
+    "supportsAttachmentsResizing": true,
+    "id": 0,
+    "supportsStatistics": true,
+    "supportedExportFormats": "csv,shapefile,sqlite,gpkg,filegdb,featureCollection,geojson,excel",
+    "standardMaxRecordCount": 32000,
+    "isDataVersioned": false,
+    "templates": [
+      {
+        "name": "New Feature",
+        "description": "",
+        "drawingTool": "esriFeatureEditToolPoint",
+        "prototype": {
+          "attributes": {
+            "somethingg": null,
+            "anotherOne_places": null,
+            "color": null,
+            "anotherThang": null,
+            "anotherField": null,
+            "popularity": null,
+            "name": null,
+            "rating": null,
+            "somthang": null,
+            "another_thang": null
+          }
+        }
+      }
+    ],
+    "supportsAdvancedQueries": true,
+    "supportsTilesAndBasicQueriesMode": true,
+    "currentVersion": 10.81,
+    "hasZ": false,
+    "supportsQuantizationEditMode": true,
+    "objectIdField": "OBJECTID",
+    "hasContingentValuesDefinition": false,
+    "name": "Tahoe places of interest",
+    "displayField": "",
+    "supportsCalculate": true,
+    "fields": [
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": false,
+        "editable": false,
+        "defaultValue": null,
+        "domain": null,
+        "name": "OBJECTID",
+        "alias": "OBJECTID",
+        "description": "{\"value\":\"this is the objectId\",\"fieldValueType\":\"\"}",
+        "type": "esriFieldTypeOID"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": false,
+        "editable": false,
+        "defaultValue": null,
+        "domain": null,
+        "name": "GlobalID",
+        "length": 38,
+        "alias": "",
+        "type": "esriFieldTypeGlobalID"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": false,
+        "defaultValue": null,
+        "domain": null,
+        "name": "CreationDate",
+        "length": 8,
+        "alias": "CreationDate",
+        "type": "esriFieldTypeDate"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": false,
+        "defaultValue": null,
+        "domain": null,
+        "name": "Creator",
+        "length": 128,
+        "alias": "Creator",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": false,
+        "defaultValue": null,
+        "domain": null,
+        "name": "EditDate",
+        "length": 8,
+        "alias": "EditDate",
+        "type": "esriFieldTypeDate"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": false,
+        "defaultValue": null,
+        "domain": null,
+        "name": "Editor",
+        "length": 128,
+        "alias": "Editor",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "name",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "anotherField",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "popularity",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "anotherOne_places",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "color",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "anotherThang",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "rating",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "somthang",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "somethingg",
+        "length": 256,
+        "alias": "",
+        "description": "{\"value\":\"this is a field description\",\"fieldValueType\":\"\"}",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "sqlType": "sqlTypeOther",
+        "nullable": true,
+        "editable": true,
+        "defaultValue": null,
+        "domain": null,
+        "name": "another_thang",
+        "length": 256,
+        "alias": "",
+        "type": "esriFieldTypeString"
+      }
+    ],
+    "maxRecordCountFactor": 1,
+    "dateFieldsTimeReference": {
+      "respectsDaylightSaving": false,
+      "timeZone": "UTC"
+    },
+    "supportsFieldDescriptionProperty": true,
+    "hasM": false,
+    "allowGeometryUpdates": true,
+    "preferredTimeReference": null,
+    "useStandardizedQueries": true,
+    "globalIdField": "GlobalID",
+    "description": "Description of points in Tahoe",
+    "supportsRollbackOnFailureParameter": true,
+    "supportsTruncate": false,
+    "standardMaxRecordCountNoGeometry": 32000,
+    "indexes": [
+      {
+        "name": "GlobalID_Index",
+        "isUnique": true,
+        "description": "",
+        "fields": "GlobalID",
+        "isAscending": false
+      },
+      {
+        "name": "user_6067.Tahoe_Things_POINT_LAYER_Shape_sidx",
+        "isUnique": false,
+        "description": "Shape Index",
+        "fields": "Shape",
+        "isAscending": false
+      },
+      {
+        "name": "PK__Tahoe_Th__F4B70D85AC503BA4",
+        "isUnique": true,
+        "description": "clustered, unique, primary key",
+        "fields": "OBJECTID",
+        "isAscending": true
+      },
+      {
+        "name": "CreationDateIndex",
+        "isUnique": false,
+        "description": "CreationDate Field index",
+        "fields": "CreationDate",
+        "isAscending": true
+      },
+      {
+        "name": "CreatorIndex",
+        "isUnique": false,
+        "description": "Creator Field index",
+        "fields": "Creator",
+        "isAscending": false
+      },
+      {
+        "name": "EditDateIndex",
+        "isUnique": false,
+        "description": "EditDate Field index",
+        "fields": "EditDate",
+        "isAscending": true
+      },
+      {
+        "name": "EditorIndex",
+        "isUnique": false,
+        "description": "Editor Field index",
+        "fields": "Editor",
+        "isAscending": false
+      }
+    ],
+    "htmlPopupType": "esriServerHTMLPopupTypeNone",
+    "supportsReturningQueryGeometry": true,
+    "minScale": 0,
+    "hasAttachments": true,
+    "advancedQueryCapabilities": {
+      "supportsSqlExpression": true,
+      "supportsQueryWithResultType": true,
+      "supportsQueryRelatedPagination": true,
+      "supportsQueryWithCacheHint": true,
+      "supportsQueryWithDatumTransformation": true,
+      "supportsOutFieldSQLExpression": true,
+      "supportsQueryAttachmentsWithReturnUrl": true,
+      "supportsQueryWithLodSR": false,
+      "supportsPaginationOnAggregatedQueries": true,
+      "supportsPagination": true,
+      "supportsMaxRecordCountFactor": true,
+      "supportsStatistics": true,
+      "supportsOrderBy": true,
+      "supportsDisjointSpatialRel": true,
+      "supportsQueryWithDistance": true,
+      "supportsLod": true,
+      "supportsCountDistinct": true,
+      "supportedLodTypes": ["geohash"],
+      "supportsAdvancedQueryRelated": true,
+      "supportsQueryAttachments": true,
+      "supportsReturningQueryExtent": true,
+      "supportsTopFeaturesQuery": true,
+      "supportsDistinct": true,
+      "supportsReturningGeometryCentroid": false,
+      "supportsQueryAnalytic": true,
+      "supportsPercentileStatistics": true,
+      "supportsHavingClause": true
+    },
+    "supportsValidateSql": true,
+    "supportsCoordinatesQuantization": true,
+    "types": [],
+    "capabilities": "Create,Delete,Query,Update,Editing,Extract,Sync,ChangeTracking",
+    "supportsAppend": true,
+    "maxScale": 0,
+    "supportsExceedsLimitStatistics": true,
+    "supportsLayerOverrides ": true,
+    "defaultVisibility": true,
+    "hasMetadata": true,
+    "supportedAppendFormats": "sqlite,gpkg,shapefile,filegdb,featureCollection,geojson,csv,excel,imageCollection",
+    "uniqueIdField": {
+      "isSystemMaintained": true,
+      "name": "OBJECTID"
+    },
+    "tileMaxRecordCount": 8000,
+    "typeIdField": "",
+    "supportsASyncCalculate": true,
+    "supportedQueryFormats": "JSON, geoJSON, PBF",
+    "drawingInfo": {
+      "renderer": {
+        "symbol": {
+          "imageData": "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",
+          "width": 15,
+          "type": "esriPMS",
+          "contentType": "image/png",
+          "url": "RedSphere.png",
+          "height": 15
+        },
+        "type": "simple"
+      }
+    },
+    "copyrightText": "",
+    "geometryType": "esriGeometryPoint",
+    "editFieldsInfo": {
+      "editDateField": "EditDate",
+      "editorField": "Editor",
+      "creationDateField": "CreationDate",
+      "creatorField": "Creator"
+    }
+  },
+  "layers": [
+    {
+      "extent": {
+        "ymin": 4689550.881166993,
+        "xmin": -13482794.08589948,
+        "ymax": 4773226.4828513805,
+        "xmax": -13248021.279816473,
+        "spatialReference": {
+          "latestWkid": 3857,
+          "wkid": 102100
+        }
+      },
+      "supportedContingentValuesFormats": "JSON, PBF",
+      "supportsApplyEditsWithGlobalIds": true,
+      "maxRecordCount": 2000,
+      "attachmentProperties": [
+        {
+          "fieldName": "ATTACHMENTID",
+          "isEnabled": true,
+          "name": "id"
+        },
+        {
+          "fieldName": "AttachmentGlobalID",
+          "isEnabled": true,
+          "name": "globalId"
+        },
+        {
+          "fieldName": "ATT_NAME",
+          "isEnabled": true,
+          "name": "name"
+        },
+        {
+          "fieldName": "DATA_SIZE",
+          "isEnabled": true,
+          "name": "size"
+        },
+        {
+          "fieldName": "CONTENT_TYPE",
+          "isEnabled": true,
+          "name": "contentType"
+        },
+        {
+          "fieldName": "Keywords",
+          "isEnabled": true,
+          "name": "keywords"
+        },
+        {
+          "fieldName": "ExifInfo",
+          "isEnabled": true,
+          "name": "exifInfo"
+        }
+      ],
+      "type": "Feature Layer",
+      "hasStaticData": false,
+      "editingInfo": {
+        "lastEditDate": 1627417519723
+      },
+      "supportsAttachmentsByUploadId": true,
+      "relationships": [],
+      "supportsAttachmentsResizing": true,
+      "id": 0,
+      "supportsStatistics": true,
+      "supportedExportFormats": "csv,shapefile,sqlite,gpkg,filegdb,featureCollection,geojson,excel",
+      "standardMaxRecordCount": 32000,
+      "isDataVersioned": false,
+      "templates": [
+        {
+          "name": "New Feature",
+          "description": "",
+          "drawingTool": "esriFeatureEditToolPoint",
+          "prototype": {
+            "attributes": {
+              "somethingg": null,
+              "anotherOne_places": null,
+              "color": null,
+              "anotherThang": null,
+              "anotherField": null,
+              "popularity": null,
+              "name": null,
+              "rating": null,
+              "somthang": null,
+              "another_thang": null
+            }
+          }
+        }
+      ],
+      "supportsAdvancedQueries": true,
+      "supportsTilesAndBasicQueriesMode": true,
+      "currentVersion": 10.81,
+      "hasZ": false,
+      "supportsQuantizationEditMode": true,
+      "objectIdField": "OBJECTID",
+      "hasContingentValuesDefinition": false,
+      "name": "Tahoe places of interest",
+      "displayField": "",
+      "supportsCalculate": true,
+      "fields": [
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": false,
+          "editable": false,
+          "defaultValue": null,
+          "domain": null,
+          "name": "OBJECTID",
+          "alias": "OBJECTID",
+          "description": "{\"value\":\"this is the objectId\",\"fieldValueType\":\"\"}",
+          "type": "esriFieldTypeOID"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": false,
+          "editable": false,
+          "defaultValue": null,
+          "domain": null,
+          "name": "GlobalID",
+          "length": 38,
+          "alias": "",
+          "type": "esriFieldTypeGlobalID"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": false,
+          "defaultValue": null,
+          "domain": null,
+          "name": "CreationDate",
+          "length": 8,
+          "alias": "CreationDate",
+          "type": "esriFieldTypeDate"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": false,
+          "defaultValue": null,
+          "domain": null,
+          "name": "Creator",
+          "length": 128,
+          "alias": "Creator",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": false,
+          "defaultValue": null,
+          "domain": null,
+          "name": "EditDate",
+          "length": 8,
+          "alias": "EditDate",
+          "type": "esriFieldTypeDate"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": false,
+          "defaultValue": null,
+          "domain": null,
+          "name": "Editor",
+          "length": 128,
+          "alias": "Editor",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "name",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "anotherField",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "popularity",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "anotherOne_places",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "color",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "anotherThang",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "rating",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "somthang",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "somethingg",
+          "length": 256,
+          "alias": "",
+          "description": "{\"value\":\"this is a field description\",\"fieldValueType\":\"\"}",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "sqlType": "sqlTypeOther",
+          "nullable": true,
+          "editable": true,
+          "defaultValue": null,
+          "domain": null,
+          "name": "another_thang",
+          "length": 256,
+          "alias": "",
+          "type": "esriFieldTypeString"
+        }
+      ],
+      "maxRecordCountFactor": 1,
+      "dateFieldsTimeReference": {
+        "respectsDaylightSaving": false,
+        "timeZone": "UTC"
+      },
+      "supportsFieldDescriptionProperty": true,
+      "hasM": false,
+      "allowGeometryUpdates": true,
+      "preferredTimeReference": null,
+      "useStandardizedQueries": true,
+      "globalIdField": "GlobalID",
+      "description": "Description of points in Tahoe",
+      "supportsRollbackOnFailureParameter": true,
+      "supportsTruncate": false,
+      "standardMaxRecordCountNoGeometry": 32000,
+      "indexes": [
+        {
+          "name": "GlobalID_Index",
+          "isUnique": true,
+          "description": "",
+          "fields": "GlobalID",
+          "isAscending": false
+        },
+        {
+          "name": "user_6067.Tahoe_Things_POINT_LAYER_Shape_sidx",
+          "isUnique": false,
+          "description": "Shape Index",
+          "fields": "Shape",
+          "isAscending": false
+        },
+        {
+          "name": "PK__Tahoe_Th__F4B70D85AC503BA4",
+          "isUnique": true,
+          "description": "clustered, unique, primary key",
+          "fields": "OBJECTID",
+          "isAscending": true
+        },
+        {
+          "name": "CreationDateIndex",
+          "isUnique": false,
+          "description": "CreationDate Field index",
+          "fields": "CreationDate",
+          "isAscending": true
+        },
+        {
+          "name": "CreatorIndex",
+          "isUnique": false,
+          "description": "Creator Field index",
+          "fields": "Creator",
+          "isAscending": false
+        },
+        {
+          "name": "EditDateIndex",
+          "isUnique": false,
+          "description": "EditDate Field index",
+          "fields": "EditDate",
+          "isAscending": true
+        },
+        {
+          "name": "EditorIndex",
+          "isUnique": false,
+          "description": "Editor Field index",
+          "fields": "Editor",
+          "isAscending": false
+        }
+      ],
+      "editFieldsInfo": {
+        "editDateField": "EditDate",
+        "editorField": "Editor",
+        "creationDateField": "CreationDate",
+        "creatorField": "Creator"
+      },
+      "htmlPopupType": "esriServerHTMLPopupTypeNone",
+      "supportsReturningQueryGeometry": true,
+      "minScale": 0,
+      "hasAttachments": true,
+      "advancedQueryCapabilities": {
+        "supportsSqlExpression": true,
+        "supportsQueryWithResultType": true,
+        "supportsQueryRelatedPagination": true,
+        "supportsQueryWithCacheHint": true,
+        "supportsQueryWithDatumTransformation": true,
+        "supportsOutFieldSQLExpression": true,
+        "supportsQueryAttachmentsWithReturnUrl": true,
+        "supportsQueryWithLodSR": false,
+        "supportsPaginationOnAggregatedQueries": true,
+        "supportsPagination": true,
+        "supportsMaxRecordCountFactor": true,
+        "supportsStatistics": true,
+        "supportsOrderBy": true,
+        "supportsDisjointSpatialRel": true,
+        "supportsQueryWithDistance": true,
+        "supportsLod": true,
+        "supportsCountDistinct": true,
+        "supportedLodTypes": ["geohash"],
+        "supportsAdvancedQueryRelated": true,
+        "supportsQueryAttachments": true,
+        "supportsReturningQueryExtent": true,
+        "supportsTopFeaturesQuery": true,
+        "supportsDistinct": true,
+        "supportsReturningGeometryCentroid": false,
+        "supportsQueryAnalytic": true,
+        "supportsPercentileStatistics": true,
+        "supportsHavingClause": true
+      },
+      "supportsValidateSql": true,
+      "supportsCoordinatesQuantization": true,
+      "types": [],
+      "capabilities": "Create,Delete,Query,Update,Editing,Extract,Sync,ChangeTracking",
+      "supportsAppend": true,
+      "maxScale": 0,
+      "supportsExceedsLimitStatistics": true,
+      "supportsLayerOverrides ": true,
+      "defaultVisibility": true,
+      "hasMetadata": true,
+      "supportedAppendFormats": "sqlite,gpkg,shapefile,filegdb,featureCollection,geojson,csv,excel,imageCollection",
+      "uniqueIdField": {
+        "isSystemMaintained": true,
+        "name": "OBJECTID"
+      },
+      "tileMaxRecordCount": 8000,
+      "typeIdField": "",
+      "supportsASyncCalculate": true,
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "drawingInfo": {
+        "renderer": {
+          "symbol": {
+            "imageData": "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",
+            "width": 15,
+            "type": "esriPMS",
+            "contentType": "image/png",
+            "url": "RedSphere.png",
+            "height": 15
+          },
+          "type": "simple"
+        }
+      },
+      "copyrightText": "",
+      "geometryType": "esriGeometryPoint"
+    }
+  ],
+  "licenseInfo": null,
+  "maxRecordCount": 2000,
+  "metadata": {
+    "metadata": {
+      "dataIdInfo": {
+        "dataLang": {
+          "languageCode": {
+            "@_value": "ger"
+          }
+        },
+        "searchKeys": {
+          "keyword": ["some", "keywords", "from", "metadata"]
+        },
+        "idCitation": {
+          "date": {
+            "pubDate": "2021-04-19T13:30:24.055-04:00"
+          }
+        },
+        "idCredit": "Myndigheten för samhällsskydd och beredskap ( https://www.msb.se/ ); con terra ( https://www.conterra.de/); Esri (https://www.esri.com/en-us/arcgis/products/arcgis-for-inspire)"
+      }
+    }
+  },
+  "modified": 1627417519723,
+  "modifiedProvenance": "layer.editingInfo.lastEditDate",
+  "name": "Tahoe places of interest",
+  "objectIdField": "OBJECTID",
+  "openData": false,
+  "orgId": "Xj56SBi2udA78cC9",
+  "orgName": "QA Premium Alpha Hub",
+  "organization": "QA Premium Alpha Hub",
+  "orgExtent": {
+    "ymin": 2700000,
+    "xmin": -15000000,
+    "ymax": 6500000,
+    "xmax": -6200000,
+    "spatialReference": {
+      "wkid": 102100
+    }
+  },
+  "owner": "thervey_qa_pre_a_hub",
+  "recordCount": 3,
+  "region": "US",
+  "searchDescription": "Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.with more wordsadding a few more to test how long it takes for our jobs to execute.Tom was here!",
+  "server": {
+    "supportedContingentValuesFormats": "JSON, PBF",
+    "allowGeometryUpdates": true,
+    "supportsQueryContingentValues": true,
+    "supportsApplyEditsWithGlobalIds": true,
+    "maxRecordCount": 2000,
+    "description": "",
+    "units": "esriMeters",
+    "supportsSharedDomains": true,
+    "hasStaticData": false,
+    "syncEnabled": true,
+    "tables": [],
+    "hasVersionedData": false,
+    "layerOverridesEnabled": true,
+    "layers": [
+      {
+        "subLayerIds": null,
+        "maxScale": 0,
+        "name": "Tahoe places of interest",
+        "defaultVisibility": true,
+        "id": 0,
+        "minScale": 0,
+        "parentLayerId": -1,
+        "geometryType": "esriGeometryPoint"
+      },
+      {
+        "subLayerIds": null,
+        "maxScale": 0,
+        "name": "Tahoe trails",
+        "defaultVisibility": true,
+        "id": 1,
+        "minScale": 0,
+        "parentLayerId": -1,
+        "geometryType": "esriGeometryPolyline"
+      },
+      {
+        "subLayerIds": null,
+        "maxScale": 0,
+        "name": "Tahoe building zones",
+        "defaultVisibility": true,
+        "id": 2,
+        "minScale": 0,
+        "parentLayerId": -1,
+        "geometryType": "esriGeometryPolygon"
+      }
+    ],
+    "spatialReference": {
+      "latestWkid": 3857,
+      "wkid": 102100
+    },
+    "serviceItemId": "f4bcc1035b7d46cba95e977f4affb6be",
+    "fullExtent": {
+      "ymin": 4689550.881166993,
+      "xmin": -13482794.08589948,
+      "ymax": 4774854.604734282,
+      "xmax": -13248021.279816473,
+      "spatialReference": {
+        "latestWkid": 3857,
+        "wkid": 102100
+      }
+    },
+    "supportedExportFormats": "csv,shapefile,sqlite,gpkg,filegdb,featureCollection,geojson,excel",
+    "capabilities": "Create,Delete,Query,Update,Editing,Extract,Sync,ChangeTracking",
+    "supportsAppend": true,
+    "xssPreventionInfo": {
+      "xssInputRule": "rejectInvalid",
+      "xssPreventionRule": "InputOnly",
+      "xssPreventionEnabled": true
+    },
+    "syncCapabilities": {
+      "supportsAsync": true,
+      "supportsSyncDirectionControl": true,
+      "supportsRegisteringExistingData": true,
+      "supportsBiDirectionalSyncForServer": true,
+      "supportsAttachmentsSyncDirection": true,
+      "supportsPerLayerSync": true,
+      "supportsSyncModelNone": true,
+      "supportsRollbackOnFailure": true,
+      "supportsPerReplicaSync": true
+    },
+    "supportsDisconnectedEditing": false,
+    "supportsContingentValuesJson": 2,
+    "supportsTilesAndBasicQueriesMode": true,
+    "supportsReturnDeleteResults": true,
+    "currentVersion": 10.81,
+    "hasSharedDomains": false,
+    "supportsWebHooks": true,
+    "supportsVCSProjection": false,
+    "supportedQueryFormats": "JSON",
+    "size": 16384,
+    "initialExtent": {
+      "ymin": 4693777.862012781,
+      "xmin": -13482794.08589948,
+      "ymax": 4773226.4828513805,
+      "xmax": -13248021.279816473,
+      "spatialReference": {
+        "latestWkid": 3857,
+        "wkid": 102100
+      }
+    },
+    "supportsTemporalLayers": true,
+    "serviceDescription": "",
+    "editorTrackingInfo": {
+      "allowAnonymousToQuery": true,
+      "allowOthersToUpdate": true,
+      "allowAnonymousToUpdate": true,
+      "enableEditorTracking": true,
+      "allowOthersToQuery": true,
+      "allowOthersToDelete": true,
+      "enableOwnershipAccessControl": false,
+      "allowAnonymousToDelete": true
+    },
+    "copyrightText": "",
+    "supportsLayerOverrides": true,
+    "extractChangesCapabilities": {
+      "supportsFeatureReturn": true,
+      "supportsReturnHasGeometryUpdates": false,
+      "supportsLayerQueries": true,
+      "supportsReturnAttachments": true,
+      "supportsReturnIdsOnly": true,
+      "supportsGeometry": true,
+      "supportsReturnExtentOnly": true
+    },
+    "changeTrackingInfo": {
+      "lastSyncDate": 1627417519395,
+      "layerServerGens": [
+        {
+          "minServerGen": 205799,
+          "serverGen": 205799,
+          "id": 0
+        },
+        {
+          "minServerGen": 205799,
+          "serverGen": 205799,
+          "id": 1
+        },
+        {
+          "minServerGen": 205799,
+          "serverGen": 205799,
+          "id": 2
+        }
+      ]
+    }
+  },
+  "serverCapabilities": "Create,Delete,Query,Update,Editing,Extract,Sync,ChangeTracking",
+  "serviceSpatialReference": {
+    "latestWkid": 3857,
+    "wkid": 102100
+  },
+  "size": 52076,
+  "slug": "qa-pre-a-hub::tahoe-places-of-interest",
+  "source": "QA Premium Alpha Hub",
+  "sourceProvenance": "org.name",
+  "statistics": {
+    "objectid": {
+      "objectid": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 252.7296829968691,
+          "values": {
+            "avg": 2,
+            "min": 1,
+            "max": 3,
+            "count": 3,
+            "sum": 6
+          }
+        }
+      }
+    },
+    "date": {
+      "creationdate": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 225.24338300526142,
+          "values": {
+            "min": 1611934830254,
+            "max": 1611934838732,
+            "count": 3
+          }
+        }
+      },
+      "editdate": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 225.24338300526142,
+          "values": {
+            "min": 1618854886238,
+            "max": 1618854890629,
+            "count": 3
+          }
+        }
+      }
+    },
+    "string": {
+      "editor": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 142.8959859907627,
+          "values": [
+            {
+              "count": 3,
+              "value": "thervey_qa_pre_a_hub"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 1
+        }
+      },
+      "creator": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 142.85836400091648,
+          "values": [
+            {
+              "count": 3,
+              "value": "thervey_qa_pre_a_hub"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 1
+        }
+      },
+      "anotherfield": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 286.2029959857464,
+          "values": [
+            {
+              "count": 1,
+              "value": "and a few more"
+            },
+            {
+              "count": 1,
+              "value": "changed text"
+            },
+            {
+              "count": 1,
+              "value": "with other words"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      },
+      "anotherone_places": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 241.15710799396038,
+          "values": [
+            {
+              "count": 1,
+              "value": "cheap"
+            },
+            {
+              "count": 1,
+              "value": "expensive"
+            },
+            {
+              "count": 1,
+              "value": "moderate"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      },
+      "color": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 253.30936799943447,
+          "values": [
+            {
+              "count": 1,
+              "value": "blue"
+            },
+            {
+              "count": 1,
+              "value": "red"
+            },
+            {
+              "count": 1,
+              "value": "yellow"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      },
+      "popularity": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 259.597378000617,
+          "values": [
+            {
+              "count": 1,
+              "value": "lowest"
+            },
+            {
+              "count": 1,
+              "value": "middle"
+            },
+            {
+              "count": 1,
+              "value": "top"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      },
+      "name": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 144.97451999783516,
+          "values": [
+            {
+              "count": 1,
+              "value": "Heavenly"
+            },
+            {
+              "count": 1,
+              "value": "Sierra"
+            },
+            {
+              "count": 1,
+              "value": "Squaw"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      },
+      "rating": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 262.8456179946661,
+          "values": [
+            {
+              "count": 2,
+              "value": "5"
+            },
+            {
+              "count": 1,
+              "value": "4"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 2
+        }
+      },
+      "anotherthang": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 216.89523799717426,
+          "values": [
+            {
+              "count": 1,
+              "value": "happy"
+            },
+            {
+              "count": 1,
+              "value": "mad"
+            },
+            {
+              "count": 1,
+              "value": "sad"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      },
+      "somthang": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 338.89854000508785,
+          "values": [
+            {
+              "count": 1,
+              "value": "1"
+            },
+            {
+              "count": 1,
+              "value": "2"
+            },
+            {
+              "count": 1,
+              "value": "3"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      },
+      "somethingg": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 124.53264999389648,
+          "values": [
+            {
+              "count": 1,
+              "value": "1"
+            },
+            {
+              "count": 1,
+              "value": "2"
+            },
+            {
+              "count": 1,
+              "value": "3"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      },
+      "another_thang": {
+        "meta": {
+          "pass": true,
+          "missingStats": [],
+          "error": null
+        },
+        "statistics": {
+          "duration": 136.48911400139332,
+          "values": [
+            {
+              "count": 1,
+              "value": "4"
+            },
+            {
+              "count": 1,
+              "value": "5"
+            },
+            {
+              "count": 1,
+              "value": "6"
+            }
+          ],
+          "count": 3,
+          "uniqueCount": 3
+        }
+      }
+    }
+  },
+  "structuredLicense": {
+    "type": "none"
+  },
+  "license": "none",
+  "supportedQueryFormats": "JSON, geoJSON, PBF",
+  "supportsAdvancedQueries": true,
+  "tags": ["Data collection", "just modified"],
+  "thumbnail": "thumbnail/ago_downloaded.png",
+  "thumbnailUrl": "thumbnail/ago_downloaded.png",
+  "type": "Feature Layer",
+  "typeCategories": ["Dataset"],
+  "typeKeywords": [
+    "ArcGIS Server",
+    "Build a layer",
+    "Collector",
+    "Data",
+    "Feature Access",
+    "Feature Service",
+    "Feature Service Template",
+    "General",
+    "Layer",
+    "Layer Template",
+    "Metadata",
+    "Multilayer",
+    "Platform",
+    "Public Data Collection",
+    "Service",
+    "Service template",
+    "Template",
+    "Hosted Service"
+  ],
+  "url": "https://servicesqa.arcgis.com/Xj56SBi2udA78cC9/arcgis/rest/services/Tahoe_Things/FeatureServer/0",
+  "useStandardizedQueries": true,
+  "validExtent": true,
+  "xFrameOptions": null,
+  "snippet": "Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.with more wordsadding a few more to test how long it takes for our jobs to execute.",
+  "culture": "en-us"
+}

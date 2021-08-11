@@ -1,0 +1,38 @@
+{
+  "name": "koop-app-example",
+  "description": "Sample koop express application with some common koop providers.",
+  "version": "0.1.0",
+  "author": "Esri R&D",
+  "bugs": {
+    "url": "https://github.com/koopjs/koop-app-example/issues"
+  },
+  "dependencies": {
+    "@esri/arcgis-rest-feature-layer": "^3.2.1",
+    "@koopjs/koop-output-dcat-us-11": "file:../build",
+    "@koopjs/koop-provider-hub-search": "^1.0.0",
+    "config": "^3.2.5",
+    "isomorphic-fetch": "^3.0.0",
+    "koop": "^4.2.0",
+    "node-fetch": "^2.6.1",
+    "through2": "^4.0.2"
+  },
+  "devDependencies": {
+    "standard": "^14.3.1",
+    "tap-spec": "^5.0.0",
+    "tape": "^5.0.0"
+  },
+  "homepage": "https://github.com/koopjs/koop-app-example",
+  "keywords": [],
+  "license": "Apache-2.0",
+  "main": "src/index.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:koopjs/koop-app-example.git"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "start:dev": "koop serve --save --watch",
+    "test": "standard && tape test/*.js | tap-spec"
+  }
+}
