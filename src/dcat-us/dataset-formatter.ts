@@ -4,8 +4,13 @@ import { isPage } from '@esri/hub-sites';
 import { baseDatasetTemplate } from './base-dataset-template';
 import { _generateDistributions } from './_generate-distributions';
 import { cloneObject } from '@esri/hub-common';
+import { IItem } from '@esri/arcgis-rest-portal';
 
-export function formatDcatDataset (hubDataset: any, siteUrl: string, dcatCustomizations: any = {}) {
+// TODO - use real type for hubDataset when it gets defined in Hub.js
+type HubDatasetAttributes = Record<string, any>;
+type DcatDatasetTemplate = Record<string, any>;
+
+export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, dcatCustomizations: DcatDatasetTemplate = {}) {
   const landingPage = `${siteUrl}/datasets/${hubDataset.id}`;
 
   const template = dcatTemplate(dcatCustomizations);
@@ -31,7 +36,7 @@ export function formatDcatDataset (hubDataset: any, siteUrl: string, dcatCustomi
 
   const dcatDataset = Object.assign({}, defaultDataset, adlib(template, hubDataset, transforms));
 
-  if (isPage(hubDataset) && !hasTags(hubDataset)) {
+  if (isPage(hubDataset as IItem) && !hasTags(hubDataset)) {
     dcatDataset.keyword = ['ArcGIS Hub page'];
   }
 
@@ -56,12 +61,12 @@ function indent(str: string, nTabs = 1) {
   return tabs + str.replace(/\n/g, `\n${tabs}`);
 }
 
-function hasTags (hubDataset: any) {
+function hasTags (hubDataset: HubDatasetAttributes) {
   const maybeTags = hubDataset.tags;
   return !!maybeTags && !(/{{.+}}/.test(maybeTags) || maybeTags.length === 0 || maybeTags[0] === '');
 }
 
-function scrubProtectedKeys (customizations: Record<string, any>): Record<string, any> {
+function scrubProtectedKeys (customizations: DcatDatasetTemplate): DcatDatasetTemplate {
   const scrubbedCustomizations = cloneObject(customizations);
 
   if (Object.keys(scrubbedCustomizations).length > 0) {
@@ -78,7 +83,7 @@ function scrubProtectedKeys (customizations: Record<string, any>): Record<string
   return scrubbedCustomizations;
 }
 
-export function dcatTemplate (customizations: Record<string, any>): Record<string, any> {
+export function dcatTemplate (customizations: DcatDatasetTemplate): DcatDatasetTemplate {
   const customConfig = scrubProtectedKeys(customizations || {});
   return Object.assign({}, baseDatasetTemplate, customConfig);
 }
