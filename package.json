@@ -1,14 +1,14 @@
 {
   "name": "@koopjs/koop-output-dcat-us-11",
   "version": "1.0.0",
-  "description": "A Koop output plugin for the DCAT-AP 2.0.1 specification",
+  "description": "A Koop output plugin for the DCAT-US 1.1 specification",
   "main": "src/index.js",
   "engines": {
     "node": ">= 12.0 <15"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:koopjs/koop-output-dcat-ap-201.git"
+    "url": "git@github.com:koopjs/koop-output-dcat-us-11.git"
   },
   "devDependencies": {
     "@types/adlib": "^3.0.1",
