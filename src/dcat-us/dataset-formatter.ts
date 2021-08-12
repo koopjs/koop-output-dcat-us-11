@@ -4,12 +4,12 @@ import { isPage } from '@esri/hub-sites';
 import { baseDatasetTemplate } from './base-dataset-template';
 import { _generateDistributions } from './_generate-distributions';
 
-export function formatDcatDataset (dataset: any, siteUrl: string, dcatCustomizations: any = {}) {
-  const landingPage = `${siteUrl}/datasets/${dataset.id}`;
+export function formatDcatDataset (hubDataset: any, siteUrl: string, dcatCustomizations: any = {}) {
+  const landingPage = `${siteUrl}/datasets/${hubDataset.id}`;
 
   const template = dcatTemplate(dcatCustomizations);
 
-  const { structuredLicense: { text = '' } = {}, licenseInfo } = dataset;
+  const { structuredLicense: { text = '' } = {}, licenseInfo } = hubDataset;
 
   const defaultDataset = {
     '@type': 'dcat:Dataset',
@@ -28,21 +28,21 @@ export function formatDcatDataset (dataset: any, siteUrl: string, dcatCustomizat
     }
   };
 
-  const dcatDataset = Object.assign({}, defaultDataset, adlib(template, dataset, transforms));
+  const dcatDataset = Object.assign({}, defaultDataset, adlib(template, hubDataset, transforms));
 
   const hasNoTags = /{{.+}}/.test(dcatDataset.keyword)
     || dcatDataset.keyword.length === 0
     || !dcatDataset.keyword[0]; // if tags is undefined, the tags array is empty, or tags is an empty string
 
-  if (isPage(dataset) && hasNoTags) {
+  if (isPage(hubDataset) && hasNoTags) {
     dcatDataset.keyword = ['ArcGIS Hub page'];
   }
 
-  dcatDataset.distribution = _generateDistributions(dataset, landingPage);
+  dcatDataset.distribution = _generateDistributions(hubDataset, landingPage);
 
   // only add spatial property if there's an extent
-  if (dataset.extent && dataset.extent.coordinates) {
-    dcatDataset.spatial = dataset.extent.coordinates.join(',');
+  if (hubDataset.extent && hubDataset.extent.coordinates) {
+    dcatDataset.spatial = hubDataset.extent.coordinates.join(',');
 
     // https://project-open-data.cio.gov/v1.1/schema/#theme
     // allow theme to be overrriden
