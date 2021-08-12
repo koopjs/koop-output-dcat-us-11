@@ -30,18 +30,13 @@ export function formatDcatDataset (hubDataset: any, siteUrl: string, dcatCustomi
 
   const dcatDataset = Object.assign({}, defaultDataset, adlib(template, hubDataset, transforms));
 
-  const hasNoTags = /{{.+}}/.test(dcatDataset.keyword)
-    || dcatDataset.keyword.length === 0
-    || !dcatDataset.keyword[0]; // if tags is undefined, the tags array is empty, or tags is an empty string
-
-  if (isPage(hubDataset) && hasNoTags) {
+  if (isPage(hubDataset) && !hasTags(hubDataset)) {
     dcatDataset.keyword = ['ArcGIS Hub page'];
   }
 
   dcatDataset.distribution = _generateDistributions(hubDataset, landingPage);
 
-  // only add spatial property if there's an extent
-  if (hubDataset.extent && hubDataset.extent.coordinates) {
+  if (_.has(hubDataset, 'extent.coordinates')) {
     dcatDataset.spatial = hubDataset.extent.coordinates.join(',');
 
     // https://project-open-data.cio.gov/v1.1/schema/#theme
@@ -60,7 +55,11 @@ function indent(str: string, nTabs = 1) {
   return tabs + str.replace(/\n/g, `\n${tabs}`);
 }
 
-// remove customizations that attempt to overwrite special or required fields
+function hasTags (hubDataset: any) {
+  const maybeTags = hubDataset.tags;
+  return !!maybeTags && !(/{{.+}}/.test(maybeTags) || maybeTags.length === 0 || maybeTags[0] === '');
+}
+
 function scrub (customizations: any) {
   if (Object.keys(customizations).length > 0) {
     delete customizations['@type'];
