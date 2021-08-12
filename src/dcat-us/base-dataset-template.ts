@@ -1,5 +1,4 @@
-// the base DCAT adlib template
-export const baseTemplate = {
+export const baseDatasetTemplate = {
   title: '{{name}}',
   description: '{{description}}',
   keyword: '{{tags}}',

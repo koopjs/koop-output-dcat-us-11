@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { adlib, TransformsList } from 'adlib';
 import { isPage } from '@esri/hub-sites';
-import { baseTemplate } from './base-template';
+import { baseDatasetTemplate } from './base-dataset-template';
 import { _generateDistributions } from './_generate-distributions';
 
 export function formatDcatDataset (dataset: any, siteUrl: string, dcatCustomizations: any = {}) {
@@ -78,5 +78,5 @@ function scrub (customizations: any) {
 
 export function dcatTemplate (customizations: any) {
   const customConfig = scrub(customizations || {});
-  return Object.assign({}, baseTemplate, customConfig);
+  return Object.assign({}, baseDatasetTemplate, customConfig);
 }
