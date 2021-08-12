@@ -3,6 +3,7 @@ import { adlib, TransformsList } from 'adlib';
 import { isPage } from '@esri/hub-sites';
 import { baseDatasetTemplate } from './base-dataset-template';
 import { _generateDistributions } from './_generate-distributions';
+import { cloneObject } from '@esri/hub-common';
 
 export function formatDcatDataset (hubDataset: any, siteUrl: string, dcatCustomizations: any = {}) {
   const landingPage = `${siteUrl}/datasets/${hubDataset.id}`;
@@ -60,22 +61,24 @@ function hasTags (hubDataset: any) {
   return !!maybeTags && !(/{{.+}}/.test(maybeTags) || maybeTags.length === 0 || maybeTags[0] === '');
 }
 
-function scrub (customizations: any) {
-  if (Object.keys(customizations).length > 0) {
-    delete customizations['@type'];
-    delete customizations.identifier;
-    delete customizations.landingPage;
-    delete customizations.webService;
-    if (customizations.contactPoint) {
-      delete customizations.contactPoint['@type'];
+function scrubProtectedKeys (customizations: Record<string, any>): Record<string, any> {
+  const scrubbedCustomizations = cloneObject(customizations);
+
+  if (Object.keys(scrubbedCustomizations).length > 0) {
+    delete scrubbedCustomizations['@type'];
+    delete scrubbedCustomizations.identifier;
+    delete scrubbedCustomizations.landingPage;
+    delete scrubbedCustomizations.webService;
+    if (scrubbedCustomizations.contactPoint) {
+      delete scrubbedCustomizations.contactPoint['@type'];
     }
-    delete customizations.distributions;
+    delete scrubbedCustomizations.distributions;
   }
 
-  return customizations;
+  return scrubbedCustomizations;
 }
 
-export function dcatTemplate (customizations: any) {
-  const customConfig = scrub(customizations || {});
+export function dcatTemplate (customizations: Record<string, any>): Record<string, any> {
+  const customConfig = scrubProtectedKeys(customizations || {});
   return Object.assign({}, baseDatasetTemplate, customConfig);
 }
