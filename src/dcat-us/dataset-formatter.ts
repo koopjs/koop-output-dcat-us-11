@@ -15,12 +15,12 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
 
   const template = dcatTemplate(dcatCustomizations);
 
-  const { structuredLicense: { text = '' } = {}, licenseInfo } = hubDataset;
+  const { structuredLicense: { url = '' } = {} } = hubDataset;
 
   const defaultDataset = {
     '@type': 'dcat:Dataset',
     identifier: landingPage,
-    license: text || licenseInfo || 'No license provided. Request permission to use.',
+    license: url,
     landingPage
   };
 

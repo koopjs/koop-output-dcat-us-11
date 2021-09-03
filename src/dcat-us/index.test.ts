@@ -37,7 +37,7 @@ describe('generating DCAT-US 1.1 feed', () => {
 
     expect(chk1['@type']).toBe('dcat:Dataset');
     expect(chk1.identifier).toBe('https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0');
-    expect(chk1.license).toBe('No license provided. Request permission to use.');
+    expect(chk1.license).toBe('');
     expect(chk1.landingPage).toBe('https://download-test-qa-pre-a-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0');
     expect(chk1.title).toBe('Tahoe places of interest');
     expect(chk1.description).toBe('Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.<div><br /></div><div>with more words</div><div><br /></div><div>adding a few more to test how long it takes for our jobs to execute.</div><div><br /></div><div>Tom was here!</div>');
