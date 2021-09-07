@@ -65,7 +65,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: '',
+      license: null,
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -162,7 +162,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: '',
+      license: null,
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -251,7 +251,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: '',
+      license: null,
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -342,7 +342,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: '',
+      license: null,
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -437,7 +437,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: '',
+      license: null,
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -565,13 +565,13 @@ describe('formatDcatDataset', () => {
       structuredLicense: { text: 'structuredLicense text' },
       licenseInfo: 'licenseInfo text',
     };
-    const expectedLicense = '';
+    const expectedLicense = null;
 
     const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
     expect(actual.license).toEqual(expectedLicense);
   });
 
-  it('object: license should display an empty string when structuredLicense is unavailable', () => {
+  it('object: license should display null when structuredLicense is unavailable', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -600,7 +600,7 @@ describe('formatDcatDataset', () => {
       },
       licenseInfo: 'licenseInfo text',
     };
-    const expectedLicense = '';
+    const expectedLicense = null;
 
     const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
     expect(actual.license).toEqual(expectedLicense);

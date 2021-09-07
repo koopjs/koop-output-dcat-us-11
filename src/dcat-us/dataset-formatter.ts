@@ -15,7 +15,7 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
 
   const template = dcatTemplate(dcatCustomizations);
 
-  const { structuredLicense: { url = '' } = {} } = hubDataset;
+  const { structuredLicense: { url = null } = {} } = hubDataset;
 
   const defaultDataset = {
     '@type': 'dcat:Dataset',
