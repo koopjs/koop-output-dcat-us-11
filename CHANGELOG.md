@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 1.0.1
+
+Fixed
+- License field uses `structuredLicense` URL or defaults to `null` [#3](https://github.com/koopjs/koop-output-dcat-us-11/pull/3)
+
 ## 1.0.0
 
 Added
