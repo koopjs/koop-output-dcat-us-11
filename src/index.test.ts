@@ -7,6 +7,9 @@ import * as request from 'supertest';
 import * as mockDataset from './test-helpers/mock-dataset.json';
 import * as mockSiteModel from './test-helpers/mock-site-model.json';
 
+import { FeedFormatterStream } from './dcat-us/feed-formatter-stream';
+import * as _ from 'lodash';
+
 describe('Output Plugin', () => {
   let mockFetchSite;
   let mockConfigModule;
@@ -31,6 +34,7 @@ describe('Output Plugin', () => {
 
   beforeEach(() => {
     jest.resetModules();
+    jest.resetAllMocks();
 
     const { fetchSite } = require('@esri/hub-common');
 
@@ -144,5 +148,43 @@ describe('Output Plugin', () => {
       });
 
     // TODO test stream error
+  });
+
+  it('Properly passes custom dcat configurations to getDataStreamDcatUs11', async () => {
+    // Mock getDataStreamDcatUs11
+    const { getDataStreamDcatUs11 } = require('./dcat-us');
+    jest.mock('./dcat-us', () => ({
+      getDataStreamDcatUs11: jest.fn(),
+    }));
+    const mockGetDataStreamDcatUs11 = mocked(getDataStreamDcatUs11);
+    mockGetDataStreamDcatUs11.mockReturnValue(new FeedFormatterStream('{', '}', '', () => ''));
+
+    // Change fetchSite's return value to include a custom dcat config
+    const customConfigSiteModel: any = _.cloneDeep(mockSiteModel);
+    customConfigSiteModel.data.values.dcatConfig = {
+      "title": "{{default.name}}",
+      "description": "{{default.description}}",
+      "keyword": "{{item.tags}}",
+      "issued": "{{item.created:toISO}}",
+      "modified": "{{item.modified:toISO}}",
+      "publisher": { "name": "{{default.source.source}}" },
+      "contactPoint": {
+        "fn": "{{item.owner}}",
+        "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
+      },
+      "landingPage": "some silly standard",
+    },
+    mockFetchSite.mockResolvedValue(customConfigSiteModel);
+
+    [plugin, app] = buildPluginAndApp();
+
+    await request(app)
+      .get('/dcat')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+      .expect(() => {
+        expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel.item, customConfigSiteModel.data.values.dcatConfig);
+      });
   });
 });

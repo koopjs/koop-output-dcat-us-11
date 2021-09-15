@@ -908,22 +908,6 @@
       },
       "internalUrl": "download-test-qa-pre-a-hub.hubqa.arcgis.com",
       "customHostname": null,
-      "dcatConfig": {
-        "title": "{{default.name}}",
-        "description": "{{default.description}}",
-        "keyword": "{{item.tags}}",
-        "issued": "{{item.created:toISO}}",
-        "modified": "{{item.modified:toISO}}",
-        "publisher": { "name": "{{default.source.source}}" },
-        "contactPoint": {
-          "fn": "{{item.owner}}",
-          "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
-        },
-        "anotherThing": "again",
-        "landingPage": "some silly standard",
-        "bureauCode": ["010:86", "010:04"],
-        "programCode": ["015:001", "015:002"]
-      },
       "telemetry": {
         "consentNotice": {
           "isTheme": true,
