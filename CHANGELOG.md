@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## Unreleased
+Added
+- Supports custom configuration values found at `site.data.feeds.dcatUS11` [#4](https://github.com/koopjs/koop-output-dcat-us-11/pull/4)
+
 ## 1.0.1
 
 Fixed
