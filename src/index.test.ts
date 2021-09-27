@@ -34,7 +34,6 @@ describe('Output Plugin', () => {
 
   beforeEach(() => {
     jest.resetModules();
-    jest.resetAllMocks();
 
     const { fetchSite } = require('@esri/hub-common');
 
@@ -161,19 +160,21 @@ describe('Output Plugin', () => {
 
     // Change fetchSite's return value to include a custom dcat config
     const customConfigSiteModel: any = _.cloneDeep(mockSiteModel);
-    customConfigSiteModel.data.values.dcatConfig = {
-      "title": "{{default.name}}",
-      "description": "{{default.description}}",
-      "keyword": "{{item.tags}}",
-      "issued": "{{item.created:toISO}}",
-      "modified": "{{item.modified:toISO}}",
-      "publisher": { "name": "{{default.source.source}}" },
-      "contactPoint": {
-        "fn": "{{item.owner}}",
-        "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
-      },
-      "landingPage": "some silly standard",
-    },
+    customConfigSiteModel.data.feeds = {
+      dcatUS11: {
+        "title": "{{default.name}}",
+        "description": "{{default.description}}",
+        "keyword": "{{item.tags}}",
+        "issued": "{{item.created:toISO}}",
+        "modified": "{{item.modified:toISO}}",
+        "publisher": { "name": "{{default.source.source}}" },
+        "contactPoint": {
+          "fn": "{{item.owner}}",
+          "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
+        },
+        "landingPage": "some silly standard",
+      }
+    }
     mockFetchSite.mockResolvedValue(customConfigSiteModel);
 
     [plugin, app] = buildPluginAndApp();
@@ -184,7 +185,7 @@ describe('Output Plugin', () => {
       .expect('Content-Type', /application\/json/)
       .expect(200)
       .expect(() => {
-        expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel.item, customConfigSiteModel.data.values.dcatConfig);
+        expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel.item, customConfigSiteModel.data.feeds.dcatUS11);
       });
   });
 });

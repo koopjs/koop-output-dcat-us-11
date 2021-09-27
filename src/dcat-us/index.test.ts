@@ -87,17 +87,6 @@ describe('generating DCAT-US 1.1 feed', () => {
     expect(chk1.distribution.length).toBe(6);
   });
 
-  it('formats catalog correctly', async function () {
-    const feed = await generateDcatFeed(mockSiteModel.item, []);
-
-    expect(feed['@context']).toBe('https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld');
-    expect(feed['@type']).toBe('dcat:Catalog');
-    expect(feed['conformsTo']).toBe('https://project-open-data.cio.gov/v1.1/schema');
-    expect(feed['describedBy']).toBe('https://project-open-data.cio.gov/v1.1/schema/catalog.json');
-    expect(Array.isArray(feed['dataset'])).toBeTruthy();
-    expect(feed['dataset'].length).toBe(0);
-  });
-
   it('scrubs dcat customization of protected fields', async function () {
     const feed = await generateDcatFeed(
       mockSiteModel.item, 
