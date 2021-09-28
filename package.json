@@ -1,6 +1,6 @@
 {
   "name": "@koopjs/koop-output-dcat-us-11",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A Koop output plugin for the DCAT-US 1.1 specification",
   "main": "src/index.js",
   "engines": {
