@@ -1,8 +1,8 @@
 import { IItem } from '@esri/arcgis-rest-portal';
-import { formatDcatDataset } from './dataset-formatter';
+import { DcatDatasetTemplate, formatDcatDataset } from './dataset-formatter';
 import { FeedFormatterStream } from './feed-formatter-stream';
 
-export function getDataStreamDcatUs11(siteItem: IItem) {
+export function getDataStreamDcatUs11(siteItem: IItem, dcatCustomizations?: DcatDatasetTemplate) {
   const catalogStr = JSON.stringify({
       '@context':
         'https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld',
@@ -19,7 +19,7 @@ export function getDataStreamDcatUs11(siteItem: IItem) {
   const footer = '\n\t]\n}';
 
   const formatFn = (chunk) => {
-    return formatDcatDataset(chunk, siteItem.url);
+    return formatDcatDataset(chunk, siteItem.url, dcatCustomizations);
   };
 
   return new FeedFormatterStream(header, footer, ',\n', formatFn);

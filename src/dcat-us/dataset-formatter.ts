@@ -8,7 +8,7 @@ import { IItem } from '@esri/arcgis-rest-portal';
 
 // TODO - use real type for hubDataset when it gets defined in Hub.js
 type HubDatasetAttributes = Record<string, any>;
-type DcatDatasetTemplate = Record<string, any>;
+export type DcatDatasetTemplate = Record<string, any>;
 
 export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, dcatCustomizations: DcatDatasetTemplate = {}) {
   const landingPage = `${siteUrl}/datasets/${hubDataset.id}`;

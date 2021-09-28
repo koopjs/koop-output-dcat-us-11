@@ -34,7 +34,7 @@ export = class OutputDcatUs11 {
 
       const datasetStream = await this.model.pullStream(req);
 
-      const dcatStream = getDataStreamDcatUs11(siteModel.item);
+      const dcatStream = getDataStreamDcatUs11(siteModel.item, _.get(siteModel, 'data.feeds.dcatUS11'));
 
       datasetStream
         .pipe(dcatStream)
