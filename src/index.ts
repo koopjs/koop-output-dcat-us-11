@@ -30,11 +30,11 @@ export = class OutputDcatUs11 {
     try {
       const siteModel = await fetchSite(req.hostname, this.getRequestOptions(portalUrl));
 
-      req.res.locals.searchRequest = this.getSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, []);
-
+      req.res.locals.searchRequest = this.extractDatasetSearchRequest(req) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, []);
       const datasetStream = await this.model.pullStream(req);
 
-      const dcatStream = getDataStreamDcatUs11(siteModel.item, _.get(siteModel, 'data.feeds.dcatUS11'));
+      const dcatCustomizations = this.extractDcatConfig(req) || _.get(siteModel, 'data.feeds.dcatUS11');
+      const dcatStream = getDataStreamDcatUs11(siteModel.item, dcatCustomizations);
 
       datasetStream
         .pipe(dcatStream)
@@ -47,6 +47,16 @@ export = class OutputDcatUs11 {
     }
   }
 
+
+  private extractDcatConfig(req) {
+    try {
+      return JSON.parse(_.get(req, 'query.dcatConfig'));
+    } catch (e) {
+      // ?dcatConfig does not exist or it is invalid JSON
+      return null;
+    }
+  }
+
   private getRequestOptions(portalUrl: string): IHubRequestOptions {
     return {
       isPortal: false,
@@ -56,7 +66,7 @@ export = class OutputDcatUs11 {
     };
   }
 
-  private getSearchRequest(
+  private getCatalogSearchRequest(
     catalog: any,
     portalUrl: string,
     fields: string[]
@@ -66,6 +76,30 @@ export = class OutputDcatUs11 {
         group: catalog.groups,
         orgid: catalog.orgId,
       },
+      options: {
+        portal: portalUrl,
+        fields: fields.join(',')
+      },
+    };
+    return searchRequest;
+  }
+
+  private extractDatasetSearchRequest(req): IContentSearchRequest {
+    let searchRequest: IContentSearchRequest = null;
+    const id = _.get(req, 'query.id');
+    if (id) {
+      searchRequest = this.getDatasetSearchRequest(id, portalUrl, []);
+    }
+    return searchRequest;
+  }
+
+  private getDatasetSearchRequest(
+    id: string,
+    portalUrl: string,
+    fields: string[]
+  ): IContentSearchRequest {
+    const searchRequest: IContentSearchRequest = {
+      filter: { id },
       options: {
         portal: portalUrl,
         fields: fields.join(',')
