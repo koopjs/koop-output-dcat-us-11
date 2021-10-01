@@ -1,7 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
-
+## 1.2.0
 Added
 - Custom configurations can be passed through the `dcatConfig` query param [#6](https://github.com/koopjs/koop-output-dcat-us-11/pull/6)
 - The returned feed can be restricted to a single dataset with the `id` query param [#6](https://github.com/koopjs/koop-output-dcat-us-11/pull/6)
