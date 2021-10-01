@@ -9,10 +9,12 @@ import * as mockSiteModel from './test-helpers/mock-site-model.json';
 
 import { FeedFormatterStream } from './dcat-us/feed-formatter-stream';
 import * as _ from 'lodash';
+import { IContentSearchRequest } from '@esri/hub-search';
 
 describe('Output Plugin', () => {
   let mockFetchSite;
   let mockConfigModule;
+  let mockPullStream;
   let plugin;
   let app: express.Application;
 
@@ -22,8 +24,9 @@ describe('Output Plugin', () => {
     const Output = require('./');
 
     const plugin = new Output();
+    mockPullStream  = jest.fn();
     plugin.model = {
-      pullStream: jest.fn().mockResolvedValue(readableFromArray([mockDataset])),
+      pullStream: mockPullStream.mockResolvedValue(readableFromArray([mockDataset])),
     };
 
     app = express();
@@ -186,6 +189,102 @@ describe('Output Plugin', () => {
       .expect(200)
       .expect(() => {
         expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel.item, customConfigSiteModel.data.feeds.dcatUS11);
+      });
+  });
+
+  it('Properly passes the ?dcatConfig query param to getDataStreamDcatUs11', async () => {
+    // Mock getDataStreamDcatUs11
+    const { getDataStreamDcatUs11 } = require('./dcat-us');
+    jest.mock('./dcat-us', () => ({
+      getDataStreamDcatUs11: jest.fn(),
+    }));
+    const mockGetDataStreamDcatUs11 = mocked(getDataStreamDcatUs11);
+    mockGetDataStreamDcatUs11.mockReturnValue(new FeedFormatterStream('{', '}', '', () => ''));
+
+    [plugin, app] = buildPluginAndApp();
+
+    const dcatConfig = {
+      planet: 'tatooine'
+    }
+
+    await request(app)
+      .get(`/dcat?dcatConfig=${JSON.stringify(dcatConfig)}`)
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+      .expect(() => {
+        expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(mockSiteModel.item, dcatConfig);
+      });
+  });
+
+  it('Passes the site dcat config to getDataStreamDcatUs11 when ?dcatConfig is invalid json', async () => {
+    // Mock getDataStreamDcatUs11
+    const { getDataStreamDcatUs11 } = require('./dcat-us');
+    jest.mock('./dcat-us', () => ({
+      getDataStreamDcatUs11: jest.fn(),
+    }));
+    const mockGetDataStreamDcatUs11 = mocked(getDataStreamDcatUs11);
+    mockGetDataStreamDcatUs11.mockReturnValue(new FeedFormatterStream('{', '}', '', () => ''));
+
+    // Change fetchSite's return value to include a custom dcat config
+    const customConfigSiteModel: any = _.cloneDeep(mockSiteModel);
+    customConfigSiteModel.data.feeds = {
+      dcatUS11: {
+        "title": "{{default.name}}",
+        "description": "{{default.description}}",
+        "keyword": "{{item.tags}}",
+        "issued": "{{item.created:toISO}}",
+        "modified": "{{item.modified:toISO}}",
+        "publisher": { "name": "{{default.source.source}}" },
+        "contactPoint": {
+          "fn": "{{item.owner}}",
+          "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
+        },
+        "landingPage": "some silly standard",
+      }
+    }
+    mockFetchSite.mockResolvedValue(customConfigSiteModel);
+
+    [plugin, app] = buildPluginAndApp();
+
+    await request(app)
+      .get('/dcat?dcatConfig={"partial":"json')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+      .expect(() => {
+        expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel.item, customConfigSiteModel.data.feeds.dcatUS11);
+      });
+  });
+
+  it('Constructs a search request for specific dataset when the id query param is populated', async () => {
+    // Mock getDataStreamDcatUs11
+    const { getDataStreamDcatUs11 } = require('./dcat-us');
+    jest.mock('./dcat-us', () => ({
+      getDataStreamDcatUs11: jest.fn(),
+    }));
+    const mockGetDataStreamDcatUs11 = mocked(getDataStreamDcatUs11);
+    mockGetDataStreamDcatUs11.mockReturnValue(new FeedFormatterStream('{', '}', '', () => ''));
+
+    [plugin, app] = buildPluginAndApp();
+
+    await request(app)
+      .get('/dcat?id=9001')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+      .expect(() => {
+        const expectedSearchRequest: IContentSearchRequest = {
+          filter: {
+            id: '9001'
+          },
+          options: {
+            portal: 'https://www.arcgis.com',
+            fields: ''
+          },
+        };
+        const actualSearchRequest = _.get(mockPullStream, 'mock.calls[0][0].res.locals.searchRequest')
+        expect(actualSearchRequest).toStrictEqual(expectedSearchRequest);
       });
   });
 });

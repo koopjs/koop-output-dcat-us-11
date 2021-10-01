@@ -29,12 +29,24 @@ export = class OutputDcatUs11 {
 
     try {
       const siteModel = await fetchSite(req.hostname, this.getRequestOptions(portalUrl));
-
-      req.res.locals.searchRequest = this.getSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, []);
-
+      
+      // Request a single dataset if id is provided, else default to site's catalog
+      const id = _.isString(req.query.id) ? req.query.id : '';
+      req.res.locals.searchRequest = this.getDatasetSearchRequest(id, portalUrl, []) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, []);
       const datasetStream = await this.model.pullStream(req);
 
-      const dcatStream = getDataStreamDcatUs11(siteModel.item, _.get(siteModel, 'data.feeds.dcatUS11'));
+      // Use dcatConfig query param if provided, else default to site's config
+      let dcatConfig;
+      if (_.isString(req.query.dcatConfig)) {
+        // param is a json string
+        dcatConfig = this.parseDcatConfig(req.query.dcatConfig);
+      } else if (_.isPlainObject(req.query.dcatConfig)) {
+        // param has been deserialized
+        dcatConfig = req.query.dcatConfig;
+      }
+    
+      const dcatCustomizations = dcatConfig || _.get(siteModel, 'data.feeds.dcatUS11');
+      const dcatStream = getDataStreamDcatUs11(siteModel.item, dcatCustomizations);
 
       datasetStream
         .pipe(dcatStream)
@@ -47,6 +59,16 @@ export = class OutputDcatUs11 {
     }
   }
 
+
+  private parseDcatConfig(dcatConfig) {
+    try {
+      return JSON.parse(dcatConfig);
+    } catch (e) {
+      // dcatConfig is undefined or is invalid JSON
+      return null;
+    }
+  }
+
   private getRequestOptions(portalUrl: string): IHubRequestOptions {
     return {
       isPortal: false,
@@ -56,7 +78,7 @@ export = class OutputDcatUs11 {
     };
   }
 
-  private getSearchRequest(
+  private getCatalogSearchRequest(
     catalog: any,
     portalUrl: string,
     fields: string[]
@@ -72,6 +94,24 @@ export = class OutputDcatUs11 {
       },
     };
     return searchRequest;
+  }
+
+  private getDatasetSearchRequest(
+    id: string,
+    portalUrl: string,
+    fields: string[]
+  ): IContentSearchRequest {
+    if (!id) {
+      return null;
+    }
+
+    return {
+      filter: { id },
+      options: {
+        portal: portalUrl,
+        fields: fields.join(',')
+      },
+    };
   }
 
   private getErrorResponse(err: any) {
