@@ -29,11 +29,23 @@ export = class OutputDcatUs11 {
 
     try {
       const siteModel = await fetchSite(req.hostname, this.getRequestOptions(portalUrl));
-
-      req.res.locals.searchRequest = this.extractDatasetSearchRequest(req) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, []);
+      
+      // Request a single dataset if id is provided, else default to site's catalog
+      const id = _.isString(req.query.id) ? req.query.id : '';
+      req.res.locals.searchRequest = this.getDatasetSearchRequest(id, portalUrl, []) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, []);
       const datasetStream = await this.model.pullStream(req);
 
-      const dcatCustomizations = this.extractDcatConfig(req) || _.get(siteModel, 'data.feeds.dcatUS11');
+      // Use dcatConfig query param if provided, else default to site's config
+      let dcatConfig;
+      if (_.isString(req.query.dcatConfig)) {
+        // param is a json string
+        dcatConfig = this.parseDcatConfig(req.query.dcatConfig);
+      } else if (_.isPlainObject(req.query.dcatConfig)) {
+        // param has been deserialized
+        dcatConfig = req.query.dcatConfig;
+      }
+    
+      const dcatCustomizations = dcatConfig || _.get(siteModel, 'data.feeds.dcatUS11');
       const dcatStream = getDataStreamDcatUs11(siteModel.item, dcatCustomizations);
 
       datasetStream
@@ -48,11 +60,11 @@ export = class OutputDcatUs11 {
   }
 
 
-  private extractDcatConfig(req) {
+  private parseDcatConfig(dcatConfig) {
     try {
-      return JSON.parse(_.get(req, 'query.dcatConfig'));
+      return JSON.parse(dcatConfig);
     } catch (e) {
-      // ?dcatConfig does not exist or it is invalid JSON
+      // dcatConfig is undefined or is invalid JSON
       return null;
     }
   }
@@ -84,28 +96,22 @@ export = class OutputDcatUs11 {
     return searchRequest;
   }
 
-  private extractDatasetSearchRequest(req): IContentSearchRequest {
-    let searchRequest: IContentSearchRequest = null;
-    const id = _.get(req, 'query.id');
-    if (id) {
-      searchRequest = this.getDatasetSearchRequest(id, portalUrl, []);
-    }
-    return searchRequest;
-  }
-
   private getDatasetSearchRequest(
     id: string,
     portalUrl: string,
     fields: string[]
   ): IContentSearchRequest {
-    const searchRequest: IContentSearchRequest = {
+    if (!id) {
+      return null;
+    }
+
+    return {
       filter: { id },
       options: {
         portal: portalUrl,
         fields: fields.join(',')
       },
     };
-    return searchRequest;
   }
 
   private getErrorResponse(err: any) {
