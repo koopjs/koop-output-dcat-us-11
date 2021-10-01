@@ -3,7 +3,7 @@
 ## Unreleased
 
 Added
-- Custom configurations can be passed as a JSON string through the `dcatConfig` query param [#6](https://github.com/koopjs/koop-output-dcat-us-11/pull/6)
+- Custom configurations can be passed through the `dcatConfig` query param [#6](https://github.com/koopjs/koop-output-dcat-us-11/pull/6)
 - The returned feed can be restricted to a single dataset with the `id` query param [#6](https://github.com/koopjs/koop-output-dcat-us-11/pull/6)
 
 ## 1.1.0
