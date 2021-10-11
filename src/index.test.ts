@@ -6,10 +6,12 @@ import * as request from 'supertest';
 
 import * as mockDataset from './test-helpers/mock-dataset.json';
 import * as mockSiteModel from './test-helpers/mock-site-model.json';
+import { createMockKoopApp } from './test-helpers/create-mock-koop-app';
 
 import { FeedFormatterStream } from './dcat-us/feed-formatter-stream';
-import * as _ from 'lodash';
 import { IContentSearchRequest } from '@esri/hub-search';
+
+import * as _ from 'lodash';
 
 describe('Output Plugin', () => {
   let mockFetchSite;
@@ -29,7 +31,7 @@ describe('Output Plugin', () => {
       pullStream: mockPullStream.mockResolvedValue(readableFromArray([mockDataset])),
     };
 
-    app = express();
+    app = createMockKoopApp();
     app.get('/dcat', plugin.serve.bind(plugin));
 
     return [plugin, app];
