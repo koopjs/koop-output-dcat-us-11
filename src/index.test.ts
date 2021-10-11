@@ -259,7 +259,7 @@ describe('Output Plugin', () => {
       });
   });
 
-  fit('Constructs a search request for specific dataset when the id query param is populated', async () => {
+  it('Constructs a search request for specific dataset when the id query param is populated', async () => {
     // Mock getDataStreamDcatUs11
     const { getDataStreamDcatUs11 } = require('./dcat-us');
     jest.mock('./dcat-us', () => ({
