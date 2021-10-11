@@ -29,9 +29,9 @@ export = class OutputDcatUs11 {
 
     try {
       const siteModel = await fetchSite(req.hostname, this.getRequestOptions(portalUrl));
-      
+
       // Request a single dataset if id is provided, else default to site's catalog
-      const id = _.isString(req.query.id) ? req.query.id : '';
+      const id = String(req.query.id || '');
       req.res.locals.searchRequest = this.getDatasetSearchRequest(id, portalUrl, []) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, []);
       const datasetStream = await this.model.pullStream(req);
 
@@ -44,7 +44,7 @@ export = class OutputDcatUs11 {
         // param has been deserialized
         dcatConfig = req.query.dcatConfig;
       }
-    
+
       const dcatCustomizations = dcatConfig || _.get(siteModel, 'data.feeds.dcatUS11');
       const dcatStream = getDataStreamDcatUs11(siteModel.item, dcatCustomizations);
 
