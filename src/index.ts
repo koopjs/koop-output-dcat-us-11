@@ -36,7 +36,9 @@ export = class OutputDcatUs11 {
       const datasetStream = await this.model.pullStream(req);
 
       // Use dcatConfig query param if provided, else default to site's config
-      const dcatConfig = req.query.dcatConfig || _.get(siteModel, 'data.feeds.dcatUS11');
+      const dcatConfig = typeof req.query.dcatConfig === 'object'
+        ? req.query.dcatConfig
+        : _.get(siteModel, 'data.feeds.dcatUS11');
       const dcatStream = getDataStreamDcatUs11(siteModel.item, dcatConfig);
 
       datasetStream
