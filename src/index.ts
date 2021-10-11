@@ -36,17 +36,8 @@ export = class OutputDcatUs11 {
       const datasetStream = await this.model.pullStream(req);
 
       // Use dcatConfig query param if provided, else default to site's config
-      let dcatConfig;
-      if (_.isString(req.query.dcatConfig)) {
-        // param is a json string
-        dcatConfig = this.parseDcatConfig(req.query.dcatConfig);
-      } else if (_.isPlainObject(req.query.dcatConfig)) {
-        // param has been deserialized
-        dcatConfig = req.query.dcatConfig;
-      }
-
-      const dcatCustomizations = dcatConfig || _.get(siteModel, 'data.feeds.dcatUS11');
-      const dcatStream = getDataStreamDcatUs11(siteModel.item, dcatCustomizations);
+      const dcatConfig = req.query.dcatConfig || _.get(siteModel, 'data.feeds.dcatUS11');
+      const dcatStream = getDataStreamDcatUs11(siteModel.item, dcatConfig);
 
       datasetStream
         .pipe(dcatStream)
@@ -56,16 +47,6 @@ export = class OutputDcatUs11 {
         });
     } catch (err) {
       res.status(500).send(this.getErrorResponse(err));
-    }
-  }
-
-
-  private parseDcatConfig(dcatConfig) {
-    try {
-      return JSON.parse(dcatConfig);
-    } catch (e) {
-      // dcatConfig is undefined or is invalid JSON
-      return null;
     }
   }
 
