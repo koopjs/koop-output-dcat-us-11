@@ -4,22 +4,27 @@ import { getDataStreamDcatUs11 } from './';
 import * as datasetFromApi from '../test-helpers/mock-dataset.json';
 import * as mockSiteModel from '../test-helpers/mock-site-model.json';
 
-function generateDcatFeed(
-  siteItem,
-  datasets,
-  dcatCustomizations?
+import { DcatDatasetTemplate } from './dataset-formatter';
+import { IItem } from '@esri/arcgis-rest-types';
+
+async function generateDcatFeed(
+  siteItem: IItem,
+  datasets: any[],
+  dcatCustomizations?: DcatDatasetTemplate
 ) {
-  const dcatStream = getDataStreamDcatUs11(siteItem, dcatCustomizations);
+  const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(siteItem, dcatCustomizations);
 
   const docStream = readableFromArray(datasets); // no datasets since we're just checking the catalog
 
-  return streamToString(docStream.pipe(dcatStream)).then(JSON.parse);
+  const feedString = await streamToString(docStream.pipe(dcatStream));
+
+  return { feed: JSON.parse(feedString), dependencies };
 }
 
 
 describe('generating DCAT-US 1.1 feed', () => {
   it('formats catalog correctly', async function () {
-    const feed = await generateDcatFeed(mockSiteModel.item, []);
+    const { feed } = await generateDcatFeed(mockSiteModel.item, []);
 
     expect(feed['@context']).toBe('https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld');
     expect(feed['@type']).toBe('dcat:Catalog');
@@ -30,7 +35,7 @@ describe('generating DCAT-US 1.1 feed', () => {
   });
 
   it('populates dataset array', async function () {
-    const feed = await generateDcatFeed(mockSiteModel.item, [
+    const { feed } = await generateDcatFeed(mockSiteModel.item, [
       datasetFromApi,
     ]);
 
@@ -56,8 +61,8 @@ describe('generating DCAT-US 1.1 feed', () => {
   });
 
   it('respects dcat customizations of overwritable attributes', async function () {
-    const feed = await generateDcatFeed(
-      mockSiteModel.item, 
+    const { feed } = await generateDcatFeed(
+      mockSiteModel.item,
       [datasetFromApi],
       {
         description: '{{name}}', // overwrite existing attribute
@@ -88,8 +93,8 @@ describe('generating DCAT-US 1.1 feed', () => {
   });
 
   it('scrubs dcat customization of protected fields', async function () {
-    const feed = await generateDcatFeed(
-      mockSiteModel.item, 
+    const { feed } = await generateDcatFeed(
+      mockSiteModel.item,
       [datasetFromApi],
       {
         '@type': '{{name}}',
@@ -124,5 +129,65 @@ describe('generating DCAT-US 1.1 feed', () => {
 
     expect(chk1.distribution).toBeInstanceOf(Array);
     expect(chk1.distribution.length).toBe(6);
+  });
+
+  it('reports default dependencies when no customizations', async () => {
+    const { dependencies } = await generateDcatFeed(
+      mockSiteModel.item,
+      [datasetFromApi]
+    );
+
+    const expectedDependencies = [
+      'id',
+      'layer.geometryType',
+      'server.spatialReference',
+      'metadata.metadata.distInfo.distTranOps.onLineSrc',
+      'name',
+      'description',
+      'tags',
+      'created',
+      'modified',
+      'source',
+      'owner'
+    ];
+
+    expect(dependencies.length).toBe(expectedDependencies.length);
+    expect(dependencies).toEqual(expect.arrayContaining(expectedDependencies));
+  });
+
+  it('reports custom dependencies when customizations provided', async () => {
+    const { dependencies } = await generateDcatFeed(
+      mockSiteModel.item,
+      [datasetFromApi],
+      {
+        // overwrite some defaults
+        keyword: '{{keyword}}',
+        contactPoint: {
+          fn: '{{other.owner}}'
+        },
+        // net-new
+        foo: '{{foo.bar.baz}}',
+        lolz: '{{lol.lol.lol}}'
+      }
+    );
+
+    const expectedDependencies = [
+      'id',
+      'layer.geometryType',
+      'server.spatialReference',
+      'metadata.metadata.distInfo.distTranOps.onLineSrc',
+      'name',
+      'description',
+      'created',
+      'modified',
+      'source',
+      'keyword',
+      'other.owner',
+      'foo.bar.baz',
+      'lol.lol.lol'
+    ];
+
+    expect(dependencies.length).toBe(expectedDependencies.length);
+    expect(dependencies).toEqual(expect.arrayContaining(expectedDependencies));
   });
 });

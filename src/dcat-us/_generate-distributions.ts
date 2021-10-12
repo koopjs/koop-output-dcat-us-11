@@ -3,6 +3,12 @@ import * as _ from 'lodash';
 const WFS_SERVER = 'WFSServer';
 const WMS_SERVER = 'WMSServer';
 
+export const DISTRIBUTION_DEPENDENCIES = [
+  'layer.geometryType',
+  'server.spatialReference',
+  'metadata.metadata.distInfo.distTranOps.onLineSrc'
+];
+
 /*
 * Generate DCAT Distributions
 */

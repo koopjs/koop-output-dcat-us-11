@@ -13,7 +13,7 @@ export function readableFromArray (arr: Array<any>) {
   return docStream;
 }
 
-export function streamToString (stream: Readable) {
+export function streamToString (stream: Readable): Promise<string> {
   const chunks = [];
   return new Promise((resolve, reject) => {
     stream.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
