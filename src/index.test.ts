@@ -108,7 +108,7 @@ describe('Output Plugin', () => {
       },
       options: {
         portal: 'https://www.arcgis.com',
-        fields: 'id,layer,server,metadata,name,description,tags,created,modified,source,owner',
+        fields: 'id,layer,server,metadata,name,description,tags,created,modified,source,owner,orgContactEmail',
       },
     });
   });

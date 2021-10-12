@@ -147,6 +147,7 @@ describe('generating DCAT-US 1.1 feed', () => {
       'tags',
       'created',
       'modified',
+      'orgContactEmail',
       'source',
       'owner'
     ];
@@ -162,8 +163,8 @@ describe('generating DCAT-US 1.1 feed', () => {
       {
         // overwrite some defaults
         keyword: '{{keyword}}',
-        contactPoint: {
-          fn: '{{other.owner}}'
+        publisher: {
+          name: '{{other.source}}'
         },
         // net-new
         foo: '{{foo.bar.baz}}',
@@ -180,9 +181,10 @@ describe('generating DCAT-US 1.1 feed', () => {
       'description',
       'created',
       'modified',
-      'source',
+      'owner',
+      'orgContactEmail',
       'keyword',
-      'other.owner',
+      'other.source',
       'foo.bar.baz',
       'lol.lol.lol'
     ];
