@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
+## 1.2.1
 Added
 - Improved performance by limiting search requests to required terms [#8](https://github.com/koopjs/koop-output-dcat-us-11/pull/8)
 
