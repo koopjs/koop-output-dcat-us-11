@@ -1,4 +1,4 @@
-import { dcatTemplate, formatDcatDataset } from './dataset-formatter';
+import { buildDatasetTemplate, formatDcatDataset } from './dataset-formatter';
 
 it('dcatHelper: it does not allow customizations to overwrite critical fields', () => {
   const customizations = {
@@ -13,27 +13,27 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
       hasEmail: 'mailto:dcat.support@dc.gov',
     },
   };
-  const template = dcatTemplate(customizations);
+  const template = buildDatasetTemplate(customizations);
   expect(template['@type']).not.toBe('SABOTAGE');
   expect(template.contactPoint['@type']).not.toBe('SABOTAGE');
 });
 
 it('dcatHelper: it does not throw an error if there are no customizations', () => {
   const customizations = undefined;
-  const template = dcatTemplate(customizations);
+  const template = buildDatasetTemplate(customizations);
   expect(template).toBeTruthy();
 });
 
 it('dcatHelper: it does not throw an error customizations are null', () => {
   const customizations = null;
-  const template = dcatTemplate(customizations);
+  const template = buildDatasetTemplate(customizations);
   expect(template).toBeTruthy();
 });
 
 describe('formatDcatDataset', () => {
   const siteUrl = 'https://foobar.hub.arcgis.com';
 
-  it('object: should render links with the correct SRID', () => {
+  it('should render links with the correct SRID', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -131,11 +131,11 @@ describe('formatDcatDataset', () => {
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual).toEqual(expected);
   });
 
-  it('object: should render links without the srid', () => {
+  it('should render links without the srid', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -220,11 +220,11 @@ describe('formatDcatDataset', () => {
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual).toEqual(expected);
   });
 
-  it('object: should override theme when theme customizations is an empty array', () => {
+  it('should override theme when theme customizations is an empty array', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -310,12 +310,12 @@ describe('formatDcatDataset', () => {
       theme: ['geospatial'],
     };
     const actual = JSON.parse(
-      formatDcatDataset(dataset, siteUrl, { theme: [] }),
+      formatDcatDataset(dataset, siteUrl, buildDatasetTemplate({ theme: [] })),
     );
     expect(actual).toEqual(expected);
   });
 
-  it('object: should _NOT_ override theme when theme customizations is supplied', () => {
+  it('should _NOT_ override theme when theme customizations is supplied', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -401,12 +401,12 @@ describe('formatDcatDataset', () => {
       theme: ['my theme'],
     };
     const actual = JSON.parse(
-      formatDcatDataset(dataset, siteUrl, { theme: ['my theme'] }),
+      formatDcatDataset(dataset, siteUrl, buildDatasetTemplate({ theme: ['my theme'] })),
     );
     expect(actual).toEqual(expected);
   });
 
-  it('object: should render links with the correct SRID', () => {
+  it('should render links with the correct SRID', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -495,11 +495,11 @@ describe('formatDcatDataset', () => {
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual).toEqual(expected);
   });
 
-  it('object: license should display structuredLicense url', () => {
+  it('license should display structuredLicense url', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -531,11 +531,11 @@ describe('formatDcatDataset', () => {
     };
     const expectedLicense = 'https://google.com';
 
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual.license).toEqual(expectedLicense);
   });
 
-  it('object: license should be empty when structuredLicense.url is unavailable', () => {
+  it('license should be empty when structuredLicense.url is unavailable', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -567,11 +567,11 @@ describe('formatDcatDataset', () => {
     };
     const expectedLicense = null;
 
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual.license).toEqual(expectedLicense);
   });
 
-  it('object: license should display null when structuredLicense is unavailable', () => {
+  it('license should display null when structuredLicense is unavailable', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -602,11 +602,11 @@ describe('formatDcatDataset', () => {
     };
     const expectedLicense = null;
 
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual.license).toEqual(expectedLicense);
   });
 
-  test('object: Hub Page gets default keyword when no tags', () => {
+  test('Hub Page gets default keyword when no tags', () => {
     const datasetWithNoTags = {
       owner: 'fpgis.CALFIRE',
       type: 'Hub Page',
@@ -647,20 +647,20 @@ describe('formatDcatDataset', () => {
     };
     const expectedKeyword = 'ArcGIS Hub page';
     expect(
-      JSON.parse(formatDcatDataset(datasetWithNoTags, siteUrl)).keyword[0],
+      JSON.parse(formatDcatDataset(datasetWithNoTags, siteUrl, buildDatasetTemplate())).keyword[0],
     ).toBe(expectedKeyword);
     expect(
-      JSON.parse(formatDcatDataset({ ...datasetWithNoTags, tags: [] }, siteUrl))
+      JSON.parse(formatDcatDataset({ ...datasetWithNoTags, tags: [] }, siteUrl, buildDatasetTemplate()))
         .keyword[0],
     ).toBe(expectedKeyword);
     expect(
       JSON.parse(
-        formatDcatDataset({ ...datasetWithNoTags, tags: [''] }, siteUrl),
+        formatDcatDataset({ ...datasetWithNoTags, tags: [''] }, siteUrl, buildDatasetTemplate()),
       ).keyword[0],
     ).toBe(expectedKeyword);
   });
 
-  it('object: should create custom distribution when data is supplied', () => {
+  it('should create custom distribution when data is supplied', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -712,11 +712,11 @@ describe('formatDcatDataset', () => {
       description: 'endpoint',
     };
 
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual.distribution.pop()).toEqual(expectedDistribution);
   });
 
-  it('object: doesnt blow up when onLineSrc is not an array', () => {
+  it('doesnt blow up when onLineSrc is not an array', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -757,7 +757,7 @@ describe('formatDcatDataset', () => {
     };
 
     try {
-      formatDcatDataset(dataset, siteUrl);
+      formatDcatDataset(dataset, siteUrl, buildDatasetTemplate());
     } catch {
       fail('Should not throw!');
     }

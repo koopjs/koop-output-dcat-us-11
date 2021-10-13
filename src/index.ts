@@ -11,6 +11,11 @@ const portalUrl = config.has('arcgisPortal')
   ? (config.get('arcgisPortal') as string)
   : 'https://www.arcgis.com';
 
+function getApiTermsFromDependencies (dependencies: string[]) {
+  // Hub API only supports scoping by top-level terms
+  return Array.from(new Set(dependencies.map(dep => dep.split('.')[0])));
+}
+
 export = class OutputDcatUs11 {
   static type = 'output';
   static version = version;
@@ -30,16 +35,19 @@ export = class OutputDcatUs11 {
     try {
       const siteModel = await fetchSite(req.hostname, this.getRequestOptions(portalUrl));
 
-      // Request a single dataset if id is provided, else default to site's catalog
-      const id = String(req.query.id || '');
-      req.res.locals.searchRequest = this.getDatasetSearchRequest(id, portalUrl, []) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, []);
-      const datasetStream = await this.model.pullStream(req);
-
       // Use dcatConfig query param if provided, else default to site's config
       const dcatConfig = typeof req.query.dcatConfig === 'object'
         ? req.query.dcatConfig
         : _.get(siteModel, 'data.feeds.dcatUS11');
-      const dcatStream = getDataStreamDcatUs11(siteModel.item, dcatConfig);
+
+      const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(siteModel.item, dcatConfig);
+      const apiTerms = getApiTermsFromDependencies(dependencies);
+
+      // Request a single dataset if id is provided, else default to site's catalog
+      const id = String(req.query.id || '');
+      req.res.locals.searchRequest = this.getDatasetSearchRequest(id, portalUrl, apiTerms) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, apiTerms);
+
+      const datasetStream = await this.model.pullStream(req);
 
       datasetStream
         .pipe(dcatStream)

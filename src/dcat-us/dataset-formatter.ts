@@ -10,10 +10,8 @@ import { IItem } from '@esri/arcgis-rest-portal';
 type HubDatasetAttributes = Record<string, any>;
 export type DcatDatasetTemplate = Record<string, any>;
 
-export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, dcatCustomizations: DcatDatasetTemplate = {}) {
+export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, datasetTemplate: DcatDatasetTemplate) {
   const landingPage = `${siteUrl}/datasets/${hubDataset.id}`;
-
-  const template = dcatTemplate(dcatCustomizations);
 
   const { structuredLicense: { url = null } = {} } = hubDataset;
 
@@ -34,7 +32,7 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
     }
   };
 
-  const dcatDataset = Object.assign({}, defaultDataset, adlib(template, hubDataset, transforms));
+  const dcatDataset = Object.assign({}, defaultDataset, adlib(datasetTemplate, hubDataset, transforms));
 
   if (isPage(hubDataset as IItem) && !hasTags(hubDataset)) {
     dcatDataset.keyword = ['ArcGIS Hub page'];
@@ -47,7 +45,7 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
 
     // https://project-open-data.cio.gov/v1.1/schema/#theme
     // allow theme to be overrriden
-    if (_.isEmpty(dcatCustomizations.theme)) {
+    if (_.isEmpty(datasetTemplate.theme)) {
       dcatDataset.theme = ['geospatial'];
     }
   }
@@ -83,7 +81,7 @@ function scrubProtectedKeys (customizations: DcatDatasetTemplate): DcatDatasetTe
   return scrubbedCustomizations;
 }
 
-export function dcatTemplate (customizations: DcatDatasetTemplate): DcatDatasetTemplate {
-  const customConfig = scrubProtectedKeys(customizations || {});
+export function buildDatasetTemplate (customizations: DcatDatasetTemplate = {}): DcatDatasetTemplate {
+  const customConfig = scrubProtectedKeys(customizations);
   return Object.assign({}, baseDatasetTemplate, customConfig);
 }

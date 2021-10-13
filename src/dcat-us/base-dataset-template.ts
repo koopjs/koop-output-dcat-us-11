@@ -10,7 +10,7 @@ export const baseDatasetTemplate = {
   contactPoint: {
     '@type': 'vcard:Contact',
     fn: '{{owner}}',
-    // hasEmail: '{{org.portalProperties.links.contactUs.url:optional}}' TODO - re-enable when supported
+    hasEmail: '{{orgContactEmail:optional}}'
   },
   accessLevel: 'public'
 };

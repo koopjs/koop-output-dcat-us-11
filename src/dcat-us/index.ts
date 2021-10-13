@@ -1,6 +1,8 @@
 import { IItem } from '@esri/arcgis-rest-portal';
-import { DcatDatasetTemplate, formatDcatDataset } from './dataset-formatter';
+import { listDependencies } from 'adlib';
+import { buildDatasetTemplate, DcatDatasetTemplate, formatDcatDataset } from './dataset-formatter';
 import { FeedFormatterStream } from './feed-formatter-stream';
+import { DISTRIBUTION_DEPENDENCIES } from './_generate-distributions';
 
 export function getDataStreamDcatUs11(siteItem: IItem, dcatCustomizations?: DcatDatasetTemplate) {
   const catalogStr = JSON.stringify({
@@ -18,9 +20,18 @@ export function getDataStreamDcatUs11(siteItem: IItem, dcatCustomizations?: Dcat
 
   const footer = '\n\t]\n}';
 
+  const datasetTemplate = buildDatasetTemplate(dcatCustomizations);
+
   const formatFn = (chunk) => {
-    return formatDcatDataset(chunk, siteItem.url, dcatCustomizations);
+    return formatDcatDataset(chunk, siteItem.url, datasetTemplate);
   };
 
-  return new FeedFormatterStream(header, footer, ',\n', formatFn);
+  return {
+    stream: new FeedFormatterStream(header, footer, ',\n', formatFn),
+    dependencies: [
+      'id', // used for the dataset landing page URL
+      ...DISTRIBUTION_DEPENDENCIES,
+      ...listDependencies(datasetTemplate)
+    ]
+  };
 }
