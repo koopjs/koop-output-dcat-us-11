@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## Unreleased
+Added
+- Improved performance by limiting search requests to required terms [#8](https://github.com/koopjs/koop-output-dcat-us-11/pull/8)
+
 ## 1.2.0
 Added
 - Custom configurations can be passed through the `dcatConfig` query param [#6](https://github.com/koopjs/koop-output-dcat-us-11/pull/6)
