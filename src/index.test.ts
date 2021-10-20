@@ -14,35 +14,34 @@ import { IModel } from '@esri/hub-common';
 
 import * as _ from 'lodash';
 
+function buildPluginAndApp() {
+  let Output;
+
+  jest.isolateModules(() => {
+    Output = require('./');
+  });
+
+  const plugin = new Output();
+  plugin.model = {
+    pullStream: jest.fn().mockResolvedValue(readableFromArray([mockDataset])),
+  };
+
+  const app = createMockKoopApp();
+  app.get('/dcat', plugin.serve.bind(plugin));
+
+  return [plugin, app];
+}
+
 describe('Output Plugin', () => {
   let mockFetchSite;
   let mockConfigModule;
-  let mockPullStream;
   let plugin;
   let app: express.Application;
 
   const siteHostName = 'download-test-qa-pre-a-hub.hubqa.arcgis.com';
 
-  function buildPluginAndApp() {
-    const Output = require('./');
-
-    const plugin = new Output();
-    mockPullStream  = jest.fn();
-    plugin.model = {
-      pullStream: mockPullStream.mockResolvedValue(readableFromArray([mockDataset])),
-    };
-
-    app = createMockKoopApp();
-    app.get('/dcat', plugin.serve.bind(plugin));
-
-    return [plugin, app];
-  }
-
   beforeEach(() => {
-    jest.resetModules();
-
     const { fetchSite } = require('@esri/hub-common');
-
     // this fancy code is just to _only_ mock some fns
     // and leave the rest alone
     jest.mock('@esri/hub-common', () => ({
@@ -56,11 +55,16 @@ describe('Output Plugin', () => {
     mockFetchSite = mocked(fetchSite);
 
     mockFetchSite.mockResolvedValue(mockSiteModel);
+
+    [plugin, app] = buildPluginAndApp();
   });
 
-  it('is configured correctly', () => {
-    [plugin, app] = buildPluginAndApp();
+  afterEach(() => {
+    const { get, has } = mockConfigModule;
+    [get, has].forEach(mock => mock.mockReset());
+  })
 
+  it('is configured correctly', () => {
     expect(plugin.constructor.type).toBe('output');
     expect(plugin.constructor.version).toBeDefined();
     expect(plugin.constructor.routes).toEqual([
@@ -73,8 +77,6 @@ describe('Output Plugin', () => {
   });
 
   it('handles a DCAT request', async () => {
-    [plugin, app] = buildPluginAndApp();
-
     await request(app)
       .get('/dcat')
       .set('host', siteHostName)
@@ -120,9 +122,9 @@ describe('Output Plugin', () => {
     mockConfigModule.get.mockReturnValue(qaPortal);
 
     // rebuild plugin to trigger initialization code
-    [plugin, app] = buildPluginAndApp();
+    const [localPlugin, localApp] = buildPluginAndApp();
 
-    await request(app)
+    await request(localApp)
       .get('/dcat')
       .set('host', siteHostName)
       .expect('Content-Type', /application\/json/)
@@ -132,15 +134,13 @@ describe('Output Plugin', () => {
     expect(mockConfigModule.get).toHaveBeenCalledWith('arcgisPortal');
 
     const expressRequest: express.Request =
-      plugin.model.pullStream.mock.calls[0][0];
+      localPlugin.model.pullStream.mock.calls[0][0];
     expect(expressRequest.res.locals.searchRequest.options.portal).toBe(
       qaPortal,
     );
   });
 
   it('sets status to 500 if something blows up', async () => {
-    [plugin, app] = buildPluginAndApp();
-
     plugin.model.pullStream.mockRejectedValue(Error('Couldnt get stream'));
 
     await request(app)
@@ -158,8 +158,7 @@ describe('Output Plugin', () => {
   describe('configuration via query params', () => {
     let mockGetDataStreamDcatUs11;
 
-    beforeEach(() => {
-      // Mock getDataStreamDcatUs11
+    beforeAll(() => {
       const { getDataStreamDcatUs11 } = require('./dcat-us');
       jest.mock('./dcat-us');
       mockGetDataStreamDcatUs11 = mocked(getDataStreamDcatUs11)
@@ -167,7 +166,7 @@ describe('Output Plugin', () => {
           stream: new FeedFormatterStream('{', '}', '', () => ''),
           dependencies: []
         });
-    });
+    })
 
     it('Properly passes custom dcat configurations to getDataStreamDcatUs11', async () => {
       // Change fetchSite's return value to include a custom dcat config
@@ -189,8 +188,6 @@ describe('Output Plugin', () => {
       }
       mockFetchSite.mockResolvedValue(customConfigSiteModel);
 
-      [plugin, app] = buildPluginAndApp();
-
       await request(app)
         .get('/dcat')
         .set('host', siteHostName)
@@ -202,8 +199,6 @@ describe('Output Plugin', () => {
     });
 
     it('Properly passes the ?dcatConfig query param to getDataStreamDcatUs11', async () => {
-      [plugin, app] = buildPluginAndApp();
-
       const dcatConfig = {
         planet: 'tatooine'
       }
@@ -238,8 +233,6 @@ describe('Output Plugin', () => {
       }
       mockFetchSite.mockResolvedValue(customConfigSiteModel);
 
-      [plugin, app] = buildPluginAndApp();
-
       await request(app)
         .get('/dcat?dcatConfig={"partial":"json')
         .set('host', siteHostName)
@@ -251,8 +244,6 @@ describe('Output Plugin', () => {
     });
 
     it('Constructs a search request for specific dataset when the id query param is populated', async () => {
-      [plugin, app] = buildPluginAndApp();
-
       await request(app)
         .get('/dcat?id=9001')
         .set('host', siteHostName)
@@ -268,7 +259,7 @@ describe('Output Plugin', () => {
               fields: ''
             },
           };
-          const actualSearchRequest = _.get(mockPullStream, 'mock.calls[0][0].res.locals.searchRequest')
+          const actualSearchRequest = _.get(plugin.model.pullStream, 'mock.calls[0][0].res.locals.searchRequest')
           expect(actualSearchRequest).toStrictEqual(expectedSearchRequest);
         });
     });
