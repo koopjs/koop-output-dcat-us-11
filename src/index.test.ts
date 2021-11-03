@@ -168,7 +168,7 @@ describe('Output Plugin', () => {
         });
     })
 
-    it('Properly passes custom dcat configurations to getDataStreamDcatUs11', async () => {
+    it('Properly passes a site\'s custom dcat configurations to getDataStreamDcatUs11 when no dcatConfig is provided', async () => {
       // Change fetchSite's return value to include a custom dcat config
       const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel);
       customConfigSiteModel.data.feeds = {
@@ -198,13 +198,29 @@ describe('Output Plugin', () => {
         });
     });
 
-    it('Properly passes the ?dcatConfig query param to getDataStreamDcatUs11', async () => {
+    it('Properly passes a valid stringified ?dcatConfig query param to getDataStreamDcatUs11', async () => {
       const dcatConfig = {
         planet: 'tatooine'
       }
 
       await request(app)
         .get(`/dcat?dcatConfig=${JSON.stringify(dcatConfig)}`)
+        .set('host', siteHostName)
+        .expect('Content-Type', /application\/json/)
+        .expect(200)
+        .expect(() => {
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(mockSiteModel.item, dcatConfig);
+        });
+    });
+
+    it('Properly passes the ?dcatConfig query param as an object to getDataStreamDcatUs11', async () => {
+      const dcatConfig = {
+        planet: 'tatooine'
+      }
+
+      await request(app)
+        .get('/dcat')
+        .query({ dcatConfig })
         .set('host', siteHostName)
         .expect('Content-Type', /application\/json/)
         .expect(200)

@@ -36,9 +36,13 @@ export = class OutputDcatUs11 {
       const siteModel = await fetchSite(req.hostname, this.getRequestOptions(portalUrl));
 
       // Use dcatConfig query param if provided, else default to site's config
-      const dcatConfig = typeof req.query.dcatConfig === 'object'
-        ? req.query.dcatConfig
-        : _.get(siteModel, 'data.feeds.dcatUS11');
+      let dcatConfig = typeof req.query.dcatConfig === 'string'
+        ? this.parseProvidedDcatConfig(req.query.dcatConfig as string)
+        : req.query.dcatConfig;
+
+      if (!dcatConfig) {
+        dcatConfig = _.get(siteModel, 'data.feeds.dcatUS11');
+      }
 
       const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(siteModel.item, dcatConfig);
       const apiTerms = getApiTermsFromDependencies(dependencies);
@@ -67,6 +71,14 @@ export = class OutputDcatUs11 {
       portal: getPortalApiUrl(portalUrl),
       authentication: null,
     };
+  }
+
+  private parseProvidedDcatConfig(dcatConfig: string) {
+    try {
+      return JSON.parse(dcatConfig);
+    } catch (err) {
+      return undefined;
+    }
   }
 
   private getCatalogSearchRequest(
