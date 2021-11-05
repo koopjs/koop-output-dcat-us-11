@@ -1,5 +1,12 @@
 # CHANGELOG.md
 
+## 1.3.0
+Added
+- Added spatial and theme properties [#11](https://github.com/koopjs/koop-output-dcat-us-11/pull/11)
+Fixed
+- Fixed license resolution [#11](https://github.com/koopjs/koop-output-dcat-us-11/pull/11)
+- Fixed missing access url for geoservices [#11](https://github.com/koopjs/koop-output-dcat-us-11/pull/11)
+
 ## 1.2.2
 Fixed
 - Fixed dcatConfig query parameter parsing issue [#10](https://github.com/koopjs/koop-output-dcat-us-11/pull/10)
