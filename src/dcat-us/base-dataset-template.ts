@@ -13,5 +13,5 @@ export const baseDatasetTemplate = {
     hasEmail: '{{orgContactEmail:optional}}'
   },
   accessLevel: 'public',
-  spatial: '{{extent:optional}}'
+  spatial: '{{extent}}'
 };
