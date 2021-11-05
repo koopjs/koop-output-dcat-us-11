@@ -13,12 +13,15 @@ export type DcatDatasetTemplate = Record<string, any>;
 export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, datasetTemplate: DcatDatasetTemplate) {
   const landingPage = `${siteUrl}/datasets/${hubDataset.id}`;
 
-  const { structuredLicense: { url = null } = {} } = hubDataset;
+  const { 
+    structuredLicense: { url = null } = {},
+    licenseInfo = ''
+  } = hubDataset;
 
   const defaultDataset = {
     '@type': 'dcat:Dataset',
     identifier: landingPage,
-    license: url,
+    license: url || licenseInfo || '',
     landingPage
   };
 
@@ -69,6 +72,7 @@ function scrubProtectedKeys (customizations: DcatDatasetTemplate): DcatDatasetTe
 
   if (Object.keys(scrubbedCustomizations).length > 0) {
     delete scrubbedCustomizations['@type'];
+    delete scrubbedCustomizations.license;
     delete scrubbedCustomizations.identifier;
     delete scrubbedCustomizations.landingPage;
     delete scrubbedCustomizations.webService;

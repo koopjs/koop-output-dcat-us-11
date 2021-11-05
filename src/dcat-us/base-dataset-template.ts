@@ -12,5 +12,6 @@ export const baseDatasetTemplate = {
     fn: '{{owner}}',
     hasEmail: '{{orgContactEmail:optional}}'
   },
-  accessLevel: 'public'
+  accessLevel: 'public',
+  spatial: '{{extent}}'
 };
