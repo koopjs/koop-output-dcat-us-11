@@ -65,7 +65,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: null,
+      license: '',
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -162,7 +162,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: null,
+      license: '',
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -251,7 +251,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: null,
+      license: '',
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -342,7 +342,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: null,
+      license: '',
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -437,7 +437,7 @@ describe('formatDcatDataset', () => {
     const expected = {
       '@type': 'dcat:Dataset',
       identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
-      license: null,
+      license: '',
       landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
       title: 'DCAT_Test',
       description: 'Some Description',
@@ -535,7 +535,7 @@ describe('formatDcatDataset', () => {
     expect(actual.license).toEqual(expectedLicense);
   });
 
-  it('license should be empty when structuredLicense.url is unavailable', () => {
+  it('license should use licenseInfo when structuredLicense.url is unavailable', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -565,13 +565,13 @@ describe('formatDcatDataset', () => {
       structuredLicense: { text: 'structuredLicense text' },
       licenseInfo: 'licenseInfo text',
     };
-    const expectedLicense = null;
+    const expectedLicense = 'licenseInfo text';
 
     const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual.license).toEqual(expectedLicense);
   });
 
-  it('license should display null when structuredLicense is unavailable', () => {
+  it('license should display empty string when neither structuredLicense nor licenseInfo are available', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -598,9 +598,8 @@ describe('formatDcatDataset', () => {
           wkid: 3310,
         },
       },
-      licenseInfo: 'licenseInfo text',
     };
-    const expectedLicense = null;
+    const expectedLicense = '';
 
     const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
     expect(actual.license).toEqual(expectedLicense);

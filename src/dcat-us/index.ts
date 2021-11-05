@@ -30,6 +30,8 @@ export function getDataStreamDcatUs11(siteItem: IItem, dcatCustomizations?: Dcat
     stream: new FeedFormatterStream(header, footer, ',\n', formatFn),
     dependencies: [
       'id', // used for the dataset landing page URL
+      'licenseInfo', // required for license resolution
+      'structuredLicense', // required for license resolution
       ...DISTRIBUTION_DEPENDENCIES,
       ...listDependencies(datasetTemplate)
     ]

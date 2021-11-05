@@ -6,7 +6,8 @@ const WMS_SERVER = 'WMSServer';
 export const DISTRIBUTION_DEPENDENCIES = [
   'layer.geometryType',
   'server.spatialReference',
-  'metadata.metadata.distInfo.distTranOps.onLineSrc'
+  'metadata.metadata.distInfo.distTranOps.onLineSrc',
+  'url',
 ];
 
 /*
