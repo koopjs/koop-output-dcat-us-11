@@ -2,15 +2,12 @@ import { readableFromArray, streamToString } from '../test-helpers/stream-utils'
 import { getDataStreamDcatUs11 } from './';
 
 import * as datasetFromApi from '../test-helpers/mock-dataset.json';
-import * as mockSiteModel from '../test-helpers/mock-site-model.json';
-
 import { DcatDatasetTemplate } from './dataset-formatter';
-import { IItem } from '@esri/arcgis-rest-types';
 
 const hostname = 'css-monster-qa-pre-hub.hubqa.arcgis.com';
 
 async function generateDcatFeed(
-  _siteItem: IItem,
+  hostname: string,
   datasets: any[],
   dcatCustomizations?: DcatDatasetTemplate
 ) {
@@ -25,7 +22,7 @@ async function generateDcatFeed(
 
 describe('generating DCAT-US 1.1 feed', () => {
   it('formats catalog correctly', async function () {
-    const { feed } = await generateDcatFeed(mockSiteModel.item, []);
+    const { feed } = await generateDcatFeed(hostname, []);
 
     expect(feed['@context']).toBe('https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld');
     expect(feed['@type']).toBe('dcat:Catalog');
@@ -36,7 +33,7 @@ describe('generating DCAT-US 1.1 feed', () => {
   });
 
   it('populates dataset array', async function () {
-    const { feed } = await generateDcatFeed(mockSiteModel.item, [
+    const { feed } = await generateDcatFeed(hostname, [
       datasetFromApi,
     ]);
 
@@ -63,7 +60,7 @@ describe('generating DCAT-US 1.1 feed', () => {
 
   it('respects dcat customizations of overwritable attributes', async function () {
     const { feed } = await generateDcatFeed(
-      mockSiteModel.item,
+      hostname,
       [datasetFromApi],
       {
         description: '{{name}}', // overwrite existing attribute
@@ -95,7 +92,7 @@ describe('generating DCAT-US 1.1 feed', () => {
 
   it('scrubs dcat customization of protected fields', async function () {
     const { feed } = await generateDcatFeed(
-      mockSiteModel.item,
+      hostname,
       [datasetFromApi],
       {
         '@type': '{{name}}',
@@ -134,7 +131,7 @@ describe('generating DCAT-US 1.1 feed', () => {
 
   it('reports default dependencies when no customizations', async () => {
     const { dependencies } = await generateDcatFeed(
-      mockSiteModel.item,
+      hostname,
       [datasetFromApi]
     );
 
@@ -163,7 +160,7 @@ describe('generating DCAT-US 1.1 feed', () => {
 
   it('reports custom dependencies when customizations provided', async () => {
     const { dependencies } = await generateDcatFeed(
-      mockSiteModel.item,
+      hostname,
       [datasetFromApi],
       {
         // overwrite some defaults
