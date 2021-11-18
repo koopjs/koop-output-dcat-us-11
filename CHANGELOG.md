@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.3.1
+Fixed
+- Fixed landingPage and identifier urls to be custom domain rather than opendata subdomain
+
 ## 1.3.0
 Added
 - Added spatial and theme properties [#11](https://github.com/koopjs/koop-output-dcat-us-11/pull/11)
