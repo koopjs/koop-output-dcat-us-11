@@ -11,7 +11,9 @@ type HubDatasetAttributes = Record<string, any>;
 export type DcatDatasetTemplate = Record<string, any>;
 
 export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, datasetTemplate: DcatDatasetTemplate) {
-  const landingPage = `${siteUrl}/datasets/${hubDataset.id}`;
+  const landingPage = siteUrl.startsWith('https://')
+    ? `${siteUrl}/datasets/${hubDataset.id}`
+    : `https://${siteUrl}/datasets/${hubDataset.id}`;
 
   const { 
     structuredLicense: { url = null } = {},

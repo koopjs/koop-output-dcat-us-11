@@ -1,10 +1,9 @@
-import { IItem } from '@esri/arcgis-rest-portal';
 import { listDependencies } from 'adlib';
 import { buildDatasetTemplate, DcatDatasetTemplate, formatDcatDataset } from './dataset-formatter';
 import { FeedFormatterStream } from './feed-formatter-stream';
 import { DISTRIBUTION_DEPENDENCIES } from './_generate-distributions';
 
-export function getDataStreamDcatUs11(siteItem: IItem, dcatCustomizations?: DcatDatasetTemplate) {
+export function getDataStreamDcatUs11(hostname: string, dcatCustomizations?: DcatDatasetTemplate) {
   const catalogStr = JSON.stringify({
       '@context':
         'https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld',
@@ -23,7 +22,7 @@ export function getDataStreamDcatUs11(siteItem: IItem, dcatCustomizations?: Dcat
   const datasetTemplate = buildDatasetTemplate(dcatCustomizations);
 
   const formatFn = (chunk) => {
-    return formatDcatDataset(chunk, siteItem.url, datasetTemplate);
+    return formatDcatDataset(chunk, hostname, datasetTemplate);
   };
 
   return {
