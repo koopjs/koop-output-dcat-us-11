@@ -33,7 +33,7 @@ export = class OutputDcatUs11 {
     res.set('Content-Type', 'application/json');
 
     try {
-      const siteModel = await fetchSite('www.spatial-data.brisbane.qld.gov.au', this.getRequestOptions(portalUrl));
+      const siteModel = await fetchSite(req.hostname, this.getRequestOptions(portalUrl));
 
       // Use dcatConfig query param if provided, else default to site's config
       let dcatConfig = typeof req.query.dcatConfig === 'string'
