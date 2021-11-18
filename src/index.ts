@@ -33,7 +33,8 @@ export = class OutputDcatUs11 {
     res.set('Content-Type', 'application/json');
 
     try {
-      const siteModel = await fetchSite(req.hostname, this.getRequestOptions(portalUrl));
+      const hostname = req.hostname;
+      const siteModel = await fetchSite(hostname, this.getRequestOptions(portalUrl));
 
       // Use dcatConfig query param if provided, else default to site's config
       let dcatConfig = typeof req.query.dcatConfig === 'string'
@@ -44,7 +45,8 @@ export = class OutputDcatUs11 {
         dcatConfig = _.get(siteModel, 'data.feeds.dcatUS11');
       }
 
-      const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(siteModel.item, dcatConfig);
+      const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(hostname, dcatConfig);
+
       const apiTerms = getApiTermsFromDependencies(dependencies);
 
       // Request a single dataset if id is provided, else default to site's catalog

@@ -193,7 +193,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel.item, customConfigSiteModel.data.feeds.dcatUS11);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel.data.feeds.dcatUS11);
         });
     });
 
@@ -208,7 +208,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(mockSiteModel.item, dcatConfig);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, dcatConfig);
         });
     });
 
@@ -224,7 +224,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(mockSiteModel.item, dcatConfig);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, dcatConfig);
         });
     });
 
@@ -254,7 +254,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel.item, customConfigSiteModel.data.feeds.dcatUS11);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel.data.feeds.dcatUS11);
         });
     });
 
@@ -276,6 +276,36 @@ describe('Output Plugin', () => {
           };
           const actualSearchRequest = _.get(plugin.model.pullStream, 'mock.calls[0][0].res.locals.searchRequest')
           expect(actualSearchRequest).toStrictEqual(expectedSearchRequest);
+        });
+    });
+
+    it('Uses the siteHostName instead of the dataset id', async () => {
+      // Change fetchSite's return value to include a custom dcat config
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel);
+      customConfigSiteModel.data.feeds = {
+        dcatUS11: {
+          "title": "{{default.name}}",
+          "description": "{{default.description}}",
+          "keyword": "{{item.tags}}",
+          "issued": "{{item.created:toISO}}",
+          "modified": "{{item.modified:toISO}}",
+          "publisher": { "name": "{{default.source.source}}" },
+          "contactPoint": {
+            "fn": "{{item.owner}}",
+            "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
+          },
+          "landingPage": "some silly standard",
+        }
+      }
+      mockFetchSite.mockResolvedValue(customConfigSiteModel);
+
+      await request(app)
+        .get('/dcat')
+        .set('host', 'css-monster-qa-pre-hub.hubqa.arcgis.com')
+        .expect('Content-Type', /application\/json/)
+        .expect(200)
+        .expect(() => {
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith('css-monster-qa-pre-hub.hubqa.arcgis.com', customConfigSiteModel.data.feeds.dcatUS11);
         });
     });
   });
