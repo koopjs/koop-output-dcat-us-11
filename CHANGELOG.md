@@ -2,8 +2,8 @@
 
 ## Unreleased
 Fixed
-- Landing page and identifier urls are now the canonical hub url for the item
-- Hub Pages included in the feed no longer have 404ing urls
+- Landing page and identifier urls are now the canonical hub url for the item [#13](https://github.com/koopjs/koop-output-dcat-us-11/pull/13)
+- Hub Pages included in the feed no longer have 404ing urls [#13](https://github.com/koopjs/koop-output-dcat-us-11/pull/13)
 
 ## 1.3.1
 Fixed
