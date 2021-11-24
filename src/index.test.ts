@@ -110,7 +110,7 @@ describe('Output Plugin', () => {
       },
       options: {
         portal: 'https://www.arcgis.com',
-        fields: "id,licenseInfo,structuredLicense,layer,server,metadata,url,name,description,tags,created,modified,source,owner,orgContactEmail,extent"      },
+        fields: "id,type,slug,licenseInfo,structuredLicense,layer,server,metadata,url,name,description,tags,created,modified,source,owner,orgContactEmail,extent"      },
     });
   });
 
@@ -193,7 +193,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel.data.feeds.dcatUS11);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel, customConfigSiteModel.data.feeds.dcatUS11);
         });
     });
 
@@ -208,7 +208,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, dcatConfig);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(mockSiteModel, dcatConfig);
         });
     });
 
@@ -224,7 +224,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, dcatConfig);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(mockSiteModel, dcatConfig);
         });
     });
 
@@ -254,7 +254,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel.data.feeds.dcatUS11);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel, customConfigSiteModel.data.feeds.dcatUS11);
         });
     });
 
@@ -305,7 +305,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith('css-monster-qa-pre-hub.hubqa.arcgis.com', customConfigSiteModel.data.feeds.dcatUS11);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(customConfigSiteModel, customConfigSiteModel.data.feeds.dcatUS11);
         });
     });
   });

@@ -3,17 +3,20 @@ import { adlib, TransformsList } from 'adlib';
 import { isPage } from '@esri/hub-sites';
 import { baseDatasetTemplate } from './base-dataset-template';
 import { _generateDistributions } from './_generate-distributions';
-import { cloneObject } from '@esri/hub-common';
+import { cloneObject, DatasetResource, datasetToContent, getContentSiteUrls, IModel } from '@esri/hub-common';
 import { IItem } from '@esri/arcgis-rest-portal';
 
 // TODO - use real type for hubDataset when it gets defined in Hub.js
 type HubDatasetAttributes = Record<string, any>;
 export type DcatDatasetTemplate = Record<string, any>;
 
-export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, datasetTemplate: DcatDatasetTemplate) {
-  const landingPage = siteUrl.startsWith('https://')
-    ? `${siteUrl}/datasets/${hubDataset.id}`
-    : `https://${siteUrl}/datasets/${hubDataset.id}`;
+export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteModel: IModel, datasetTemplate: DcatDatasetTemplate) {
+  const content = datasetToContent({ 
+    id: hubDataset.id, 
+    attributes: hubDataset
+  } as DatasetResource);
+  const { absolute: siteUrl } = getContentSiteUrls(content, siteModel);
+  const landingPage = siteUrl.startsWith('https://') ? `${siteUrl}` : `https://${siteUrl}`;
 
   const { 
     structuredLicense: { url = null } = {},

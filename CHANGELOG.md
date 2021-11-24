@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## Unreleased
+Fixed
+- Landing page and identifier urls are now the canonical hub url for the item
+- Hub Pages included in the feed no longer have 404ing urls
+
 ## 1.3.1
 Fixed
 - Fixed landingPage and identifier urls to be custom domain rather than opendata subdomain

@@ -45,7 +45,7 @@ export = class OutputDcatUs11 {
         dcatConfig = _.get(siteModel, 'data.feeds.dcatUS11');
       }
 
-      const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(hostname, dcatConfig);
+      const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(siteModel, dcatConfig);
 
       const apiTerms = getApiTermsFromDependencies(dependencies);
 
