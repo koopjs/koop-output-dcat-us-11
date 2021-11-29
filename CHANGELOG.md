@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
+## 1.4.0
 Fixed
 - Landing page and identifier urls are now the canonical hub url for the item [#13](https://github.com/koopjs/koop-output-dcat-us-11/pull/13)
 - Hub Pages included in the feed no longer have 404ing urls [#13](https://github.com/koopjs/koop-output-dcat-us-11/pull/13)
