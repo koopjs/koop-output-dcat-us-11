@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.4.1
+Fixed
+- Add proper error status [#14](https://github.com/koopjs/koop-output-dcat-us-11/pull/14)
+
 ## 1.4.0
 Fixed
 - Landing page and identifier urls are now the canonical hub url for the item [#13](https://github.com/koopjs/koop-output-dcat-us-11/pull/13)
