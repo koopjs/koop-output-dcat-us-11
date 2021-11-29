@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import { version } from '../package.json';
 import { getDataStreamDcatUs11 } from './dcat-us';
-import { fetchSite, getHubApiUrl, getPortalApiUrl, IHubRequestOptions } from '@esri/hub-common';
+import { fetchSite, getHubApiUrl, getPortalApiUrl, IHubRequestOptions, RemoteServerError } from '@esri/hub-common';
 import { IContentSearchRequest } from '@esri/hub-search';
 
 const portalUrl = config.has('arcgisPortal')
@@ -34,7 +34,7 @@ export = class OutputDcatUs11 {
 
     try {
       const hostname = req.hostname;
-      const siteModel = await fetchSite(hostname, this.getRequestOptions(portalUrl));
+      const siteModel = await this.fetchSite(hostname, this.getRequestOptions(portalUrl));
 
       // Use dcatConfig query param if provided, else default to site's config
       let dcatConfig = typeof req.query.dcatConfig === 'string'
@@ -56,7 +56,7 @@ export = class OutputDcatUs11 {
       const id = String(req.query.id || '');
       req.res.locals.searchRequest = this.getDatasetSearchRequest(id, portalUrl, apiTerms) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, apiTerms);
 
-      const datasetStream = await this.model.pullStream(req);
+      const datasetStream = await this.getDatasetStream(req);
 
       datasetStream
         .pipe(dcatStream)
@@ -65,7 +65,20 @@ export = class OutputDcatUs11 {
           res.status(500).send(this.getErrorResponse(err));
         });
     } catch (err) {
-      res.status(500).send(this.getErrorResponse(err));
+      res.status(err.status || 500).send(this.getErrorResponse(err));
+    }
+  }
+
+  private async fetchSite(hostname: string, opts: IHubRequestOptions) {
+    try {
+      return await fetchSite(hostname, opts);
+    } catch (err) {
+
+      // Throw 404 if domain does not exist (first) or site is private (second)
+      if (err.message.includes(':: 404') || err.response?.error?.code === 403) {
+        throw new RemoteServerError(err.message, null, 404);
+      }
+      throw new RemoteServerError(err.message, null, 500);
     }
   }
 
@@ -120,6 +133,17 @@ export = class OutputDcatUs11 {
         fields: fields.join(',')
       },
     };
+  }
+
+  private async getDatasetStream(req: Request) {
+    try {
+      return await this.model.pullStream(req);
+    } catch (err) {
+      if (err.status === 400) {
+        throw new RemoteServerError(err.message, null, 400);
+      }
+      throw new RemoteServerError(err.message, null, 500);
+    }
   }
 
   private getErrorResponse(err: any) {

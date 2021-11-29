@@ -154,6 +154,85 @@ describe('Output Plugin', () => {
     // TODO test stream error
   });
 
+  it('returns 400 when searchRequest returns 400', async () => {
+    [ plugin, app ] = buildPluginAndApp();
+
+    plugin.model = {
+      pullStream: jest.fn().mockRejectedValue({ status: 400, message: 'A validation error' })
+    }
+
+    await request(app)
+      .get('/dcat')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(400)
+      .expect(res => {
+        expect(plugin.model.pullStream).toHaveBeenCalledTimes(1);
+        expect(res.body).toBeDefined();
+        expect(res.body.error).toEqual('A validation error');
+      });
+  });
+
+  it('returns 404 when provided domain does not exist and domain service returns appropriate message', async () => {
+    [ plugin, app ] = buildPluginAndApp();
+
+    mockFetchSite.mockRejectedValue({ message: 'DOMAIN DOES NOT EXIST :: 404' })
+    await request(app)
+      .get('/dcat')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(404)
+      .expect(res => {
+        expect(res.body).toBeDefined();
+        expect(res.body.error).toEqual('DOMAIN DOES NOT EXIST :: 404');
+      });
+  });
+
+  it('returns 500 when provided domain does not exist and domain service returns wrong message', async () => {
+    [ plugin, app ] = buildPluginAndApp();
+
+    mockFetchSite.mockRejectedValue({ message: 'DOMAIN DOES NOT EXIST :: 403' })
+    await request(app)
+      .get('/dcat')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(500)
+      .expect(res => {
+        expect(res.body).toBeDefined();
+        expect(res.body.error).toEqual('DOMAIN DOES NOT EXIST :: 403');
+      });
+  });
+
+  it('returns 404 when provided domain represents a private site', async () => {
+    [ plugin, app ] = buildPluginAndApp();
+
+    mockFetchSite.mockRejectedValue({ message: 'PRIVATE SITE', response: { error: { code: 403 } } })
+    await request(app)
+      .get('/dcat')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(404)
+      .expect(res => {
+        expect(res.body).toBeDefined();
+        expect(res.body.error).toEqual('PRIVATE SITE');
+      });
+  });
+
+  it('returns 500 when ArcGIS returns wrong error for a site item', async () => {
+    [ plugin, app ] = buildPluginAndApp();
+
+    mockFetchSite.mockRejectedValue({ message: 'PRIVATE SITE' })
+    await request(app)
+      .get('/dcat')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(500)
+      .expect(res => {
+        expect(res.body).toBeDefined();
+        expect(res.body.error).toEqual('PRIVATE SITE');
+      });
+  });
+
   describe('configuration via query params', () => {
     let mockGetDataStreamDcatUs11;
 
