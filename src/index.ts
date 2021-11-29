@@ -45,7 +45,10 @@ export = class OutputDcatUs11 {
         dcatConfig = _.get(siteModel, 'data.feeds.dcatUS11');
       }
 
-      const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(hostname, dcatConfig);
+      // TODO: We only pass in hostname because some site item urls are out of sync, causing invalid urls for
+      // landingPage and identifier. If we can resolve the syncing issues, we can omit hostname and just use
+      // the absolute url we get from getContentSiteUrls()
+      const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(hostname, siteModel, dcatConfig);
 
       const apiTerms = getApiTermsFromDependencies(dependencies);
 

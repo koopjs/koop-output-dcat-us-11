@@ -1,3 +1,4 @@
+import { IModel } from '@esri/hub-common';
 import { buildDatasetTemplate, formatDcatDataset } from './dataset-formatter';
 
 it('dcatHelper: it does not allow customizations to overwrite critical fields', () => {
@@ -32,6 +33,7 @@ it('dcatHelper: it does not throw an error customizations are null', () => {
 
 describe('formatDcatDataset', () => {
   const siteUrl = 'https://foobar.hub.arcgis.com';
+  const siteModel = { item: { url: siteUrl } } as unknown as IModel;
 
   it('should render links with the correct SRID', () => {
     const dataset = {
@@ -131,7 +133,7 @@ describe('formatDcatDataset', () => {
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
     expect(actual).toEqual(expected);
   });
 
@@ -220,7 +222,7 @@ describe('formatDcatDataset', () => {
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
     expect(actual).toEqual(expected);
   });
 
@@ -310,7 +312,7 @@ describe('formatDcatDataset', () => {
       theme: ['geospatial'],
     };
     const actual = JSON.parse(
-      formatDcatDataset(dataset, siteUrl, buildDatasetTemplate({ theme: [] })),
+      formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ theme: [] })),
     );
     expect(actual).toEqual(expected);
   });
@@ -401,7 +403,7 @@ describe('formatDcatDataset', () => {
       theme: ['my theme'],
     };
     const actual = JSON.parse(
-      formatDcatDataset(dataset, siteUrl, buildDatasetTemplate({ theme: ['my theme'] })),
+      formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ theme: ['my theme'] })),
     );
     expect(actual).toEqual(expected);
   });
@@ -495,7 +497,7 @@ describe('formatDcatDataset', () => {
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
       theme: ['geospatial'],
     };
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
     expect(actual).toEqual(expected);
   });
 
@@ -531,7 +533,7 @@ describe('formatDcatDataset', () => {
     };
     const expectedLicense = 'https://google.com';
 
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
     expect(actual.license).toEqual(expectedLicense);
   });
 
@@ -567,7 +569,7 @@ describe('formatDcatDataset', () => {
     };
     const expectedLicense = 'licenseInfo text';
 
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
     expect(actual.license).toEqual(expectedLicense);
   });
 
@@ -601,7 +603,7 @@ describe('formatDcatDataset', () => {
     };
     const expectedLicense = '';
 
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
     expect(actual.license).toEqual(expectedLicense);
   });
 
@@ -646,15 +648,15 @@ describe('formatDcatDataset', () => {
     };
     const expectedKeyword = 'ArcGIS Hub page';
     expect(
-      JSON.parse(formatDcatDataset(datasetWithNoTags, siteUrl, buildDatasetTemplate())).keyword[0],
+      JSON.parse(formatDcatDataset(datasetWithNoTags, siteUrl, siteModel, buildDatasetTemplate())).keyword[0],
     ).toBe(expectedKeyword);
     expect(
-      JSON.parse(formatDcatDataset({ ...datasetWithNoTags, tags: [] }, siteUrl, buildDatasetTemplate()))
+      JSON.parse(formatDcatDataset({ ...datasetWithNoTags, tags: [] }, siteUrl, siteModel, buildDatasetTemplate()))
         .keyword[0],
     ).toBe(expectedKeyword);
     expect(
       JSON.parse(
-        formatDcatDataset({ ...datasetWithNoTags, tags: [''] }, siteUrl, buildDatasetTemplate()),
+        formatDcatDataset({ ...datasetWithNoTags, tags: [''] }, siteUrl, siteModel, buildDatasetTemplate()),
       ).keyword[0],
     ).toBe(expectedKeyword);
   });
@@ -711,7 +713,7 @@ describe('formatDcatDataset', () => {
       description: 'endpoint',
     };
 
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, buildDatasetTemplate()));
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
     expect(actual.distribution.pop()).toEqual(expectedDistribution);
   });
 
@@ -756,7 +758,7 @@ describe('formatDcatDataset', () => {
     };
 
     try {
-      formatDcatDataset(dataset, siteUrl, buildDatasetTemplate());
+      formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate());
     } catch {
       fail('Should not throw!');
     }

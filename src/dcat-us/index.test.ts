@@ -3,6 +3,7 @@ import { getDataStreamDcatUs11 } from './';
 
 import * as datasetFromApi from '../test-helpers/mock-dataset.json';
 import { DcatDatasetTemplate } from './dataset-formatter';
+import { IModel } from '@esri/hub-common';
 
 const hostname = 'css-monster-qa-pre-hub.hubqa.arcgis.com';
 
@@ -11,7 +12,9 @@ async function generateDcatFeed(
   datasets: any[],
   dcatCustomizations?: DcatDatasetTemplate
 ) {
-  const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(hostname, dcatCustomizations);
+  const siteModel = { item: { url: hostname } } as unknown as IModel;
+
+  const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(hostname, siteModel, dcatCustomizations);
 
   const docStream = readableFromArray(datasets); // no datasets since we're just checking the catalog
 
@@ -40,9 +43,9 @@ describe('generating DCAT-US 1.1 feed', () => {
     const chk1 = feed['dataset'][0];
 
     expect(chk1['@type']).toBe('dcat:Dataset');
-    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0');
+    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
     expect(chk1.license).toBe('');
-    expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0');
+    expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
     expect(chk1.title).toBe('Tahoe places of interest');
     expect(chk1.description).toBe('Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.<div><br /></div><div>with more words</div><div><br /></div><div>adding a few more to test how long it takes for our jobs to execute.</div><div><br /></div><div>Tom was here!</div>');
     expect(chk1.keyword).toEqual([ 'Data collection', 'just modified' ]);
@@ -71,9 +74,9 @@ describe('generating DCAT-US 1.1 feed', () => {
     const chk1 = feed['dataset'][0];
 
     expect(chk1['@type']).toBe('dcat:Dataset');
-    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0');
+    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
     expect(chk1.license).toBe('');
-    expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0');
+    expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
     expect(chk1.title).toBe('Tahoe places of interest');
     expect(chk1.description).toBe('Tahoe places of interest');
     expect(chk1.customField).toBe('Tahoe places of interest');
@@ -110,10 +113,10 @@ describe('generating DCAT-US 1.1 feed', () => {
     const chk1 = feed['dataset'][0];
 
     expect(chk1['@type']).toBe('dcat:Dataset');
-    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0');
+    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
     expect(chk1.license).toBe('');
     expect(chk1.webService).toBe(undefined);
-    expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/f4bcc1035b7d46cba95e977f4affb6be_0');
+    expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
     expect(chk1.title).toBe('Tahoe places of interest');
     expect(chk1.description).toBe('Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.<div><br /></div><div>with more words</div><div><br /></div><div>adding a few more to test how long it takes for our jobs to execute.</div><div><br /></div><div>Tom was here!</div>');
     expect(chk1.keyword).toEqual([ 'Data collection', 'just modified' ]);
@@ -137,6 +140,8 @@ describe('generating DCAT-US 1.1 feed', () => {
 
     const expectedDependencies = [
       'id',
+      'type',
+      'slug',
       'licenseInfo',
       'structuredLicense',
       'layer.geometryType',
@@ -176,6 +181,8 @@ describe('generating DCAT-US 1.1 feed', () => {
 
     const expectedDependencies = [
       'id',
+      'type',
+      'slug',
       'licenseInfo',
       'structuredLicense',
       'layer.geometryType',
