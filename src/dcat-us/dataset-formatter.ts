@@ -10,13 +10,13 @@ import { IItem } from '@esri/arcgis-rest-portal';
 type HubDatasetAttributes = Record<string, any>;
 export type DcatDatasetTemplate = Record<string, any>;
 
-export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteModel: IModel, datasetTemplate: DcatDatasetTemplate) {
+export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, siteModel: IModel, datasetTemplate: DcatDatasetTemplate) {
   const content = datasetToContent({ 
     id: hubDataset.id, 
     attributes: hubDataset
   } as DatasetResource);
-  const { absolute: siteUrl } = getContentSiteUrls(content, siteModel);
-  const landingPage = siteUrl.startsWith('https://') ? `${siteUrl}` : `https://${siteUrl}`;
+  const { relative: relativePath } = getContentSiteUrls(content, siteModel);
+  const landingPage = siteUrl.startsWith('https://') ? siteUrl + relativePath : `https://${siteUrl}${relativePath}`;
 
   const { 
     structuredLicense: { url = null } = {},

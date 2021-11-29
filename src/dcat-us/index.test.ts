@@ -14,7 +14,7 @@ async function generateDcatFeed(
 ) {
   const siteModel = { item: { url: hostname } } as unknown as IModel;
 
-  const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(siteModel, dcatCustomizations);
+  const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(hostname, siteModel, dcatCustomizations);
 
   const docStream = readableFromArray(datasets); // no datasets since we're just checking the catalog
 

@@ -4,7 +4,7 @@ import { buildDatasetTemplate, DcatDatasetTemplate, formatDcatDataset } from './
 import { FeedFormatterStream } from './feed-formatter-stream';
 import { DISTRIBUTION_DEPENDENCIES } from './_generate-distributions';
 
-export function getDataStreamDcatUs11(siteModel: IModel, dcatCustomizations?: DcatDatasetTemplate) {
+export function getDataStreamDcatUs11(siteUrl: string, siteModel: IModel, dcatCustomizations?: DcatDatasetTemplate) {
   const catalogStr = JSON.stringify({
       '@context':
         'https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld',
@@ -23,7 +23,7 @@ export function getDataStreamDcatUs11(siteModel: IModel, dcatCustomizations?: Dc
   const datasetTemplate = buildDatasetTemplate(dcatCustomizations);
 
   const formatFn = (chunk) => {
-    return formatDcatDataset(chunk, siteModel, datasetTemplate);
+    return formatDcatDataset(chunk, siteUrl, siteModel, datasetTemplate);
   };
 
   return {
