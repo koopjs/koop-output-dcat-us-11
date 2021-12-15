@@ -84,7 +84,7 @@ function scrubProtectedKeys (customizations: DcatDatasetTemplate): DcatDatasetTe
     if (scrubbedCustomizations.contactPoint) {
       delete scrubbedCustomizations.contactPoint['@type'];
     }
-    delete scrubbedCustomizations.distributions;
+    delete scrubbedCustomizations.distribution;
   }
 
   return scrubbedCustomizations;
