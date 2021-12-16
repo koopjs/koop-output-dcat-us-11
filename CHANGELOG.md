@@ -1,7 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
-
+## 1.4.2
 Fixed
 - Scrub attempts to overwrite `distribution` rather than `distributions` [#15](https://github.com/koopjs/koop-output-dcat-us-11/pull/15)
 
