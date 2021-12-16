@@ -102,7 +102,7 @@ describe('generating DCAT-US 1.1 feed', () => {
         identifier: '{{name}}',
         landingPage: '{{name}}',
         webService: '{{name}}',
-        distributions: '{{name}}',
+        distribution: '{{name}}',
         contactPoint: {
           '@type': '{{name}}',
           fn: '{{owner}}',
