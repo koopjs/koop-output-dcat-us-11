@@ -1,18 +1,16 @@
 import { mocked } from 'ts-jest/utils';
-
-import { readableFromArray } from './test-helpers/stream-utils';
+import * as _ from 'lodash';
 import * as express from 'express';
 import * as request from 'supertest';
+
+import { IContentSearchRequest } from '@esri/hub-search';
+import { IModel } from '@esri/hub-common';
 
 import * as mockDataset from './test-helpers/mock-dataset.json';
 import * as mockSiteModel from './test-helpers/mock-site-model.json';
 import { createMockKoopApp } from './test-helpers/create-mock-koop-app';
-
 import { FeedFormatterStream } from './dcat-us/feed-formatter-stream';
-import { IContentSearchRequest } from '@esri/hub-search';
-import { IModel } from '@esri/hub-common';
-
-import * as _ from 'lodash';
+import { readableFromArray } from './test-helpers/stream-utils';
 
 function buildPluginAndApp() {
   let Output;
@@ -35,24 +33,27 @@ function buildPluginAndApp() {
 describe('Output Plugin', () => {
   let mockFetchSite;
   let mockConfigModule;
+  let mockHubApiRequest;
   let plugin;
   let app: express.Application;
 
   const siteHostName = 'download-test-qa-pre-a-hub.hubqa.arcgis.com';
 
   beforeEach(() => {
-    const { fetchSite } = require('@esri/hub-common');
+    const { fetchSite, hubApiRequest } = require('@esri/hub-common');
     // this fancy code is just to _only_ mock some fns
     // and leave the rest alone
     jest.mock('@esri/hub-common', () => ({
       ...(jest.requireActual('@esri/hub-common') as object),
       fetchSite: jest.fn(),
+      hubApiRequest: jest.fn()
     }));
 
     mockConfigModule = mocked(require('config'), true);
     jest.mock('config');
 
     mockFetchSite = mocked(fetchSite);
+    mockHubApiRequest = mocked(hubApiRequest);
 
     mockFetchSite.mockResolvedValue(mockSiteModel);
 
@@ -137,6 +138,58 @@ describe('Output Plugin', () => {
     expect(expressRequest.res.locals.searchRequest.options.portal).toBe(
       qaPortal,
     );
+  });
+
+  it('Properly converts adlib path hierarchies to Hub API Fields', async () => {
+    // Change fetchSite's return value to include a custom dcat config
+    const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel);
+    customConfigSiteModel.data.feeds = {
+      dcatUS11: {
+        "title": "{{name}}",
+        "description": "{{description}}",
+        "keyword": "{{tags}}",
+        "issued": "{{created:toISO}}",
+        "modified": "{{modified:toISO}}",
+        "publisher": { "name": "{{source}}" },
+        "contactPoint": {
+          "fn": "{{owner}}",
+          "hasEmail": "{{orgContactEmail}}"
+        },
+        "hierarchyTwoValidApiFields": "{{venue || openData}}",
+        "hierarchyLastFieldIsInvalidApiField": "{{contentStatus || a_literal}}",
+        "hierarchyThreeValidApiFieldsOneInvalid": "{{itemModified || region || recordCount || another_literal}}",
+        "hierarchyOneDuplicateValue": "{{snippet || openData}}"
+      }
+    }
+
+    mockFetchSite.mockResolvedValue(customConfigSiteModel);
+
+    mockHubApiRequest.mockResolvedValue([
+      'venue', 'openData', 'contentStatus', 'itemModified', 'region', 'recordCount', 'snippet'
+    ]);
+
+    await request(app)
+      .get('/dcat')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+      .expect(res => {
+        expect(plugin.model.pullStream).toHaveBeenCalledTimes(1);
+        
+        const actualSearchRequest = _.get(plugin.model.pullStream, 'mock.calls[0][0].res.locals.searchRequest');
+        const fieldsAsArray: string[] = actualSearchRequest.options.fields.split(',');
+        expect(fieldsAsArray.includes('venue')).toBeTruthy();
+        expect(fieldsAsArray.includes('openData')).toBeTruthy();
+        expect(fieldsAsArray.includes('contentStatus')).toBeTruthy();
+        expect(fieldsAsArray.includes('itemModified')).toBeTruthy();
+        expect(fieldsAsArray.includes('region')).toBeTruthy();
+        expect(fieldsAsArray.includes('recordCount')).toBeTruthy();
+        expect(fieldsAsArray.includes('snippet')).toBeTruthy();
+        expect(fieldsAsArray.includes('a_literal')).toBeFalsy();
+        expect(fieldsAsArray.includes('another_literal')).toBeFalsy();
+
+        expect(res.body).toBeDefined();
+      });
   });
 
   it('sets status to 500 if something blows up', async () => {
@@ -244,22 +297,22 @@ describe('Output Plugin', () => {
           stream: new FeedFormatterStream('{', '}', '', () => ''),
           dependencies: []
         });
-    })
+    });
 
     it('Properly passes a site\'s custom dcat configurations to getDataStreamDcatUs11 when no dcatConfig is provided', async () => {
       // Change fetchSite's return value to include a custom dcat config
       const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel);
       customConfigSiteModel.data.feeds = {
         dcatUS11: {
-          "title": "{{default.name}}",
-          "description": "{{default.description}}",
-          "keyword": "{{item.tags}}",
-          "issued": "{{item.created:toISO}}",
-          "modified": "{{item.modified:toISO}}",
-          "publisher": { "name": "{{default.source.source}}" },
+          "title": "{{name}}",
+          "description": "{{description}}",
+          "keyword": "{{tags}}",
+          "issued": "{{created:toISO}}",
+          "modified": "{{modified:toISO}}",
+          "publisher": { "name": "{{source}}" },
           "contactPoint": {
-            "fn": "{{item.owner}}",
-            "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
+            "fn": "{{owner}}",
+            "hasEmail": "{{orgContactEmail}}"
           },
           "landingPage": "some silly standard",
         }
@@ -312,15 +365,15 @@ describe('Output Plugin', () => {
       const customConfigSiteModel: any = _.cloneDeep(mockSiteModel);
       customConfigSiteModel.data.feeds = {
         dcatUS11: {
-          "title": "{{default.name}}",
-          "description": "{{default.description}}",
-          "keyword": "{{item.tags}}",
-          "issued": "{{item.created:toISO}}",
-          "modified": "{{item.modified:toISO}}",
-          "publisher": { "name": "{{default.source.source}}" },
+          "title": "{{name}}",
+          "description": "{{description}}",
+          "keyword": "{{tags}}",
+          "issued": "{{created:toISO}}",
+          "modified": "{{modified:toISO}}",
+          "publisher": { "name": "{{source}}" },
           "contactPoint": {
-            "fn": "{{item.owner}}",
-            "hasEmail": "{{org.portalProperties.links.contactUs.url}}"
+            "fn": "{{owner}}",
+            "hasEmail": "{{orgContactEmail}}"
           },
           "landingPage": "some silly standard",
         }
@@ -350,7 +403,7 @@ describe('Output Plugin', () => {
             },
             options: {
               portal: 'https://www.arcgis.com',
-              fields: ''
+              fields: undefined
             },
           };
           const actualSearchRequest = _.get(plugin.model.pullStream, 'mock.calls[0][0].res.locals.searchRequest')
