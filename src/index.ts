@@ -2,18 +2,62 @@ import { Request, Response } from 'express';
 import * as config from 'config';
 import * as _ from 'lodash';
 
+import { fetchSite, getHubApiUrl, getPortalApiUrl, hubApiRequest, IHubRequestOptions, RemoteServerError } from '@esri/hub-common';
+import { IContentSearchRequest } from '@esri/hub-search';
+
 import { version } from '../package.json';
 import { getDataStreamDcatUs11 } from './dcat-us';
-import { fetchSite, getHubApiUrl, getPortalApiUrl, IHubRequestOptions, RemoteServerError } from '@esri/hub-common';
-import { IContentSearchRequest } from '@esri/hub-search';
 
 const portalUrl = config.has('arcgisPortal')
   ? (config.get('arcgisPortal') as string)
   : 'https://www.arcgis.com';
 
-function getApiTermsFromDependencies (dependencies: string[]) {
-  // Hub API only supports scoping by top-level terms
-  return Array.from(new Set(dependencies.map(dep => dep.split('.')[0])));
+/**
+  * This function converts adlib'ed fields from the specified catalog into valid API fields used
+  * to query the API for catalog content.
+  * 
+  * For fields that specify a path hierarchy using the || operator,
+  * process each field as an API field EXCEPT for the last one.
+  * The last field is interpreted as EITHER a templated value (e.g. `"modifed")
+  * OR a literal value (e.g. "my literal value")
+  * See "Path Hierarchies and Defaults" at https://github.com/Esri/adlib
+  * 
+  * Because the last field can be interpreted as either, with no syntax to differentiate,
+  * the last field will be treated as a literal if it is not a valid Hub API field. As such,
+  * it is not converted to a Hub API field
+  * 
+  * @param dependencies - list of fields processed by adlib to use when building the catalog
+  * @returns - a list of valid Hub API fields
+*/
+async function getApiTermsFromDependencies (dependencies: string[]) {
+  // Only get valid Hub API fields if they are needed
+  const doesPathHierarchyExist = dependencies.filter(dep => dep.includes('||')).length;
+  const validApiFields: string[] = doesPathHierarchyExist ? await hubApiRequest('fields') : [];
+  const validApiFieldMap = validApiFields.reduce((fieldMap, field) => {
+    fieldMap[field] = true;
+    return fieldMap;
+  }, {});
+
+  return Array.from(new Set(_.flatten(dependencies.map(dep => {
+    // Dependency could indicate a hierarchial path (e.g. orgEmail || author)
+    if (dep.includes('||')) {
+      const providedSubDeps = dep.split('||').map(subDep => subDep.trim()).filter(subDep => !!subDep);
+      const returnedSubDeps = [];
+
+      // Assume all non-last fields are valid API fields
+      for (let i = 0; i < providedSubDeps.length - 1; i++) {
+        returnedSubDeps.push(providedSubDeps[i].split('.')[0]);
+      }
+
+      // Only push the last one if its a valid API field
+      if (validApiFieldMap[providedSubDeps[providedSubDeps.length - 1]]) {
+        returnedSubDeps.push(providedSubDeps[providedSubDeps.length - 1].split('.')[0]);
+      }
+
+      return returnedSubDeps;
+    }
+    return dep.split('.')[0];
+  }))));
 }
 
 export = class OutputDcatUs11 {
@@ -50,7 +94,7 @@ export = class OutputDcatUs11 {
       // the absolute url we get from getContentSiteUrls()
       const { stream: dcatStream, dependencies } = getDataStreamDcatUs11(hostname, siteModel, dcatConfig);
 
-      const apiTerms = getApiTermsFromDependencies(dependencies);
+      const apiTerms = await getApiTermsFromDependencies(dependencies);
 
       // Request a single dataset if id is provided, else default to site's catalog
       const id = String(req.query.id || '');
@@ -111,7 +155,7 @@ export = class OutputDcatUs11 {
       },
       options: {
         portal: portalUrl,
-        fields: fields.join(',')
+        fields: Array.isArray(fields) && fields.length > 0 ? fields.join(',') : undefined
       },
     };
     return searchRequest;
@@ -130,7 +174,7 @@ export = class OutputDcatUs11 {
       filter: { id },
       options: {
         portal: portalUrl,
-        fields: fields.join(',')
+        fields: Array.isArray(fields) && fields.length > 0 ? fields.join(',') : undefined
       },
     };
   }
