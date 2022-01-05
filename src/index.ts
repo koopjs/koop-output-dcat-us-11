@@ -30,6 +30,8 @@ const portalUrl = config.has('arcgisPortal')
   * @returns - a list of valid Hub API fields
 */
 async function getApiTermsFromDependencies (dependencies: string[]) {
+  if (!dependencies || !Array.isArray(dependencies)) return undefined;
+
   // Only get valid Hub API fields if they are needed
   const doesPathHierarchyExist = dependencies.filter(dep => dep.includes('||')).length;
   const validApiFields: string[] = doesPathHierarchyExist ? await hubApiRequest('fields') : [];
