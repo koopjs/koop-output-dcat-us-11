@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.5.0
+Added
+- Handling of path hierarchies/fallback values [#16](https://github.com/koopjs/koop-output-dcat-us-11/pull/16)
+
 ## 1.4.2
 Fixed
 - Scrub attempts to overwrite `distribution` rather than `distributions` [#15](https://github.com/koopjs/koop-output-dcat-us-11/pull/15)
