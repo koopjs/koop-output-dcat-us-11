@@ -82,7 +82,7 @@ function scrubProtectedKeys (customizations: DcatDatasetTemplate): DcatDatasetTe
     delete scrubbedCustomizations.landingPage;
     delete scrubbedCustomizations.webService;
     if (scrubbedCustomizations.contactPoint) {
-      delete scrubbedCustomizations.contactPoint['@type'];
+      scrubbedCustomizations.contactPoint['@type'] = 'vcard:Contact';
     }
     delete scrubbedCustomizations.distribution;
   }

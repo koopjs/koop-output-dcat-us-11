@@ -289,7 +289,7 @@ describe('Output Plugin', () => {
   describe('configuration via query params', () => {
     let mockGetDataStreamDcatUs11;
 
-    beforeAll(() => {
+    beforeEach(() => {
       const { getDataStreamDcatUs11 } = require('./dcat-us');
       jest.mock('./dcat-us');
       mockGetDataStreamDcatUs11 = mocked(getDataStreamDcatUs11)
@@ -318,6 +318,7 @@ describe('Output Plugin', () => {
         }
       }
       mockFetchSite.mockResolvedValue(customConfigSiteModel);
+      [plugin, app] = buildPluginAndApp();
 
       await request(app)
         .get('/dcat')
