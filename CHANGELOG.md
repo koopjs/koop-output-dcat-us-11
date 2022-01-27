@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
+## 1.5.1
 Fixed
 - Default value is returned when custom config attempts to overwrite contactPoint['@type'] [#17](https://github.com/koopjs/koop-output-dcat-us-11/pull/17)
 
