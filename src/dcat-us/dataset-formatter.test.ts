@@ -29,6 +29,9 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
   expect(template.webService).not.toBe('SABOTAGE');
   expect(template.spatial).not.toBe('SABOTAGE');
   expect(template.distribution).not.toBe('SABOTAGE');
+  expect(template.title).toBe('{{metadata.metadata.name||item.title}}')
+  expect(template.contactPoint.fn).toBe('{{item.owner}}');
+  expect(template.contactPoint.hasEmail).toBe('mailto:dcat.support@dc.gov');
 });
 
 it('dcatHelper: it does not throw an error if there are no customizations', () => {
