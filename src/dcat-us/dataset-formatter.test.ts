@@ -13,10 +13,22 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
       fn: '{{item.owner}}',
       hasEmail: 'mailto:dcat.support@dc.gov',
     },
+    identifier: 'SABOTAGE',
+    license: 'SABOTAGE',
+    landingPage: 'SABOTAGE',
+    webService: 'SABOTAGE',
+    spatial: 'SABOTAGE',
+    distribution: 'SABOTAGE'
   };
   const template = buildDatasetTemplate(customizations);
   expect(template['@type']).not.toBe('SABOTAGE');
   expect(template.contactPoint['@type']).not.toBe('SABOTAGE');
+  expect(template.identifier).not.toBe('SABOTAGE');
+  expect(template.license).not.toBe('SABOTAGE');
+  expect(template.landingPage).not.toBe('SABOTAGE');
+  expect(template.webService).not.toBe('SABOTAGE');
+  expect(template.spatial).not.toBe('SABOTAGE');
+  expect(template.distribution).not.toBe('SABOTAGE');
 });
 
 it('dcatHelper: it does not throw an error if there are no customizations', () => {
@@ -759,6 +771,47 @@ describe('formatDcatDataset', () => {
 
     try {
       formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate());
+    } catch {
+      fail('Should not throw!');
+    }
+  });
+
+  it('overwrites critical fields without values to an empty string', () => {
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      metadata: {
+        metadata: {
+          distInfo: {
+            distTranOps: {
+              onLineSrc: {
+                linkage: 'https://foobar.com',
+              },
+            },
+          },
+        },
+      },
+    };
+
+    try {
+      const formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
+      expect(formatted.spatial).toEqual('');
     } catch {
       fail('Should not throw!');
     }

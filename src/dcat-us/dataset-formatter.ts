@@ -5,6 +5,7 @@ import { baseDatasetTemplate } from './base-dataset-template';
 import { _generateDistributions } from './_generate-distributions';
 import { cloneObject, DatasetResource, datasetToContent, getContentSiteUrls, IModel } from '@esri/hub-common';
 import { IItem } from '@esri/arcgis-rest-portal';
+import { nonEditableFieldPaths } from './noneditable-fields';
 
 // TODO - use real type for hubDataset when it gets defined in Hub.js
 type HubDatasetAttributes = Record<string, any>;
@@ -42,6 +43,8 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
 
   const dcatDataset = Object.assign({}, defaultDataset, adlib(datasetTemplate, hubDataset, transforms));
 
+  setLeftoverInterpolations(dcatDataset);
+
   if (isPage(hubDataset as IItem) && !hasTags(hubDataset)) {
     dcatDataset.keyword = ['ArcGIS Hub page'];
   }
@@ -52,7 +55,7 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
     dcatDataset.spatial = hubDataset.extent.coordinates.join(',');
 
     // https://project-open-data.cio.gov/v1.1/schema/#theme
-    // allow theme to be overrriden
+    // allow theme to be overridden
     if (_.isEmpty(datasetTemplate.theme)) {
       dcatDataset.theme = ['geospatial'];
     }
@@ -73,18 +76,10 @@ function hasTags (hubDataset: HubDatasetAttributes) {
 }
 
 function scrubProtectedKeys (customizations: DcatDatasetTemplate): DcatDatasetTemplate {
-  const scrubbedCustomizations = cloneObject(customizations);
+  const scrubbedCustomizations = _.omit(cloneObject(customizations), nonEditableFieldPaths) as DcatDatasetTemplate;
 
-  if (Object.keys(scrubbedCustomizations).length > 0) {
-    delete scrubbedCustomizations['@type'];
-    delete scrubbedCustomizations.license;
-    delete scrubbedCustomizations.identifier;
-    delete scrubbedCustomizations.landingPage;
-    delete scrubbedCustomizations.webService;
-    if (scrubbedCustomizations.contactPoint) {
-      scrubbedCustomizations.contactPoint['@type'] = 'vcard:Contact';
-    }
-    delete scrubbedCustomizations.distribution;
+  if (scrubbedCustomizations.contactPoint) {
+    scrubbedCustomizations.contactPoint['@type'] = 'vcard:Contact';
   }
 
   return scrubbedCustomizations;
@@ -93,4 +88,13 @@ function scrubProtectedKeys (customizations: DcatDatasetTemplate): DcatDatasetTe
 export function buildDatasetTemplate (customizations: DcatDatasetTemplate = {}): DcatDatasetTemplate {
   const customConfig = scrubProtectedKeys(customizations);
   return Object.assign({}, baseDatasetTemplate, customConfig);
+}
+
+function setLeftoverInterpolations(dataset) {
+  nonEditableFieldPaths.forEach(path => {
+    const value = _.get(dataset, path, '');
+    if (typeof value === 'string' && value.match(/{{.+}}/)?.length) {
+      _.set(dataset, path, '');
+    }
+  });
 }
