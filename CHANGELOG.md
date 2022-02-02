@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.6.0
+Added
+- Default undefined non-editable field values to empty string [#18](https://github.com/koopjs/koop-output-dcat-us-11/pull/18)
+
 ## 1.5.1
 Fixed
 - Default value is returned when custom config attempts to overwrite contactPoint['@type'] [#17](https://github.com/koopjs/koop-output-dcat-us-11/pull/17)
