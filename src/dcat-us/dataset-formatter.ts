@@ -27,7 +27,6 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
   const defaultDataset = {
     '@type': 'dcat:Dataset',
     identifier: landingPage,
-    license: url || licenseInfo || '',
     landingPage
   };
 
@@ -44,6 +43,10 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
   const dcatDataset = Object.assign({}, defaultDataset, adlib(datasetTemplate, hubDataset, transforms));
 
   setLeftoverInterpolations(dcatDataset);
+
+  if (!dcatDataset.license || dcatDataset.license.match(/{{.+}}/g)?.length) {
+    dcatDataset.license = url || licenseInfo || '';
+  }
 
   if (isPage(hubDataset as IItem) && !hasTags(hubDataset)) {
     dcatDataset.keyword = ['ArcGIS Hub page'];

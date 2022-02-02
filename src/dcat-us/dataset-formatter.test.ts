@@ -14,7 +14,7 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
       hasEmail: 'mailto:dcat.support@dc.gov',
     },
     identifier: 'SABOTAGE',
-    license: 'SABOTAGE',
+    license: '{{CUSTOM LICENSE}}',
     landingPage: 'SABOTAGE',
     webService: 'SABOTAGE',
     spatial: 'SABOTAGE',
@@ -24,7 +24,6 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
   expect(template['@type']).not.toBe('SABOTAGE');
   expect(template.contactPoint['@type']).not.toBe('SABOTAGE');
   expect(template.identifier).not.toBe('SABOTAGE');
-  expect(template.license).not.toBe('SABOTAGE');
   expect(template.landingPage).not.toBe('SABOTAGE');
   expect(template.webService).not.toBe('SABOTAGE');
   expect(template.spatial).not.toBe('SABOTAGE');
@@ -32,6 +31,7 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
   expect(template.title).toBe('{{metadata.metadata.name||item.title}}')
   expect(template.contactPoint.fn).toBe('{{item.owner}}');
   expect(template.contactPoint.hasEmail).toBe('mailto:dcat.support@dc.gov');
+  expect(template.license).toBe('{{CUSTOM LICENSE}}')
 });
 
 it('dcatHelper: it does not throw an error if there are no customizations', () => {
@@ -514,6 +514,82 @@ describe('formatDcatDataset', () => {
     };
     const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
     expect(actual).toEqual(expected);
+  });
+
+  it('license should be editable with templated value', () => {
+    const template = buildDatasetTemplate();
+    template.license = '{{owner}}'
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      extent: {
+        coordinates: [
+          [-123.8832, 35.0024],
+          [-118.3281, 42.0122],
+        ],
+        type: 'envelope',
+      },
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      structuredLicense: { text: 'structuredLicense text', url: 'https://google.com' },
+      licenseInfo: 'licenseInfo text',
+    };
+    const expectedLicense = 'fpgis.CALFIRE';
+
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, template));
+    expect(actual.license).toEqual(expectedLicense);
+  });
+
+  it('license should be editable with literal value', () => {
+    const template = buildDatasetTemplate();
+    template.license = 'A HARDCODED LICENSE'
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      extent: {
+        coordinates: [
+          [-123.8832, 35.0024],
+          [-118.3281, 42.0122],
+        ],
+        type: 'envelope',
+      },
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      structuredLicense: { text: 'structuredLicense text', url: 'https://google.com' },
+      licenseInfo: 'licenseInfo text',
+    };
+    const expectedLicense = 'A HARDCODED LICENSE';
+
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, template));
+    expect(actual.license).toEqual(expectedLicense);
   });
 
   it('license should display structuredLicense url', () => {
