@@ -14,7 +14,6 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
       hasEmail: 'mailto:dcat.support@dc.gov',
     },
     identifier: 'SABOTAGE',
-    license: '{{CUSTOM LICENSE}}',
     landingPage: 'SABOTAGE',
     webService: 'SABOTAGE',
     spatial: 'SABOTAGE',
@@ -31,7 +30,6 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
   expect(template.title).toBe('{{metadata.metadata.name||item.title}}')
   expect(template.contactPoint.fn).toBe('{{item.owner}}');
   expect(template.contactPoint.hasEmail).toBe('mailto:dcat.support@dc.gov');
-  expect(template.license).toBe('{{CUSTOM LICENSE}}')
 });
 
 it('dcatHelper: it does not throw an error if there are no customizations', () => {
