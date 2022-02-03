@@ -2,7 +2,6 @@
 export const nonEditableFieldPaths = [
   '@type',
   'identifier',
-  'license',
   'landingPage',
   'webService',
   'spatial',
