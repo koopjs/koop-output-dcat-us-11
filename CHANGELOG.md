@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.7.0
+Added
+- Modified license to be editable with fallback logic if not defined [#19](https://github.com/koopjs/koop-output-dcat-us-11/pull/19)
+
 ## 1.6.0
 Added
 - Default undefined non-editable field values to empty string [#18](https://github.com/koopjs/koop-output-dcat-us-11/pull/18)
