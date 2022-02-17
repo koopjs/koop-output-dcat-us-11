@@ -32,6 +32,43 @@ describe('_generateDistributions', () => {
     expect(distributions).toEqual(expected);
   })
 
+  it('adds default and csv distributions if dataset is a proxied csv', () => {
+    const dataset = {
+      id: 'foo',
+      access: 'public',
+      slug: 'nissan::skyline-gtr',
+      size: 1,
+      type: 'CSV'
+    };
+
+    const expected =  [{
+      '@type': 'dcat:Distribution',
+      title: 'ArcGIS Hub Dataset',
+      format: 'Web Page',
+      mediaType: 'text/html',
+      accessURL: 'https://my-site.hub.arcgis.com/datasets/nissan::skyline-gtr'
+    },
+    {
+      '@type': 'dcat:Distribution',
+      title: 'ArcGIS GeoService',
+      format: 'ArcGIS GeoServices REST API',
+      mediaType: 'application/json',
+    },
+    {
+      '@type': 'dcat:Distribution',
+      title: 'CSV',
+      format: 'CSV',
+      mediaType: 'text/csv',
+      accessURL: 'https://my-site.hub.arcgis.com/datasets/nissan::skyline-gtr.csv'
+    }
+  ]
+
+    const distributions = _generateDistributions(dataset, getLandingPage(dataset.slug));
+
+    expect(distributions.length).toBe(3)
+    expect(distributions).toEqual(expected);
+  });
+
   it('adds default distributions if dataset is a layer', () => {
     const dataset = {
       id: 'foo_0', // layer id

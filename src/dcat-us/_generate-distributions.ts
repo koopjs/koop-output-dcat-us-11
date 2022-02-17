@@ -1,3 +1,4 @@
+import { DatasetResource, datasetToItem, getProxyUrl, IHubRequestOptions } from '@esri/hub-common';
 import * as _ from 'lodash';
 
 const WFS_SERVER = 'WFSServer';
@@ -18,6 +19,10 @@ export function _generateDistributions (dataset: any, landingPage: string) {
     getHubLandingPageDistribution,
     getEsriGeoServiceDistribution
   ];
+
+  if (isProxiedCSV(dataset)) {
+    distributionFns.push(getCSVDistribution);
+  }
 
   if (isLayer(dataset)) {
     distributionFns.push(getGeoJSONDistribution);
@@ -51,6 +56,16 @@ export function _generateDistributions (dataset: any, landingPage: string) {
 
 function isLayer (dataset: any) {
   return /_/.test(dataset.id);
+}
+
+function isProxiedCSV(dataset: any) {
+  const item = datasetToItem({
+    id: dataset.id,
+    attributes: dataset
+  } as DatasetResource);
+  const requestOptions: IHubRequestOptions = { isPortal: false };
+  
+  return !!getProxyUrl(item, requestOptions);
 }
 
 // HUBJS CANDIDATE

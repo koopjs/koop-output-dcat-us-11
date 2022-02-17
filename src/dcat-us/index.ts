@@ -32,6 +32,8 @@ export function getDataStreamDcatUs11(siteUrl: string, siteModel: IModel, dcatCu
       'id', // used for the dataset landing page URL
       'type', // used for the dataset landing page URL
       'slug', // used for the dataset landing page URL
+      'access', // used for detecting proxied csv's
+      'size', // used for detecting proxied csv's
       'licenseInfo', // required for license resolution
       'structuredLicense', // required for license resolution
       ...DISTRIBUTION_DEPENDENCIES,
