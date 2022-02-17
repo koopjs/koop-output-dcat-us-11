@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## Unreleased
+Added
+- Distributions for proxied CSVs now include a csv distribution [#20](https://github.com/koopjs/koop-output-dcat-us-11/pull/20)
+
 ## 1.7.0
 Added
 - Modified license to be editable with fallback logic if not defined [#19](https://github.com/koopjs/koop-output-dcat-us-11/pull/19)
