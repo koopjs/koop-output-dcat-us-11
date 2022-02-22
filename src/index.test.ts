@@ -111,7 +111,7 @@ describe('Output Plugin', () => {
       },
       options: {
         portal: 'https://www.arcgis.com',
-        fields: "id,type,slug,licenseInfo,structuredLicense,layer,server,metadata,url,name,description,tags,created,modified,source,owner,orgContactEmail,extent"      },
+        fields: "id,type,slug,access,size,licenseInfo,structuredLicense,layer,server,metadata,url,name,description,tags,created,modified,source,owner,orgContactEmail,extent"      },
     });
   });
 
