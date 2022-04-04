@@ -696,6 +696,44 @@ describe('formatDcatDataset', () => {
     expect(actual.license).toEqual(expectedLicense);
   });
 
+  it('license should be overwritten if it is specified as "none"', () => {
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      extent: {
+        coordinates: [
+          [-123.8832, 35.0024],
+          [-118.3281, 42.0122],
+        ],
+        type: 'envelope',
+      },
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      license: 'none'
+    };
+    
+    const expectedLicense = 'a-custom-license';
+
+    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({
+      license: '{{license || a-custom-license}}'
+    })));
+    expect(actual.license).toEqual(expectedLicense);
+  });
+
   test('Hub Page gets default keyword when no tags', () => {
     const datasetWithNoTags = {
       owner: 'fpgis.CALFIRE',

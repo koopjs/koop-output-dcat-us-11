@@ -24,6 +24,11 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
     licenseInfo = ''
   } = hubDataset;
 
+  // Override hub.js default license value of 'none'
+  if (hubDataset.license === 'none') {
+    hubDataset.license = null;
+  }
+
   const defaultDataset = {
     '@type': 'dcat:Dataset',
     identifier: landingPage,
