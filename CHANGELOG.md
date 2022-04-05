@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.8.1
+Fixed
+- Fixed license issue [#21](https://github.com/koopjs/koop-output-dcat-us-11/pull/21)
+
 ## 1.8.0
 Added
 - Distributions for proxied CSVs now include a csv distribution [#20](https://github.com/koopjs/koop-output-dcat-us-11/pull/20)
