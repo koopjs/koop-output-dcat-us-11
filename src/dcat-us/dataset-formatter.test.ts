@@ -76,6 +76,7 @@ describe('formatDcatDataset', () => {
           wkid: 3310,
         },
       },
+      identifier: 'CALFIRE::DCAT_Test',
       slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
@@ -174,6 +175,7 @@ describe('formatDcatDataset', () => {
         geometryType: 'esriGeometryPolygon',
       },
       server: {},
+      identifier: 'CALFIRE::DCAT_Test',
       slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
@@ -264,6 +266,7 @@ describe('formatDcatDataset', () => {
         geometryType: 'esriGeometryPolygon',
       },
       server: {},
+      identifier: 'CALFIRE::DCAT_Test',
       slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
@@ -356,6 +359,7 @@ describe('formatDcatDataset', () => {
         geometryType: 'esriGeometryPolygon',
       },
       server: {},
+      identifier: 'CALFIRE::DCAT_Test',
       slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
@@ -452,6 +456,7 @@ describe('formatDcatDataset', () => {
           wkid: 3310,
         },
       },
+      identifier: 'CALFIRE::DCAT_Test',
       slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {

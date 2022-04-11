@@ -18,7 +18,7 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
   } as DatasetResource);
   const { relative: relativePath } = getContentSiteUrls(content, siteModel);
   const landingPage = siteUrl.startsWith('https://') ? siteUrl + relativePath : `https://${siteUrl}${relativePath}`;
-  const downloadLink = siteUrl.startsWith('https://') ? `${siteUrl}/datasets/${hubDataset.slug}` : `https://${siteUrl}/datasets/${hubDataset.slug}`;
+  const downloadLink = siteUrl.startsWith('https://') ? `${siteUrl}/datasets/${hubDataset.identifier}` : `https://${siteUrl}/datasets/${hubDataset.identifier}`;
 
   const { 
     structuredLicense: { url = null } = {},
