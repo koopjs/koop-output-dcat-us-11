@@ -80,9 +80,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -97,7 +97,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+          accessURL: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -178,9 +178,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -195,7 +195,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+          accessURL: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -268,9 +268,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -285,7 +285,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+          accessURL: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -360,9 +360,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -377,7 +377,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+          accessURL: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -456,9 +456,9 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+      landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -473,7 +473,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
+          accessURL: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
