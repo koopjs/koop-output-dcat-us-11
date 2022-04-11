@@ -18,6 +18,7 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
   } as DatasetResource);
   const { relative: relativePath } = getContentSiteUrls(content, siteModel);
   const landingPage = siteUrl.startsWith('https://') ? siteUrl + relativePath : `https://${siteUrl}${relativePath}`;
+  const downloadLink = siteUrl.startsWith('https://') ? `${siteUrl}/datasets/${hubDataset.slug}` : `https://${siteUrl}/datasets/${hubDataset.slug}`;
 
   const { 
     structuredLicense: { url = null } = {},
@@ -57,7 +58,7 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
     dcatDataset.keyword = ['ArcGIS Hub page'];
   }
 
-  dcatDataset.distribution = _generateDistributions(hubDataset, landingPage);
+  dcatDataset.distribution = _generateDistributions(hubDataset, landingPage, downloadLink);
 
   if (_.has(hubDataset, 'extent.coordinates')) {
     dcatDataset.spatial = hubDataset.extent.coordinates.join(',');

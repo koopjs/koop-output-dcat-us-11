@@ -76,12 +76,13 @@ describe('formatDcatDataset', () => {
           wkid: 3310,
         },
       },
+      slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -96,7 +97,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -111,7 +112,7 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson?outSR=${encodeURIComponent(
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.geojson?outSR=${encodeURIComponent(
             JSON.stringify(dataset.server.spatialReference),
           )}`,
         },
@@ -120,7 +121,7 @@ describe('formatDcatDataset', () => {
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv?outSR=${encodeURIComponent(
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.csv?outSR=${encodeURIComponent(
             JSON.stringify(dataset.server.spatialReference),
           )}`,
         },
@@ -129,7 +130,7 @@ describe('formatDcatDataset', () => {
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml?outSR=${encodeURIComponent(
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.kml?outSR=${encodeURIComponent(
             JSON.stringify(dataset.server.spatialReference),
           )}`,
         },
@@ -138,7 +139,7 @@ describe('formatDcatDataset', () => {
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip?outSR=${encodeURIComponent(
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.zip?outSR=${encodeURIComponent(
             JSON.stringify(dataset.server.spatialReference),
           )}`,
         },
@@ -173,12 +174,13 @@ describe('formatDcatDataset', () => {
         geometryType: 'esriGeometryPolygon',
       },
       server: {},
+      slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -193,7 +195,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -208,28 +210,28 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.geojson`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.csv`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.kml`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.zip`,
         },
       ],
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
@@ -262,12 +264,13 @@ describe('formatDcatDataset', () => {
         geometryType: 'esriGeometryPolygon',
       },
       server: {},
+      slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -282,7 +285,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -297,28 +300,28 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.geojson`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.csv`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.kml`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.zip`,
         },
       ],
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
@@ -353,12 +356,13 @@ describe('formatDcatDataset', () => {
         geometryType: 'esriGeometryPolygon',
       },
       server: {},
+      slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -373,7 +377,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -388,28 +392,28 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.geojson`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.csv`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.kml`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.zip`,
         },
       ],
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
@@ -448,12 +452,13 @@ describe('formatDcatDataset', () => {
           wkid: 3310,
         },
       },
+      slug: 'CALFIRE::DCAT_Test'
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      identifier: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       license: '',
-      landingPage: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+      landingPage: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
       description: 'Some Description',
       keyword: ['Uno', 'Dos', 'Tres'],
@@ -468,7 +473,7 @@ describe('formatDcatDataset', () => {
           title: 'ArcGIS Hub Dataset',
           format: 'Web Page',
           mediaType: 'text/html',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test`,
         },
         {
           '@type': 'dcat:Distribution',
@@ -483,28 +488,28 @@ describe('formatDcatDataset', () => {
           title: 'GeoJSON',
           format: 'GeoJSON',
           mediaType: 'application/vnd.geo+json',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.geojson?outSR=%7B%22wkid%22%3A3310%7D`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.geojson?outSR=%7B%22wkid%22%3A3310%7D`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'CSV',
           format: 'CSV',
           mediaType: 'text/csv',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.csv?outSR=%7B%22wkid%22%3A3310%7D`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.csv?outSR=%7B%22wkid%22%3A3310%7D`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'KML',
           format: 'KML',
           mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.kml?outSR=%7B%22wkid%22%3A3310%7D`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.kml?outSR=%7B%22wkid%22%3A3310%7D`,
         },
         {
           '@type': 'dcat:Distribution',
           title: 'Shapefile',
           format: 'ZIP',
           mediaType: 'application/zip',
-          accessURL: `${siteUrl}/datasets/00000000000000000000000000000000_0.zip?outSR=%7B%22wkid%22%3A3310%7D`,
+          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.zip?outSR=%7B%22wkid%22%3A3310%7D`,
         },
       ],
       spatial: '-123.8832,35.0024,-118.3281,42.0122',
