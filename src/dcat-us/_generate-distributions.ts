@@ -14,7 +14,7 @@ export const DISTRIBUTION_DEPENDENCIES = [
 /*
 * Generate DCAT Distributions
 */
-export function _generateDistributions (dataset: any, landingPage: string) {
+export function _generateDistributions (dataset: any, landingPage: string, downloadLink: string) {
   const distributionFns = [
     getHubLandingPageDistribution,
     getEsriGeoServiceDistribution
@@ -44,8 +44,9 @@ export function _generateDistributions (dataset: any, landingPage: string) {
 
   const params: DistributionParameters = {
     landingPage,
+    downloadLink,
     serviceUrl: dataset.url,
-    downloadLinkFor: getDownloadLinkFn(landingPage, dataset)
+    downloadLinkFor: getDownloadLinkFn(downloadLink, dataset)
   };
 
   const distributions = distributionFns.map(fn => fn(params));
@@ -69,7 +70,7 @@ function isProxiedCSV(dataset: any) {
 }
 
 // HUBJS CANDIDATE
-function getDownloadLinkFn (landingPage: string, dataset: any) {
+function getDownloadLinkFn (downloadLink: string, dataset: any) {
   const spatialReference = _.get(dataset, 'server.spatialReference');
 
   let queryStr = '';
@@ -83,7 +84,7 @@ function getDownloadLinkFn (landingPage: string, dataset: any) {
     }
   }
 
-  return (ext: string) => `${landingPage}.${ext}${queryStr}`;
+  return (ext: string) => `${downloadLink}.${ext}${queryStr}`;
 }
 
 function getCustomDistributions (dataset: any) {
@@ -111,6 +112,7 @@ function ogcUrl (datasetUrl: string, type: 'WMS'|'WFS' = 'WMS') {
 
 interface DistributionParameters {
   landingPage: string;
+  downloadLink: string;
   serviceUrl: string;
   downloadLinkFor: (type: string) => string;
 }
