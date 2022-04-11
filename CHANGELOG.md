@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.8.2
+Fixed
+- Fixed access urls for downloadable distributions [#22](https://github.com/koopjs/koop-output-dcat-us-11/pull/22)
+
 ## 1.8.1
 Fixed
 - Fixed license issue [#21](https://github.com/koopjs/koop-output-dcat-us-11/pull/21)
