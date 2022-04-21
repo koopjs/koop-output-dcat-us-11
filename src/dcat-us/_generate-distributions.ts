@@ -11,58 +11,92 @@ export const DISTRIBUTION_DEPENDENCIES = [
   'url',
 ];
 
+interface IGenerateDistributionParams {
+  hubDataset: Record<any, any>; // dataset from the Hub API
+  dcatDataset: Record<any, any>; // interpolated dataset from adlib
+  landingPage: string; // best guess at the canonical Hub URL for the dataset
+  downloadLink: string; // Hub download url for the dataset
+}
+
+/**
+ * Generates distributions for a given dataset.
+ * 
+ * A note about custom distributions. We now allow clients to define custom
+ * distributions on their DCAT Config objects via the `distribution` property. 
+ * 
+ * We will prepend the interpolated value of `distribution` onto the result if
+ * the value is an array. If the value not an array, it will be ignored.
+ * 
+ * @param {IGenerateDistributionParams} params 
+ * @returns all distributions
+ */
+export function _generateDistributions(params: IGenerateDistributionParams) {
+  const {
+    hubDataset, 
+    dcatDataset,
+    landingPage, 
+    downloadLink
+  } = params;
+
+  const customDistributions = _.isArray(dcatDataset.distribution) ? dcatDataset.distribution : [];
+  const standardDistributions = _generateStandardDistributions(hubDataset, landingPage, downloadLink);
+
+  return [...customDistributions, ...standardDistributions];
+}
+
 /*
-* Generate DCAT Distributions
+* Generate Standard DCAT Distributions
 */
-export function _generateDistributions (dataset: any, landingPage: string, downloadLink: string) {
+function _generateStandardDistributions (hubDataset: Record<any, any>, landingPage: string, downloadLink: string) {
+
   const distributionFns = [
     getHubLandingPageDistribution,
     getEsriGeoServiceDistribution
   ];
 
-  if (isProxiedCSV(dataset)) {
+  if (isProxiedCSV(hubDataset)) {
     distributionFns.push(getCSVDistribution);
   }
 
-  if (isLayer(dataset)) {
+  if (isLayer(hubDataset)) {
     distributionFns.push(getGeoJSONDistribution);
     distributionFns.push(getCSVDistribution);
 
-    if (_.has(dataset, 'layer.geometryType')) {
+    if (_.has(hubDataset, 'layer.geometryType')) {
       distributionFns.push(getKMLDistribution);
       distributionFns.push(getShapefileDistribution);
     }
   }
 
-  if (dataset.supportedExtensions?.includes(WFS_SERVER)) {
+  if (hubDataset.supportedExtensions?.includes(WFS_SERVER)) {
     distributionFns.push(getWFSDistribution);
   }
 
-  if (dataset.supportedExtensions?.includes(WMS_SERVER)) {
+  if (hubDataset.supportedExtensions?.includes(WMS_SERVER)) {
     distributionFns.push(getWMSDistribution);
   }
 
   const params: DistributionParameters = {
     landingPage,
     downloadLink,
-    serviceUrl: dataset.url,
-    downloadLinkFor: getDownloadLinkFn(downloadLink, dataset)
+    serviceUrl: hubDataset.url,
+    downloadLinkFor: getDownloadLinkFn(downloadLink, hubDataset)
   };
 
   const distributions = distributionFns.map(fn => fn(params));
-  const customDistributions = getCustomDistributions(dataset);
+  const metadataDistributions = getMetadataDistributions(hubDataset);
 
-  return [...distributions, ...customDistributions];
+  return [...distributions, ...metadataDistributions];
 }
 
-function isLayer (dataset: any) {
-  return /_/.test(dataset.id);
+function isLayer (hubDataset: any) {
+  return /_/.test(hubDataset.id);
 }
 
-function isProxiedCSV(dataset: any) {
+function isProxiedCSV(hubDataset: any) {
   const item = datasetToItem({
-    id: dataset.id,
-    attributes: dataset
+    id: hubDataset.id,
+    attributes: hubDataset
   } as DatasetResource);
   const requestOptions: IHubRequestOptions = { isPortal: false };
   
@@ -70,8 +104,8 @@ function isProxiedCSV(dataset: any) {
 }
 
 // HUBJS CANDIDATE
-function getDownloadLinkFn (downloadLink: string, dataset: any) {
-  const spatialReference = _.get(dataset, 'server.spatialReference');
+function getDownloadLinkFn (downloadLink: string, hubDataset: any) {
+  const spatialReference = _.get(hubDataset, 'server.spatialReference');
 
   let queryStr = '';
 
@@ -87,9 +121,9 @@ function getDownloadLinkFn (downloadLink: string, dataset: any) {
   return (ext: string) => `${downloadLink}.${ext}${queryStr}`;
 }
 
-function getCustomDistributions (dataset: any) {
+function getMetadataDistributions (hubDataset: any) {
   const distros = [];
-  const data = _.get(dataset, 'metadata.metadata.distInfo.distTranOps.onLineSrc');
+  const data = _.get(hubDataset, 'metadata.metadata.distInfo.distTranOps.onLineSrc');
 
   if (Array.isArray(data)) {
     for (const dist of data) {

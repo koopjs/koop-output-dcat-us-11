@@ -17,7 +17,6 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
     landingPage: 'SABOTAGE',
     webService: 'SABOTAGE',
     spatial: 'SABOTAGE',
-    distribution: 'SABOTAGE'
   };
   const template = buildDatasetTemplate(customizations);
   expect(template['@type']).not.toBe('SABOTAGE');
@@ -26,7 +25,6 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
   expect(template.landingPage).not.toBe('SABOTAGE');
   expect(template.webService).not.toBe('SABOTAGE');
   expect(template.spatial).not.toBe('SABOTAGE');
-  expect(template.distribution).not.toBe('SABOTAGE');
   expect(template.title).toBe('{{metadata.metadata.name||item.title}}')
   expect(template.contactPoint.fn).toBe('{{item.owner}}');
   expect(template.contactPoint.hasEmail).toBe('mailto:dcat.support@dc.gov');
@@ -798,7 +796,52 @@ describe('formatDcatDataset', () => {
     ).toBe(expectedKeyword);
   });
 
-  it('should create custom distribution when data is supplied', () => {
+  it('should prepend custom distribution if template.distribution is a non-empty array', () => {
+    const hubDataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      extent: {
+        coordinates: [
+          [-123.8832, 35.0024],
+          [-118.3281, 42.0122],
+        ],
+        type: 'envelope',
+      },
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+    };
+
+    const template = buildDatasetTemplate({
+      distribution: [{
+        interpolated: '{{name}}',
+        constant: 'myConstant',
+      }]
+    });
+
+    const expectedDistribution = {
+      interpolated: 'DCAT_Test',
+      constant: 'myConstant',
+    };
+
+    const actual = JSON.parse(formatDcatDataset(hubDataset, siteUrl, siteModel, template));
+    expect(actual.distribution.shift()).toEqual(expectedDistribution);
+  });
+
+  it('should create distributions from metadata when data is supplied', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
