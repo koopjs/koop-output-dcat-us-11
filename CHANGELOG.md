@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
+## 1.9.0
 Added
 - If the `distribution` property of a site's dcat config is an array, those custom distributions will now be prepended to the distributions list [#23](https://github.com/koopjs/koop-output-dcat-us-11/pull/23)
 
