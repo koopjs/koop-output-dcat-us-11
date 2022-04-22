@@ -6,5 +6,4 @@ export const nonEditableFieldPaths = [
   'webService',
   'spatial',
   'contactPoint[@type]',
-  'distribution'
 ];

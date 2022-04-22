@@ -48,7 +48,8 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
 
   const dcatDataset = Object.assign({}, defaultDataset, adlib(datasetTemplate, hubDataset, transforms));
 
-  setLeftoverInterpolations(dcatDataset);
+  // reset uninterpolated, non-editable fields since customers cannot remove them
+  resetUninterpolatedPaths(dcatDataset, nonEditableFieldPaths);
 
   if (!dcatDataset.license || dcatDataset.license.match(/{{.+}}/g)?.length) {
     dcatDataset.license = url || licenseInfo || '';
@@ -58,7 +59,12 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
     dcatDataset.keyword = ['ArcGIS Hub page'];
   }
 
-  dcatDataset.distribution = _generateDistributions(hubDataset, landingPage, downloadLink);
+  dcatDataset.distribution = _generateDistributions({
+    hubDataset, 
+    dcatDataset,
+    landingPage, 
+    downloadLink
+  });
 
   if (_.has(hubDataset, 'extent.coordinates')) {
     dcatDataset.spatial = hubDataset.extent.coordinates.join(',');
@@ -99,8 +105,12 @@ export function buildDatasetTemplate (customizations: DcatDatasetTemplate = {}):
   return Object.assign({}, baseDatasetTemplate, customConfig);
 }
 
-function setLeftoverInterpolations(dataset) {
-  nonEditableFieldPaths.forEach(path => {
+/**
+ * If the value at each field path is an uninterpolated adlib string,
+ * change the field to the empty string.
+ */
+function resetUninterpolatedPaths(dataset, fieldPaths) {
+  fieldPaths.forEach(path => {
     const value = _.get(dataset, path, '');
     if (typeof value === 'string' && value.match(/{{.+}}/)?.length) {
       _.set(dataset, path, '');
