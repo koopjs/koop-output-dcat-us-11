@@ -37,7 +37,7 @@ it('dcatHelper: it does not throw an error if there are no customizations', () =
 });
 
 it('dcatHelper: it does not throw an error customizations are null', () => {
-  const customizations = null;
+  const customizations = undefined;
   const template = buildDatasetTemplate(customizations);
   expect(template).toBeTruthy();
 });

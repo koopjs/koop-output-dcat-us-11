@@ -98,7 +98,7 @@ describe('Output Plugin', () => {
 
     const expressRequest: express.Request =
       plugin.model.pullStream.mock.calls[0][0];
-    expect(expressRequest.res.locals.searchRequest).toEqual({
+    expect(expressRequest.res?.locals.searchRequest).toEqual({
       filter: {
         group: [
           '3b9ffb00851f47dab74494018ffa00fb',
@@ -135,15 +135,15 @@ describe('Output Plugin', () => {
 
     const expressRequest: express.Request =
       localPlugin.model.pullStream.mock.calls[0][0];
-    expect(expressRequest.res.locals.searchRequest.options.portal).toBe(
+    expect(expressRequest.res?.locals.searchRequest.options.portal).toBe(
       qaPortal,
     );
   });
 
   it('Properly converts adlib path hierarchies to Hub API Fields', async () => {
     // Change fetchSite's return value to include a custom dcat config
-    const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel);
-    customConfigSiteModel.data.feeds = {
+    const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+    (customConfigSiteModel.data || {}).feeds = {
       dcatUS11: {
         "title": "{{name}}",
         "description": "{{description}}",
@@ -301,8 +301,8 @@ describe('Output Plugin', () => {
 
     it('Properly passes a site\'s custom dcat configurations to getDataStreamDcatUs11 when no dcatConfig is provided', async () => {
       // Change fetchSite's return value to include a custom dcat config
-      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel);
-      customConfigSiteModel.data.feeds = {
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+      (customConfigSiteModel.data || {}).feeds = {
         dcatUS11: {
           "title": "{{name}}",
           "description": "{{description}}",
@@ -326,7 +326,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data.feeds.dcatUS11);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
         });
     });
 
@@ -414,8 +414,8 @@ describe('Output Plugin', () => {
 
     it('Uses the siteHostName instead of the dataset id', async () => {
       // Change fetchSite's return value to include a custom dcat config
-      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel);
-      customConfigSiteModel.data.feeds = {
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+      (customConfigSiteModel.data || {}).feeds = {
         dcatUS11: {
           "title": "{{default.name}}",
           "description": "{{default.description}}",
@@ -438,7 +438,7 @@ describe('Output Plugin', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
-          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith('css-monster-qa-pre-hub.hubqa.arcgis.com', customConfigSiteModel, customConfigSiteModel.data.feeds.dcatUS11);
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith('css-monster-qa-pre-hub.hubqa.arcgis.com', customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
         });
     });
   });
