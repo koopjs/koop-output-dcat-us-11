@@ -16,7 +16,6 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
     identifier: 'SABOTAGE',
     landingPage: 'SABOTAGE',
     webService: 'SABOTAGE',
-    spatial: 'SABOTAGE',
   };
   const template = buildDatasetTemplate(customizations);
   expect(template['@type']).not.toBe('SABOTAGE');
@@ -24,7 +23,6 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
   expect(template.identifier).not.toBe('SABOTAGE');
   expect(template.landingPage).not.toBe('SABOTAGE');
   expect(template.webService).not.toBe('SABOTAGE');
-  expect(template.spatial).not.toBe('SABOTAGE');
   expect(template.title).toBe('{{metadata.metadata.name||item.title}}')
   expect(template.contactPoint.fn).toBe('{{item.owner}}');
   expect(template.contactPoint.hasEmail).toBe('mailto:dcat.support@dc.gov');
@@ -944,7 +942,7 @@ describe('formatDcatDataset', () => {
     }
   });
 
-  it('overwrites critical fields without values to an empty string', () => {
+  it('does not define spatial property when template does not specify it', () => {
     const dataset = {
       owner: 'fpgis.CALFIRE',
       created: 1570747289000,
@@ -977,11 +975,275 @@ describe('formatDcatDataset', () => {
       },
     };
 
-    try {
-      const formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
-      expect(formatted.spatial).toEqual('');
-    } catch {
-      fail('Should not throw!');
-    }
+    const formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: undefined })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+  });
+
+  it('does not define spatial property adlib cannot find value to inject', () => {
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      metadata: {
+        metadata: {
+          distInfo: {
+            distTranOps: {
+              onLineSrc: {
+                linkage: 'https://foobar.com',
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{orgExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+  });
+
+  it('injects a spatial property equal to a hardcoded value', () => {
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      metadata: {
+        metadata: {
+          distInfo: {
+            distTranOps: {
+              onLineSrc: {
+                linkage: 'https://foobar.com',
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: 'hardcoded' })));
+    expect(formatted.spatial).toEqual('hardcoded');
+  });
+
+  it('injects a spatial property equal to a fallback hardcoded value', () => {
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      metadata: {
+        metadata: {
+          distInfo: {
+            distTranOps: {
+              onLineSrc: {
+                linkage: 'https://foobar.com',
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent || hardcoded}}' })));
+    expect(formatted.spatial).toEqual('hardcoded');
+  });
+
+  it('does not define spatial property if injected property is not a valid bbox', () => {
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      metadata: {
+        metadata: {
+          distInfo: {
+            distTranOps: {
+              onLineSrc: {
+                linkage: 'https://foobar.com',
+              },
+            },
+          },
+        },
+      },
+    } as any;
+  
+    dataset.itemExtent = [];
+    let formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[]];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[], []];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[1], []];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[1], [2]];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[1, 1], [2]];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[1], [2, 2]];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [['1', 1], [2, 2]];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[1, '1'], [2, 2]];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[1, 1], ['2', 2]];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+
+    dataset.itemExtent = [[1, 1], [2, '2']];
+    formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.hasOwnProperty('spatial')).toBeFalsy();
+  });
+
+  it('injects spatial property from a datasets itemExtent', () => {
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      itemExtent: [[1,1], [2,2]],
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      metadata: {
+        metadata: {
+          distInfo: {
+            distTranOps: {
+              onLineSrc: {
+                linkage: 'https://foobar.com',
+              },
+            },
+          },
+        },
+      },
+    } as any;
+  
+    const formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{itemExtent}}' })));
+    expect(formatted.spatial).toEqual('1.0000,1.0000,2.0000,2.0000');
+  });
+
+  it('injects spatial property from a datasets valid extent', () => {
+    const dataset = {
+      owner: 'fpgis.CALFIRE',
+      created: 1570747289000,
+      modified: 1570747379000,
+      tags: ['Uno', 'Dos', 'Tres'],
+      extent: {
+        type: 'envelope',
+        coordinates: [[1,1], [2,2]]
+      },
+      name: 'DCAT_Test',
+      description: 'Some Description',
+      source: 'Test Source',
+      id: '00000000000000000000000000000000_0',
+      type: 'Feature Layer',
+      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
+      layer: {
+        geometryType: 'esriGeometryPolygon',
+      },
+      server: {
+        spatialReference: {
+          wkid: 3310,
+        },
+      },
+      metadata: {
+        metadata: {
+          distInfo: {
+            distTranOps: {
+              onLineSrc: {
+                linkage: 'https://foobar.com',
+              },
+            },
+          },
+        },
+      },
+    } as any;
+  
+    const formatted = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate({ spatial: '{{extent}}' })));
+    expect(formatted.spatial).toEqual('1.0000,1.0000,2.0000,2.0000');
   });
 });

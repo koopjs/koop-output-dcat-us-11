@@ -129,7 +129,7 @@ function computeSpatialProperty(datasetTemplate, dcatDataset) {
   if (!datasetTemplate.spatial || !dcatDataset.spatial) return undefined;
 
   // Adlib returns the input for a templated value when it cannot resolve a non-falsey value
-  if (datasetTemplate.spatial === dcatDataset.spatial) return undefined;
+  if (typeof dcatDataset.spatial === 'string' && dcatDataset.spatial.match(/{{.+}}/)?.length) return undefined;
 
   // Get coordinates from valid GeoJSON bbox envelope or raw coordinates
   let coordinates;
