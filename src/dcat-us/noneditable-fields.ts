@@ -4,6 +4,5 @@ export const nonEditableFieldPaths = [
   'identifier',
   'landingPage',
   'webService',
-  'spatial',
   'contactPoint[@type]',
 ];

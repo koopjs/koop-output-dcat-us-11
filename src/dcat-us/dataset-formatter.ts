@@ -3,7 +3,7 @@ import { adlib, TransformsList } from 'adlib';
 import { isPage } from '@esri/hub-sites';
 import { baseDatasetTemplate } from './base-dataset-template';
 import { _generateDistributions } from './_generate-distributions';
-import { cloneObject, DatasetResource, datasetToContent, getContentSiteUrls, IModel } from '@esri/hub-common';
+import { cloneObject, DatasetResource, datasetToContent, getContentSiteUrls, IModel, isBBox } from '@esri/hub-common';
 import { IItem } from '@esri/arcgis-rest-portal';
 import { nonEditableFieldPaths } from './noneditable-fields';
 
@@ -66,14 +66,17 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
     downloadLink
   });
 
-  if (_.has(hubDataset, 'extent.coordinates')) {
-    dcatDataset.spatial = hubDataset.extent.coordinates.join(',');
+  const spatial = computeSpatialProperty(datasetTemplate, dcatDataset);
+  if (spatial) {
+    dcatDataset.spatial = spatial;
 
     // https://project-open-data.cio.gov/v1.1/schema/#theme
     // allow theme to be overridden
     if (_.isEmpty(datasetTemplate.theme)) {
       dcatDataset.theme = ['geospatial'];
     }
+  } else if (dcatDataset.spatial) {
+    delete dcatDataset.spatial;
   }
 
   return indent(JSON.stringify(dcatDataset, null, '\t'), 2);
@@ -116,4 +119,36 @@ function resetUninterpolatedPaths(dataset, fieldPaths) {
       _.set(dataset, path, '');
     }
   });
+}
+
+/**
+ * Determines what to put in the spatial property based on template, raw dataset, and adlib-ed dataset
+ */
+function computeSpatialProperty(datasetTemplate, dcatDataset) {
+  // Either the template does not have spatial key set or somehow adlib does not inject, so don't set
+  if (!datasetTemplate.spatial || !dcatDataset.spatial) return undefined;
+
+  // Adlib returns the input for a templated value when it cannot resolve a non-falsey value
+  if (typeof dcatDataset.spatial === 'string' && dcatDataset.spatial.match(/{{.+}}/)?.length) return undefined;
+
+  // Get coordinates from valid GeoJSON bbox envelope or raw coordinates
+  let coordinates;
+  if (dcatDataset.spatial.type === 'envelope' && Array.isArray(dcatDataset.spatial.coordinates)) {
+    coordinates = dcatDataset.spatial.coordinates;
+  } else if (Array.isArray(dcatDataset.spatial)) {
+    coordinates = dcatDataset.spatial;
+  }
+
+  // Just return what adlib returned if coordinates cannot be obtained
+  if (!coordinates) return dcatDataset.spatial;
+
+  // If valid bbox coordinates return stringified
+  if (!isBBox(coordinates)) return undefined;
+  if (coordinates.length != 2 || coordinates[0].length != 2 || coordinates[1].length != 2) {
+    return undefined;
+  }
+  if (!_.isNumber(coordinates[0][0]) || !_.isNumber(coordinates[0][1]) || !_.isNumber(coordinates[1][0]) || !_.isNumber(coordinates[1][1])) {
+    return undefined;
+  }
+  return `${coordinates[0][0].toFixed(4)},${coordinates[0][1].toFixed(4)},${coordinates[1][0].toFixed(4)},${coordinates[1][1].toFixed(4)}`;
 }

@@ -54,7 +54,7 @@ describe('generating DCAT-US 1.1 feed', () => {
     expect(chk1.publisher).toEqual({ name: 'QA Premium Alpha Hub' });
     expect(chk1.contactPoint).toEqual({ '@type': 'vcard:Contact', fn: 'thervey_qa_pre_a_hub' });
     expect(chk1.accessLevel).toBe('public');
-    expect(chk1.spatial).toBe('-121.118,38.7754,-119.009,39.359');
+    expect(chk1.spatial).toBe('-121.1180,38.7754,-119.0090,39.3590');
     expect(chk1.theme).toEqual(['geospatial']);
 
     expect(chk1.distribution).toBeInstanceOf(Array);
@@ -86,7 +86,7 @@ describe('generating DCAT-US 1.1 feed', () => {
     expect(chk1.publisher).toEqual({ name: 'QA Premium Alpha Hub' });
     expect(chk1.contactPoint).toEqual({ '@type': 'vcard:Contact', fn: 'thervey_qa_pre_a_hub' });
     expect(chk1.accessLevel).toBe('public');
-    expect(chk1.spatial).toBe('-121.118,38.7754,-119.009,39.359');
+    expect(chk1.spatial).toBe('-121.1180,38.7754,-119.0090,39.3590');
     expect(chk1.theme).toEqual(['geospatial']);
 
     expect(chk1.distribution).toBeInstanceOf(Array);
@@ -128,7 +128,7 @@ describe('generating DCAT-US 1.1 feed', () => {
       fn: 'thervey_qa_pre_a_hub' 
     });
     expect(chk1.accessLevel).toBe('public');
-    expect(chk1.spatial).toBe('-121.118,38.7754,-119.009,39.359');
+    expect(chk1.spatial).toBe('-121.1180,38.7754,-119.0090,39.3590');
     expect(chk1.theme).toEqual(['geospatial']);
 
     expect(chk1.distribution).toBeInstanceOf(Array);
