@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.10.0
+Added
+- Capability to customize the spatial property[#25](https://github.com/koopjs/koop-output-dcat-us-11/pull/25)
+
 ## 1.9.1
 Fixed
 - Fixed issue with additional resources in hub.js dependency [#24](https://github.com/koopjs/koop-output-dcat-us-11/pull/24)
