@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.11.0
+Added
+- Added new route[#26](https://github.com/koopjs/koop-output-dcat-us-11/pull/26)
+
 ## 1.10.0
 Added
 - Capability to customize the spatial property[#25](https://github.com/koopjs/koop-output-dcat-us-11/pull/25)
