@@ -71,6 +71,11 @@ export = class OutputDcatUs11 {
       methods: ['get'],
       handler: 'serve',
     },
+    {
+      path: '/data.json',
+      methods: ['get'],
+      handler: 'serve',
+    },
   ];
 
   model: any;
