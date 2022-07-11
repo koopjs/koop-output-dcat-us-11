@@ -74,6 +74,11 @@ describe('Output Plugin', () => {
         methods: ['get'],
         handler: 'serve',
       },
+      {
+        path: '/data.json',
+        methods: ['get'],
+        handler: 'serve',
+      },
     ]);
   });
 
