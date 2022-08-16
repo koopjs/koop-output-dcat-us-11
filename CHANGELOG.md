@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## Unreleased
+Added
+- identifier is now a customizable attribute and defaults to the AGO home page of an item [#27](https://github.com/koopjs/koop-output-dcat-us-11/pull/27)
+
 ## 1.11.0
 Added
 - Added new route[#26](https://github.com/koopjs/koop-output-dcat-us-11/pull/26)
