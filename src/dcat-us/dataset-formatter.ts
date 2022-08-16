@@ -3,22 +3,31 @@ import { adlib, TransformsList } from 'adlib';
 import { isPage } from '@esri/hub-sites';
 import { baseDatasetTemplate } from './base-dataset-template';
 import { _generateDistributions } from './_generate-distributions';
-import { cloneObject, DatasetResource, datasetToContent, getContentSiteUrls, IModel, isBBox } from '@esri/hub-common';
+import { cloneObject, DatasetResource, datasetToContent, getContentSiteUrls, IModel, isBBox, parseDatasetId } from '@esri/hub-common';
 import { IItem } from '@esri/arcgis-rest-portal';
 import { nonEditableFieldPaths } from './noneditable-fields';
+import { portalUrl } from '../config';
 
 // TODO - use real type for hubDataset when it gets defined in Hub.js
 type HubDatasetAttributes = Record<string, any>;
 export type DcatDatasetTemplate = Record<string, any>;
 
 export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: string, siteModel: IModel, datasetTemplate: DcatDatasetTemplate) {
+  // Download and Hub Links must be generated from Content
   const content = datasetToContent({ 
     id: hubDataset.id, 
     attributes: hubDataset
   } as DatasetResource);
   const { relative: relativePath } = getContentSiteUrls(content, siteModel);
-  const landingPage = siteUrl.startsWith('https://') ? siteUrl + relativePath : `https://${siteUrl}${relativePath}`;
+  const hubLandingPage = siteUrl.startsWith('https://') ? siteUrl + relativePath : `https://${siteUrl}${relativePath}`;
   const downloadLink = siteUrl.startsWith('https://') ? `${siteUrl}/datasets/${content.identifier}` : `https://${siteUrl}/datasets/${content.identifier}`;
+
+  // AGO links must be generated from Dataset Records
+  const { itemId, layerId } = parseDatasetId(hubDataset.id);
+  let agoLandingPage = `${portalUrl}/home/item.html?id=${itemId}`;
+  if (layerId) {
+    agoLandingPage += `&sublayer=${layerId}`;
+  }
 
   const { 
     structuredLicense: { url = null } = {},
@@ -32,8 +41,8 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
 
   const defaultDataset = {
     '@type': 'dcat:Dataset',
-    identifier: landingPage,
-    landingPage
+    identifier: agoLandingPage,
+    landingPage: hubLandingPage
   };
 
   const transforms: TransformsList = {
@@ -62,7 +71,7 @@ export function formatDcatDataset (hubDataset: HubDatasetAttributes, siteUrl: st
   dcatDataset.distribution = _generateDistributions({
     hubDataset, 
     dcatDataset,
-    landingPage, 
+    landingPage: hubLandingPage, 
     downloadLink
   });
 

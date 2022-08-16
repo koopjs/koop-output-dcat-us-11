@@ -13,14 +13,12 @@ it('dcatHelper: it does not allow customizations to overwrite critical fields', 
       fn: '{{item.owner}}',
       hasEmail: 'mailto:dcat.support@dc.gov',
     },
-    identifier: 'SABOTAGE',
     landingPage: 'SABOTAGE',
     webService: 'SABOTAGE',
   };
   const template = buildDatasetTemplate(customizations);
   expect(template['@type']).not.toBe('SABOTAGE');
   expect(template.contactPoint['@type']).not.toBe('SABOTAGE');
-  expect(template.identifier).not.toBe('SABOTAGE');
   expect(template.landingPage).not.toBe('SABOTAGE');
   expect(template.webService).not.toBe('SABOTAGE');
   expect(template.title).toBe('{{metadata.metadata.name||item.title}}')
@@ -60,7 +58,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -77,7 +75,7 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
+      identifier:'https://www.arcgis.com/home/item.html?id=0&sublayer=0',
       license: '',
       landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
@@ -164,7 +162,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -176,7 +174,7 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
+      identifier: 'https://www.arcgis.com/home/item.html?id=0&sublayer=0',
       license: '',
       landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
@@ -255,7 +253,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -267,7 +265,7 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
+      identifier: 'https://www.arcgis.com/home/item.html?id=0&sublayer=0',
       license: '',
       landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
@@ -348,7 +346,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -360,7 +358,7 @@ describe('formatDcatDataset', () => {
     };
     const expected = {
       '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
+      identifier: 'https://www.arcgis.com/home/item.html?id=0&sublayer=0',
       license: '',
       landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
       title: 'DCAT_Test',
@@ -425,101 +423,6 @@ describe('formatDcatDataset', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('should render links with the correct SRID', () => {
-    const dataset = {
-      owner: 'fpgis.CALFIRE',
-      created: 1570747289000,
-      modified: 1570747379000,
-      tags: ['Uno', 'Dos', 'Tres'],
-      extent: {
-        coordinates: [
-          [-123.8832, 35.0024],
-          [-118.3281, 42.0122],
-        ],
-        type: 'envelope',
-      },
-      name: 'DCAT_Test',
-      description: 'Some Description',
-      source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
-      type: 'Feature Layer',
-      url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
-      layer: {
-        geometryType: 'esriGeometryPolygon',
-      },
-      server: {
-        spatialReference: {
-          wkid: 3310,
-        },
-      },
-      identifier: 'CALFIRE::DCAT_Test',
-      slug: 'CALFIRE::DCAT_Test'
-    };
-    const expected = {
-      '@type': 'dcat:Dataset',
-      identifier: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
-      license: '',
-      landingPage: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
-      title: 'DCAT_Test',
-      description: 'Some Description',
-      keyword: ['Uno', 'Dos', 'Tres'],
-      issued: '2019-10-10T22:41:29.000Z',
-      modified: '2019-10-10T22:42:59.000Z',
-      publisher: { name: 'Test Source' },
-      contactPoint: { '@type': 'vcard:Contact', fn: 'fpgis.CALFIRE' },
-      accessLevel: 'public',
-      distribution: [
-        {
-          '@type': 'dcat:Distribution',
-          title: 'ArcGIS Hub Dataset',
-          format: 'Web Page',
-          mediaType: 'text/html',
-          accessURL: `${siteUrl}/maps/CALFIRE::DCAT_Test`,
-        },
-        {
-          '@type': 'dcat:Distribution',
-          title: 'ArcGIS GeoService',
-          format: 'ArcGIS GeoServices REST API',
-          mediaType: 'application/json',
-          accessURL:
-            'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
-        },
-        {
-          '@type': 'dcat:Distribution',
-          title: 'GeoJSON',
-          format: 'GeoJSON',
-          mediaType: 'application/vnd.geo+json',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.geojson?outSR=%7B%22wkid%22%3A3310%7D`,
-        },
-        {
-          '@type': 'dcat:Distribution',
-          title: 'CSV',
-          format: 'CSV',
-          mediaType: 'text/csv',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.csv?outSR=%7B%22wkid%22%3A3310%7D`,
-        },
-        {
-          '@type': 'dcat:Distribution',
-          title: 'KML',
-          format: 'KML',
-          mediaType: 'application/vnd.google-earth.kml+xml',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.kml?outSR=%7B%22wkid%22%3A3310%7D`,
-        },
-        {
-          '@type': 'dcat:Distribution',
-          title: 'Shapefile',
-          format: 'ZIP',
-          mediaType: 'application/zip',
-          accessURL: `${siteUrl}/datasets/CALFIRE::DCAT_Test.zip?outSR=%7B%22wkid%22%3A3310%7D`,
-        },
-      ],
-      spatial: '-123.8832,35.0024,-118.3281,42.0122',
-      theme: ['geospatial'],
-    };
-    const actual = JSON.parse(formatDcatDataset(dataset, siteUrl, siteModel, buildDatasetTemplate()));
-    expect(actual).toEqual(expected);
-  });
-
   it('license should be editable with templated value', () => {
     const template = buildDatasetTemplate();
     template.license = '{{owner}}'
@@ -538,7 +441,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -576,7 +479,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -612,7 +515,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -648,7 +551,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -684,7 +587,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -718,7 +621,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -767,7 +670,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
         geometryType: 'esriGeometryPolygon',
@@ -810,7 +713,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -855,7 +758,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -911,7 +814,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -951,7 +854,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -988,7 +891,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -1025,7 +928,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -1062,7 +965,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -1099,7 +1002,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -1178,7 +1081,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {
@@ -1219,7 +1122,7 @@ describe('formatDcatDataset', () => {
       name: 'DCAT_Test',
       description: 'Some Description',
       source: 'Test Source',
-      id: '00000000000000000000000000000000_0',
+      id: '0_0',
       type: 'Feature Layer',
       url: 'https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/DCAT_Test/FeatureServer/0',
       layer: {

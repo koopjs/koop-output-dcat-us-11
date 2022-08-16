@@ -43,7 +43,7 @@ describe('generating DCAT-US 1.1 feed', () => {
     const chk1 = feed['dataset'][0];
 
     expect(chk1['@type']).toBe('dcat:Dataset');
-    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
+    expect(chk1.identifier).toBe('https://www.arcgis.com/home/item.html?id=f4bcc1035b7d46cba95e977f4affb6be&sublayer=0');
     expect(chk1.license).toBe('');
     expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
     expect(chk1.title).toBe('Tahoe places of interest');
@@ -74,7 +74,7 @@ describe('generating DCAT-US 1.1 feed', () => {
     const chk1 = feed['dataset'][0];
 
     expect(chk1['@type']).toBe('dcat:Dataset');
-    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
+    expect(chk1.identifier).toBe('https://www.arcgis.com/home/item.html?id=f4bcc1035b7d46cba95e977f4affb6be&sublayer=0');
     expect(chk1.license).toBe('');
     expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
     expect(chk1.title).toBe('Tahoe places of interest');
@@ -99,7 +99,6 @@ describe('generating DCAT-US 1.1 feed', () => {
       [datasetFromApi],
       {
         '@type': '{{name}}',
-        identifier: '{{name}}',
         landingPage: '{{name}}',
         webService: '{{name}}',
         distribution: '{{name}}',
@@ -113,7 +112,7 @@ describe('generating DCAT-US 1.1 feed', () => {
     const chk1 = feed['dataset'][0];
 
     expect(chk1['@type']).toBe('dcat:Dataset');
-    expect(chk1.identifier).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
+    expect(chk1.identifier).toBe('https://www.arcgis.com/home/item.html?id=f4bcc1035b7d46cba95e977f4affb6be&sublayer=0');
     expect(chk1.license).toBe('');
     expect(chk1.webService).toBe(undefined);
     expect(chk1.landingPage).toBe('https://css-monster-qa-pre-hub.hubqa.arcgis.com/datasets/qa-pre-a-hub::tahoe-places-of-interest');
