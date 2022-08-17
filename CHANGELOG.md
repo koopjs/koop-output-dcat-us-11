@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
+## 1.12.0
 Added
 - identifier is now a customizable attribute and defaults to the AGO home page of an item [#27](https://github.com/koopjs/koop-output-dcat-us-11/pull/27)
 
