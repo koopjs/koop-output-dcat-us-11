@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import * as config from 'config';
 import * as _ from 'lodash';
 
 import { fetchSite, getHubApiUrl, getPortalApiUrl, hubApiRequest, IHubRequestOptions, RemoteServerError } from '@esri/hub-common';
@@ -7,10 +6,7 @@ import { IContentSearchRequest } from '@esri/hub-search';
 
 import { version } from '../package.json';
 import { getDataStreamDcatUs11 } from './dcat-us';
-
-const portalUrl = config.has('arcgisPortal')
-  ? (config.get('arcgisPortal') as string)
-  : 'https://www.arcgis.com';
+import { portalUrl } from './config';
 
 /**
   * This function converts adlib'ed fields from the specified catalog into valid API fields used
