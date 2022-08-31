@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.13.0
+Added
+- ability to sort and query the feed using free text [#28](https://github.com/koopjs/koop-output-dcat-us-11/pull/28)
+
 ## 1.12.0
 Added
 - identifier is now a customizable attribute and defaults to the AGO home page of an item [#27](https://github.com/koopjs/koop-output-dcat-us-11/pull/27)
