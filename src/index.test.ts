@@ -449,16 +449,15 @@ describe('Output Plugin', () => {
       await request(app)
         .get('/dcat')
         .set('host', siteHostName)
-        .query({ q: 'free text' })
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
           expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
-          expect(servedRequest.res.locals.searchRequest.filter.terms).toEqual('free text');
+          expect(servedRequest.res.locals.searchRequest.filter.terms).toEqual(undefined);
         });
     });
 
-    it('Constructs a search request using a search text', async () => {
+    it('Constructs a search request with a search text', async () => {
       // Change fetchSite's return value to include a custom dcat config
       const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
       (customConfigSiteModel.data || {}).feeds = {
@@ -490,11 +489,12 @@ describe('Output Plugin', () => {
       await request(app)
         .get('/dcat')
         .set('host', siteHostName)
+        .query({ q: 'free text' })
         .expect('Content-Type', /application\/json/)
         .expect(200)
         .expect(() => {
           expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
-          expect(servedRequest.res.locals.searchRequest.filter.terms).toEqual(undefined);
+          expect(servedRequest.res.locals.searchRequest.filter.terms).toEqual('free text');
         });
     });
 
