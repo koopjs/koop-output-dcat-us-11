@@ -164,14 +164,23 @@ export = class OutputDcatUs11 {
       filter: {
         group: catalog.groups,
         orgid: catalog.orgId,
-        terms: _.get(req, 'query.q', undefined),
       },
       options: {
         portal: portalUrl,
         fields: Array.isArray(fields) && fields.length > 0 ? fields.join(',') : undefined,
-        ...(this.getSortOptions(_.get(req, 'query.sort', undefined)) || {}),
       },
     };
+
+    if (typeof _.get(req, 'query.q') === 'string' && req.query.q.length > 0) {
+      searchRequest.filter.terms = req.query.q as string;
+    }
+
+    const sortOptions = this.getSortOptions(_.get(req, 'query.sort', undefined));
+    if (sortOptions) {
+      searchRequest.options.sortField = sortOptions.sortField;
+      searchRequest.options.sortOrder = sortOptions.sortOrder;
+    }
+
     return searchRequest;
   }
 
