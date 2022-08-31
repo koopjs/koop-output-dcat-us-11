@@ -417,6 +417,254 @@ describe('Output Plugin', () => {
         });
     });
 
+    it('Constructs a search request without a search text', async () => {
+      // Change fetchSite's return value to include a custom dcat config
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+      (customConfigSiteModel.data || {}).feeds = {
+        dcatUS11: {
+          "title": "{{name}}",
+          "description": "{{description}}",
+          "keyword": "{{tags}}",
+          "issued": "{{created:toISO}}",
+          "modified": "{{modified:toISO}}",
+          "publisher": { "name": "{{source}}" },
+          "contactPoint": {
+            "fn": "{{owner}}",
+            "hasEmail": "{{orgContactEmail}}"
+          },
+          "landingPage": "some silly standard",
+        }
+      }
+      mockFetchSite.mockResolvedValue(customConfigSiteModel);
+      [plugin, app] = buildPluginAndApp();
+
+      // A hack to extract the request object that is actually served
+      let servedRequest: any;
+      app._router.stack.pop();
+      app.get('/dcat', (async (req, res) => {
+        servedRequest = req;
+        await plugin.serve.bind(plugin)(req, res);
+      }));
+
+      await request(app)
+        .get('/dcat')
+        .set('host', siteHostName)
+        .expect('Content-Type', /application\/json/)
+        .expect(200)
+        .expect(() => {
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
+          expect(servedRequest.res.locals.searchRequest.filter.terms).toEqual(undefined);
+        });
+    });
+
+    it('Constructs a search request with a search text', async () => {
+      // Change fetchSite's return value to include a custom dcat config
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+      (customConfigSiteModel.data || {}).feeds = {
+        dcatUS11: {
+          "title": "{{name}}",
+          "description": "{{description}}",
+          "keyword": "{{tags}}",
+          "issued": "{{created:toISO}}",
+          "modified": "{{modified:toISO}}",
+          "publisher": { "name": "{{source}}" },
+          "contactPoint": {
+            "fn": "{{owner}}",
+            "hasEmail": "{{orgContactEmail}}"
+          },
+          "landingPage": "some silly standard",
+        }
+      }
+      mockFetchSite.mockResolvedValue(customConfigSiteModel);
+      [plugin, app] = buildPluginAndApp();
+
+      // A hack to extract the request object that is actually served
+      let servedRequest: any;
+      app._router.stack.pop();
+      app.get('/dcat', (async (req, res) => {
+        servedRequest = req;
+        await plugin.serve.bind(plugin)(req, res);
+      }));
+
+      await request(app)
+        .get('/dcat')
+        .set('host', siteHostName)
+        .query({ q: 'free text' })
+        .expect('Content-Type', /application\/json/)
+        .expect(200)
+        .expect(() => {
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
+          expect(servedRequest.res.locals.searchRequest.filter.terms).toEqual('free text');
+        });
+    });
+
+    it('Constructs a search request without a sort', async () => {
+      // Change fetchSite's return value to include a custom dcat config
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+      (customConfigSiteModel.data || {}).feeds = {
+        dcatUS11: {
+          "title": "{{name}}",
+          "description": "{{description}}",
+          "keyword": "{{tags}}",
+          "issued": "{{created:toISO}}",
+          "modified": "{{modified:toISO}}",
+          "publisher": { "name": "{{source}}" },
+          "contactPoint": {
+            "fn": "{{owner}}",
+            "hasEmail": "{{orgContactEmail}}"
+          },
+          "landingPage": "some silly standard",
+        }
+      }
+      mockFetchSite.mockResolvedValue(customConfigSiteModel);
+      [plugin, app] = buildPluginAndApp();
+
+      // A hack to extract the request object that is actually served
+      let servedRequest: any;
+      app._router.stack.pop();
+      app.get('/dcat', (async (req, res) => {
+        servedRequest = req;
+        await plugin.serve.bind(plugin)(req, res);
+      }));
+
+      await request(app)
+        .get('/dcat')
+        .set('host', siteHostName)
+        .expect('Content-Type', /application\/json/)
+        .expect(200)
+        .expect(() => {
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
+          expect(servedRequest.res.locals.searchRequest.options.sortField).toEqual(undefined);
+          expect(servedRequest.res.locals.searchRequest.options.sortOrder).toEqual(undefined);
+        });
+    });
+
+    it('Constructs a search request using a sort of only one input component', async () => {
+      // Change fetchSite's return value to include a custom dcat config
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+      (customConfigSiteModel.data || {}).feeds = {
+        dcatUS11: {
+          "title": "{{name}}",
+          "description": "{{description}}",
+          "keyword": "{{tags}}",
+          "issued": "{{created:toISO}}",
+          "modified": "{{modified:toISO}}",
+          "publisher": { "name": "{{source}}" },
+          "contactPoint": {
+            "fn": "{{owner}}",
+            "hasEmail": "{{orgContactEmail}}"
+          },
+          "landingPage": "some silly standard",
+        }
+      }
+      mockFetchSite.mockResolvedValue(customConfigSiteModel);
+      [plugin, app] = buildPluginAndApp();
+
+      // A hack to extract the request object that is actually served
+      let servedRequest: any;
+      app._router.stack.pop();
+      app.get('/dcat', (async (req, res) => {
+        servedRequest = req;
+        await plugin.serve.bind(plugin)(req, res);
+      }));
+
+      await request(app)
+        .get('/dcat')
+        .set('host', siteHostName)
+        .query({ sort: 'Date Created' })
+        .expect('Content-Type', /application\/json/)
+        .expect(200)
+        .expect(() => {
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
+          expect(servedRequest.res.locals.searchRequest.options.sortField).toEqual('created');
+          expect(servedRequest.res.locals.searchRequest.options.sortOrder).toEqual('desc');
+        });
+    });
+
+    it('Constructs a search request using a sort of only two input components', async () => {
+      // Change fetchSite's return value to include a custom dcat config
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+      (customConfigSiteModel.data || {}).feeds = {
+        dcatUS11: {
+          "title": "{{name}}",
+          "description": "{{description}}",
+          "keyword": "{{tags}}",
+          "issued": "{{created:toISO}}",
+          "modified": "{{modified:toISO}}",
+          "publisher": { "name": "{{source}}" },
+          "contactPoint": {
+            "fn": "{{owner}}",
+            "hasEmail": "{{orgContactEmail}}"
+          },
+          "landingPage": "some silly standard",
+        }
+      }
+      mockFetchSite.mockResolvedValue(customConfigSiteModel);
+      [plugin, app] = buildPluginAndApp();
+
+      // A hack to extract the request object that is actually served
+      let servedRequest: any;
+      app._router.stack.pop();
+      app.get('/dcat', (async (req, res) => {
+        servedRequest = req;
+        await plugin.serve.bind(plugin)(req, res);
+      }));
+
+      await request(app)
+        .get('/dcat')
+        .set('host', siteHostName)
+        .query({ sort: 'Date Modified|modified' })
+        .expect('Content-Type', /application\/json/)
+        .expect(200)
+        .expect(() => {
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
+          expect(servedRequest.res.locals.searchRequest.options.sortField).toEqual('modified');
+          expect(servedRequest.res.locals.searchRequest.options.sortOrder).toEqual('desc');
+        });
+    });
+
+    it('Constructs a search request using a sort of three input components', async () => {
+      // Change fetchSite's return value to include a custom dcat config
+      const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;
+      (customConfigSiteModel.data || {}).feeds = {
+        dcatUS11: {
+          "title": "{{name}}",
+          "description": "{{description}}",
+          "keyword": "{{tags}}",
+          "issued": "{{created:toISO}}",
+          "modified": "{{modified:toISO}}",
+          "publisher": { "name": "{{source}}" },
+          "contactPoint": {
+            "fn": "{{owner}}",
+            "hasEmail": "{{orgContactEmail}}"
+          },
+          "landingPage": "some silly standard",
+        }
+      }
+      mockFetchSite.mockResolvedValue(customConfigSiteModel);
+      [plugin, app] = buildPluginAndApp();
+
+      // A hack to extract the request object that is actually served
+      let servedRequest: any;
+      app._router.stack.pop();
+      app.get('/dcat', (async (req, res) => {
+        servedRequest = req;
+        await plugin.serve.bind(plugin)(req, res);
+      }));
+
+      await request(app)
+        .get('/dcat')
+        .set('host', siteHostName)
+        .query({ sort: 'Date Modified|modified|asc' })
+        .expect('Content-Type', /application\/json/)
+        .expect(200)
+        .expect(() => {
+          expect(mockGetDataStreamDcatUs11).toHaveBeenCalledWith(siteHostName, customConfigSiteModel, customConfigSiteModel.data?.feeds.dcatUS11);
+          expect(servedRequest.res.locals.searchRequest.options.sortField).toEqual('modified');
+          expect(servedRequest.res.locals.searchRequest.options.sortOrder).toEqual('asc');
+        });
+    });
+
     it('Uses the siteHostName instead of the dataset id', async () => {
       // Change fetchSite's return value to include a custom dcat config
       const customConfigSiteModel: IModel = _.cloneDeep(mockSiteModel) as any;

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import * as _ from 'lodash';
 
 import { fetchSite, getHubApiUrl, getPortalApiUrl, hubApiRequest, IHubRequestOptions, RemoteServerError } from '@esri/hub-common';
-import { IContentSearchRequest } from '@esri/hub-search';
+import { IContentSearchRequest, SortDirection } from '@esri/hub-search';
 
 import { version } from '../package.json';
 import { getDataStreamDcatUs11 } from './dcat-us';
@@ -58,6 +58,15 @@ async function getApiTermsFromDependencies (dependencies: string[]) {
   }))));
 }
 
+/**
+ * Sort field map that connects English versions of sort fields
+ * to API sort field keys
+ */
+const sortFieldMap = {
+  'Date Created': 'created',
+  'Date Modified': 'modified',
+};
+
 export = class OutputDcatUs11 {
   static type = 'output';
   static version = version;
@@ -101,7 +110,7 @@ export = class OutputDcatUs11 {
 
       // Request a single dataset if id is provided, else default to site's catalog
       const id = String(req.query.id || '');
-      req.res.locals.searchRequest = this.getDatasetSearchRequest(id, portalUrl, apiTerms) || this.getCatalogSearchRequest(_.get(siteModel, 'data.catalog'), portalUrl, apiTerms);
+      req.res.locals.searchRequest = this.getDatasetSearchRequest(id, apiTerms) || this.getCatalogSearchRequest(req, _.get(siteModel, 'data.catalog'), apiTerms);
 
       const datasetStream = await this.getDatasetStream(req);
 
@@ -147,8 +156,8 @@ export = class OutputDcatUs11 {
   }
 
   private getCatalogSearchRequest(
+    req: Request,
     catalog: any,
-    portalUrl: string,
     fields: string[]
   ): IContentSearchRequest {
     const searchRequest: IContentSearchRequest = {
@@ -158,15 +167,25 @@ export = class OutputDcatUs11 {
       },
       options: {
         portal: portalUrl,
-        fields: Array.isArray(fields) && fields.length > 0 ? fields.join(',') : undefined
+        fields: Array.isArray(fields) && fields.length > 0 ? fields.join(',') : undefined,
       },
     };
+
+    if (typeof _.get(req, 'query.q') === 'string' && req.query.q.length > 0) {
+      searchRequest.filter.terms = req.query.q as string;
+    }
+
+    const sortOptions = this.getSortOptions(_.get(req, 'query.sort', undefined));
+    if (sortOptions) {
+      searchRequest.options.sortField = sortOptions.sortField;
+      searchRequest.options.sortOrder = sortOptions.sortOrder;
+    }
+
     return searchRequest;
   }
 
   private getDatasetSearchRequest(
     id: string,
-    portalUrl: string,
     fields: string[]
   ): IContentSearchRequest {
     if (!id) {
@@ -179,6 +198,21 @@ export = class OutputDcatUs11 {
         portal: portalUrl,
         fields: Array.isArray(fields) && fields.length > 0 ? fields.join(',') : undefined
       },
+    };
+  }
+
+  private getSortOptions(sortQuery: string): { sortField?: string; sortOrder?: SortDirection } {
+    if (typeof sortQuery !== 'string' || !sortQuery.length) {
+      return undefined;
+    }
+
+    const sortOptions = sortQuery.split('|');
+    
+    const sortField = sortOptions.length > 1 ? sortOptions[1] : sortFieldMap[sortOptions[0]];
+    const sortOrder = sortOptions.length > 2 ? sortOptions[2] as SortDirection : SortDirection.desc;
+    return {
+      sortField,
+      sortOrder,
     };
   }
 
