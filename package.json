@@ -63,7 +63,6 @@
     "@esri/hub-search": "^9.32.1",
     "@esri/hub-sites": "^9.32.1",
     "@esri/hub-teams": "^9.32.1",
-    "config": "^3.3.6",
     "lodash": "^4.17.21",
     "tslib": "~2.3.0"
   },
