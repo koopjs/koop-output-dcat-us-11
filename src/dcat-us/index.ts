@@ -2,7 +2,7 @@ import { formatDcatDataset } from './dataset-formatter';
 import { FeedFormatterStream } from './feed-formatter-stream';
 import { TransformsList } from 'adlib';
 
-export function getDataStreamDcatUs11(dcatCustomizations: any, transforms: TransformsList, nonEditableFieldPaths: string[]) {
+export function getDataStreamDcatUs11(feedTemplate: any, feedTemplateTransforms: TransformsList) {
   const catalogStr = JSON.stringify({
     '@context':
       'https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld',
@@ -19,7 +19,7 @@ export function getDataStreamDcatUs11(dcatCustomizations: any, transforms: Trans
   const footer = '\n\t]\n}';
 
   const formatFn = (chunk) => {
-    return formatDcatDataset(chunk, dcatCustomizations, transforms, nonEditableFieldPaths);
+    return formatDcatDataset(chunk, feedTemplate, feedTemplateTransforms);
   };
 
   return {
