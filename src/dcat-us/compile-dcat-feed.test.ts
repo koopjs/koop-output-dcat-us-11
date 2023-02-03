@@ -1,11 +1,10 @@
-import { formatDcatDataset } from './dataset-formatter';
+import { compileDcatFeedEntry, getDcatErrorWithStatusCode } from './compile-dcat-feed';
 import * as datasetFromApi from '../test-helpers/mock-dataset.json';
-import { RemoteServerError } from '@esri/hub-common';
 
 describe('generating DCAT-US 1.1 feed', () => {
   it('should throw 400 error if template contains transformer that is not defined', async function () {
     try {
-      formatDcatDataset(datasetFromApi, {
+      compileDcatFeedEntry(datasetFromApi, {
         title: '{{name}}',
         description: '{{description}}',
         keyword: '{{tags}}',
@@ -21,7 +20,7 @@ describe('generating DCAT-US 1.1 feed', () => {
         }
       }, {});
     } catch (e) {
-      expect(e).toEqual(new RemoteServerError('Attempted to apply non-existant transform toISO on created with params created:toISO', null, 404));
+      expect(e).toEqual(getDcatErrorWithStatusCode('Attempted to apply non-existant transform toISO on created with params created:toISO', 400));
     }
   });
 

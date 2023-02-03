@@ -4,6 +4,7 @@ import { RemoteServerError } from '@esri/hub-common';
 import { version } from '../package.json';
 import { getDataStreamDcatUs11 } from './dcat-us';
 import { TransformsList } from 'adlib';
+import { getDcatErrorWithStatusCode } from './dcat-us/compile-dcat-feed';
 
 export = class OutputDcatUs11 {
   static type = 'output';
@@ -41,7 +42,7 @@ export = class OutputDcatUs11 {
       } = req;
 
       if (!feedTemplate) {
-        throw new RemoteServerError('DCAT-US 1.1 feed template is not provided.', null, 400);
+        throw getDcatErrorWithStatusCode('DCAT-US 1.1 feed template is not provided.', 400);
       }
 
       const { stream: dcatStream } = getDataStreamDcatUs11(feedTemplate, feedTemplateTransforms);

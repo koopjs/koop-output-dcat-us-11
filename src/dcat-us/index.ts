@@ -1,4 +1,4 @@
-import { formatDcatDataset } from './dataset-formatter';
+import { compileDcatFeedEntry } from './compile-dcat-feed';
 import { FeedFormatterStream } from './feed-formatter-stream';
 import { TransformsList } from 'adlib';
 
@@ -19,7 +19,7 @@ export function getDataStreamDcatUs11(feedTemplate: any, feedTemplateTransforms:
   const footer = '\n\t]\n}';
 
   const formatFn = (chunk) => {
-    return formatDcatDataset(chunk, feedTemplate, feedTemplateTransforms);
+    return compileDcatFeedEntry(chunk, feedTemplate, feedTemplateTransforms);
   };
 
   return {
