@@ -27,19 +27,23 @@ export = class OutputDcatUs11 {
     res.set('Content-Type', 'application/json');
 
     try {
-      const { res: { locals: { feedTemplate, feedTemplateTransforms} } }: {
+      const { res: { locals: { feedTemplate } }, app: { locals: { feedTemplateTransforms } } }: {
         res?: {
           locals?: {
-            feedTemplate?: any,
+            feedTemplate?: any
+          }
+        }
+        app: {
+          locals: {
             feedTemplateTransforms?: TransformsList
           }
         }
       } = req;
-      
+
       if (!feedTemplate) {
         throw new RemoteServerError('DCAT-US 1.1 feed template is not provided.', null, 400);
       }
-      
+
       const { stream: dcatStream } = getDataStreamDcatUs11(feedTemplate, feedTemplateTransforms);
 
       const datasetStream = await this.getDatasetStream(req);

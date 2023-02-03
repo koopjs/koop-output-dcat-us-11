@@ -1,3 +1,4 @@
+import { RemoteServerError } from '@esri/hub-common';
 import { adlib, TransformsList } from 'adlib';
 
 export type DcatDatasetTemplate = Record<string, any>;
@@ -7,20 +8,16 @@ export function formatDcatDataset(hubDataset: any, feedTemplate: DcatDatasetTemp
     '@type': 'dcat:Dataset'
   };
 
-  const dcatDataset = Object.assign({}, defaultDataset, adlib(feedTemplate, hubDataset, feedTemplateTransforms));
-
-  if (dcatDataset.distribution) {
-    dcatDataset.distribution = removeUninterpolatedDistributions(dcatDataset.distribution);
+  try {
+    const dcatDataset = Object.assign({}, defaultDataset, adlib(feedTemplate, hubDataset, feedTemplateTransforms));
+    return indent(JSON.stringify({
+      ...dcatDataset,
+      distribution: dcatDataset.distribution && removeUninterpolatedDistributions(dcatDataset.distribution),
+      theme: dcatDataset.spatial && ['geospatial']
+    }, null, '\t'), 2);
+  } catch (err) {
+    throw new RemoteServerError(err?.message || 'Error parsing feed template', null, 400);
   }
-
-  if (dcatDataset.spatial) {
-    dcatDataset.theme = ['geospatial'];
-  }
-
-  return indent(JSON.stringify({
-    ...dcatDataset,
-    distribution: removeUninterpolatedDistributions(dcatDataset.distribution)
-  }, null, '\t'), 2);
 }
 
 function removeUninterpolatedDistributions(distributions: any[]) {
