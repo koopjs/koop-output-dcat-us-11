@@ -3,8 +3,6 @@ import { getDataStreamDcatUs11 } from './';
 import * as datasetFromApi from '../test-helpers/mock-dataset.json';
 
 async function generateDcatFeed(dataset, template, templateTransforms) {
-  // const siteModel = { item: { url: hostname } } as unknown as IModel;
-
   const { stream: dcatStream } = getDataStreamDcatUs11(template, templateTransforms);
 
   const docStream = readableFromArray([dataset]); // no datasets since we're just checking the catalog
