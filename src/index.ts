@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import * as _ from 'lodash';
-import { RemoteServerError } from '@esri/hub-common';
 import { version } from '../package.json';
 import { getDataStreamDcatUs11 } from './dcat-us';
 import { TransformsList } from 'adlib';
@@ -57,7 +56,7 @@ export = class OutputDcatUs11 {
         });
 
     } catch (err) {
-      res.status(err.status || 500).send(this.getErrorResponse(err));
+      res.status(err.statusCode || 500).send(this.getErrorResponse(err));
     }
   }
 
@@ -66,9 +65,9 @@ export = class OutputDcatUs11 {
       return await this.model.pullStream(req);
     } catch (err) {
       if (err.status === 400) {
-        throw new RemoteServerError(err.message, null, 400);
+        throw new DcatUsError(err.message, 400);
       }
-      throw new RemoteServerError(err.message, null, 500);
+      throw new DcatUsError(err.message, 500);
     }
   }
 
