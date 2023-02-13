@@ -9,7 +9,11 @@ export function compileDcatFeedEntry(dataset: any, feedTemplate: DcatDatasetTemp
     const defaultDataset = {
       '@type': 'dcat:Dataset'
     };
-    const dcatDataset = Object.assign({}, defaultDataset, adlib(feedTemplate, dataset, feedTemplateTransforms));
+    const dcatDataset = Object.assign(
+      {}, 
+      defaultDataset, 
+      adlib(feedTemplate, { ...dataset?.properties, ...dataset?.geometry }, feedTemplateTransforms)
+    );
 
     return indent(JSON.stringify({
       ...dcatDataset,
