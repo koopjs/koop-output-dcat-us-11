@@ -6,14 +6,7 @@ export type DcatDatasetTemplate = Record<string, any>;
 
 export function compileDcatFeedEntry(dataset: any, feedTemplate: DcatDatasetTemplate, feedTemplateTransforms: TransformsList) {
   try {
-    const defaultDataset = {
-      '@type': 'dcat:Dataset'
-    };
-    const dcatDataset = Object.assign(
-      {}, 
-      defaultDataset, 
-      adlib(feedTemplate, { ...dataset?.properties, ...dataset?.geometry }, feedTemplateTransforms)
-    );
+    const dcatDataset = generateDcatDataset(feedTemplate, feedTemplateTransforms, dataset);
 
     return indent(JSON.stringify({
       ...dcatDataset,
@@ -27,6 +20,23 @@ export function compileDcatFeedEntry(dataset: any, feedTemplate: DcatDatasetTemp
 
 function removeUninterpolatedDistributions(distributions: any[]) {
   return distributions.filter((distro) => !(typeof distro === 'string' && distro.match(/{{.+}}/)?.length));
+}
+
+function generateDcatDataset(feedTemplate, feedTemplateTransforms, dataset) {
+  const defaultFields = {
+    '@type': 'dcat:Dataset'
+  };
+  const interpolatedFields = adlib(
+    feedTemplate, 
+    { ...dataset?.properties, ...dataset?.geometry }, 
+    feedTemplateTransforms
+  )
+
+  return Object.assign(
+    {},
+    defaultFields,
+    interpolatedFields
+  );
 }
 
 // HUBJS CANDIDATE
