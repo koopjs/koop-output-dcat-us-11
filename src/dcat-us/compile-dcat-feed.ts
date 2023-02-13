@@ -26,7 +26,10 @@ function generateDcatItem(feedTemplate, feedTemplateTransforms, geojsonFeature) 
   const defaultFields = {
     '@type': 'dcat:Dataset'
   };
-  //
+
+  // moving feature properties fields at the top level
+  // and geometry to second as the values for the properties
+  // can be easily referenced in template
   const dcatFeedData = { 
     ...geojsonFeature?.properties, 
     ...{ geometry: geojsonFeature?.geometry } 
