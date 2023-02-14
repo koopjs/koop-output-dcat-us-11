@@ -13,7 +13,7 @@
     "config": "^3.2.5",
     "isomorphic-fetch": "^3.0.0",
     "koop": "^4.2.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "through2": "^4.0.2"
   },
   "devDependencies": {
