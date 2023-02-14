@@ -3,21 +3,22 @@ import * as _ from 'lodash';
 import { DcatUsError } from './dcat-us-error';
 
 export type DcatDatasetTemplate = Record<string, any>;
+type Feature = {
+  type: string,
+  geometry: Record<string, any>,
+  properties: Record<string, any>
+};
 
-export function compileDcatFeedEntry(dataset: any, feedTemplate: DcatDatasetTemplate, feedTemplateTransforms: TransformsList) {
+export function compileDcatFeedEntry(geojsonFeature: Feature | undefined, feedTemplate: DcatDatasetTemplate, feedTemplateTransforms: TransformsList): string {
   try {
-    const defaultDataset = {
-      '@type': 'dcat:Dataset'
-    };
-    const dcatDataset = Object.assign({}, defaultDataset, adlib(feedTemplate, dataset, feedTemplateTransforms));
-
+    const dcatFeedItem = generateDcatItem(feedTemplate, feedTemplateTransforms, geojsonFeature);
     return indent(JSON.stringify({
-      ...dcatDataset,
-      distribution: Array.isArray(dcatDataset.distribution) && removeUninterpolatedDistributions(_.flatten(dcatDataset.distribution)),
-      theme: dcatDataset.spatial && ['geospatial']
+      ...dcatFeedItem,
+      distribution: Array.isArray(dcatFeedItem.distribution) && removeUninterpolatedDistributions(_.flatten(dcatFeedItem.distribution)),
+      theme: dcatFeedItem.spatial && ['geospatial']
     }, null, '\t'), 2);
   } catch (err) {
-    throw new DcatUsError(err?.message || 'Error parsing feed template', 400);
+    throw new DcatUsError(err.message, 400);
   }
 }
 
@@ -25,8 +26,31 @@ function removeUninterpolatedDistributions(distributions: any[]) {
   return distributions.filter((distro) => !(typeof distro === 'string' && distro.match(/{{.+}}/)?.length));
 }
 
+function generateDcatItem(feedTemplate: DcatDatasetTemplate, feedTemplateTransforms: TransformsList, geojsonFeature: Feature): Record<string, any> {
+  const defaultFields = {
+    '@type': 'dcat:Dataset'
+  };
+
+  const dcatFeedData = {
+    ...geojsonFeature.properties,
+    geometry: geojsonFeature.geometry
+  };
+
+  const interpolatedFields = adlib(
+    feedTemplate,
+    dcatFeedData,
+    feedTemplateTransforms
+  );
+
+  return Object.assign(
+    {},
+    defaultFields,
+    interpolatedFields
+  );
+}
+
 // HUBJS CANDIDATE
-function indent(str: string, nTabs = 1) {
+function indent(str: string, nTabs: number) {
   const tabs = new Array(nTabs).fill('\t').join('');
   return tabs + str.replace(/\n/g, `\n${tabs}`);
 }

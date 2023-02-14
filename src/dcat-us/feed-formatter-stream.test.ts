@@ -1,5 +1,6 @@
 import { readableFromArray, streamToString } from '../test-helpers/stream-utils';
 import { FeedFormatterStream } from './feed-formatter-stream';
+import { PassThrough } from 'stream';
 
 it('Feed Formatter Stream: just header and footer when no contents', async function () {
   const formatter = new FeedFormatterStream(
@@ -43,3 +44,13 @@ it('Feed Formatter Stream: applies format function', async function () {
 
   expect(res).toBe('headerprocessed:foo|processed:barfooter');
 });
+
+it('Feed Formatter Stream: rejects promise with error if stream error', async function () {
+  const mockedReadStream = new PassThrough(); 
+  const streamPromise = streamToString(mockedReadStream);
+  mockedReadStream.emit('error', 'Invalid stream');
+  await expect(streamPromise).rejects.toBe('Invalid stream');
+});
+
+
+

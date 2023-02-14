@@ -2,7 +2,6 @@ import { mocked } from 'ts-jest/utils';
 import * as _ from 'lodash';
 import * as express from 'express';
 import * as request from 'supertest';
-
 import * as mockDataset from './test-helpers/mock-dataset.json';
 import * as mockSiteModel from './test-helpers/mock-site-model.json';
 import { createMockKoopApp } from './test-helpers/create-mock-koop-app';
@@ -139,7 +138,7 @@ describe('Output Plugin', () => {
   });
 
   it('returns 400 when searchRequest returns 400', async () => {
-    [ plugin, app ] = buildPluginAndApp({}, {});
+    [plugin, app] = buildPluginAndApp({}, {});
 
     plugin.model = {
       pullStream: jest.fn().mockRejectedValue({ status: 400, message: 'A validation error' })
@@ -156,7 +155,4 @@ describe('Output Plugin', () => {
         expect(res.body.error).toEqual('A validation error');
       });
   });
-
-
-
 });
