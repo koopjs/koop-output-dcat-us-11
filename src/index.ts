@@ -47,16 +47,12 @@ export = class OutputDcatUs11 {
       const { stream: dcatStream } = getDataStreamDcatUs11(feedTemplate, feedTemplateTransforms);
 
       const datasetStream = await this.getDatasetStream(req);
-
       datasetStream
         .pipe(dcatStream)
-        .pipe(res)
-        .on('error', (err: any) => {
-          res.status(500).send(this.getErrorResponse(err));
-        });
+        .pipe(res);
 
     } catch (err) {
-      res.status(err.statusCode || 500).send(this.getErrorResponse(err));
+      res.status(err.statusCode).send(this.getErrorResponse(err));
     }
   }
 

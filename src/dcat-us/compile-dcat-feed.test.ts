@@ -61,4 +61,18 @@ describe('generating DCAT-US 1.1 feed', () => {
     expect(dcatDataset.theme).toStrictEqual(['geospatial']);
   });
 
+  it('should throw error if geojson from provider is missing', async function () {
+    const dcatTemplate = {
+      title: '{{name}}',
+      description: '{{description}}',
+      keyword: '{{tags}}',
+      issued: '{{created:toISO}}'
+    };
+
+    expect(() => {
+      compileDcatFeedEntry(undefined, dcatTemplate, {});
+    }).toThrow(DcatUsError);
+
+  });
+
 });
