@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## Unreleased
+Added
+- Support for GeoJSON parsing from provider [#32](https://github.com/koopjs/koop-output-dcat-us-11/pull/32)
+Removed
+- Data enrichment and content search request formation from the output plugin [#31](https://github.com/koopjs/koop-output-dcat-us-11/pull/31)
+
 ## 1.13.0
 Added
 - ability to sort and query the feed using free text [#28](https://github.com/koopjs/koop-output-dcat-us-11/pull/28)
