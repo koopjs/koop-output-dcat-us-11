@@ -3,7 +3,6 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as middleware from 'koop/lib/middleware';
 import { join } from 'path';
-import * as _ from 'lodash';
 
 /**
  * Creates a mock Koop Express application for testing.
@@ -18,12 +17,6 @@ export function createMockKoopApp(): express.Application {
     // parse application/x-www-form-urlencoded
     .use(bodyParser.urlencoded({ extended: false }))
     .disable('x-powered-by')
-    // TODO this should just live inside featureserver
-    .use((req, _res, next) => {
-    // request parameters can come from query url or POST body
-      req.query = _.extend(req.query || {}, req.body || {});
-      next();
-    })
     .use(middleware.paramTrim)
     .use(middleware.paramParse)
     .use(middleware.paramCoerce)
