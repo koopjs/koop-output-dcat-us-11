@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
+## 2.0.0
 Added
 - Support for GeoJSON parsing from provider [#32](https://github.com/koopjs/koop-output-dcat-us-11/pull/32)
 Removed
