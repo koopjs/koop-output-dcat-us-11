@@ -49,7 +49,7 @@ export = class OutputDcatUs11 {
       const datasetStream = await this.getDatasetStream(req);
       datasetStream.on('error', (err) => {
         if (req.next) {
-          req.next(err)
+          req.next(err);
         }
       }).pipe(dcatStream).pipe(res);
 
