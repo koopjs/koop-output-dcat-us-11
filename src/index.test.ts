@@ -7,6 +7,7 @@ import * as mockSiteModel from './test-helpers/mock-site-model.json';
 import { createMockKoopApp } from './test-helpers/create-mock-koop-app';
 import { readableFromArray } from './test-helpers/stream-utils';
 import { DcatUsError } from './dcat-us/dcat-us-error';
+import { PassThrough } from 'stream';
 
 function buildPluginAndApp(feedTemplate, feedTemplateTransforms) {
   let Output;
@@ -21,9 +22,16 @@ function buildPluginAndApp(feedTemplate, feedTemplateTransforms) {
   };
 
   const app = createMockKoopApp();
+
   app.get('/dcat', function (req, res, next) {
     req.app.locals.feedTemplateTransforms = feedTemplateTransforms;
     res.locals.feedTemplate = feedTemplate;
+    app.use((err, _req, res, _next) => {
+      res.status(err.status || 500)
+      res.send({
+        error: err.message
+      })
+    })
     next();
   }, plugin.serve.bind(plugin));
 
@@ -61,7 +69,6 @@ describe('Output Plugin', () => {
     mockFetchSite = mocked(fetchSite);
 
     mockFetchSite.mockResolvedValue(mockSiteModel);
-
     [plugin, app] = buildPluginAndApp(dcatTemplate, {});
   });
 
@@ -135,6 +142,25 @@ describe('Output Plugin', () => {
       });
 
     // TODO test stream error
+  });
+
+  it('returns error if stream emits an error', async () => {
+    const mockReadable = new PassThrough();
+
+    plugin.model.pullStream.mockResolvedValue(mockReadable);
+    const mockError = new Error('stream error')
+
+    setTimeout(() => {
+      mockReadable.emit('error', mockError)
+    }, 200)
+    await request(app)
+      .get('/dcat')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(500)
+      .expect((res) => {
+        expect(res.body).toEqual({ error: 'stream error' });
+      });
   });
 
   it('returns 400 when searchRequest returns 400', async () => {
