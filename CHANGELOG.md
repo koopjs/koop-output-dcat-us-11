@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.0.1
+Fixed
+- Handle steam error [#43](https://github.com/koopjs/koop-output-dcat-ap-201/pull/43)
+
 ## 2.0.0
 Added
 - Support for GeoJSON parsing from provider [#32](https://github.com/koopjs/koop-output-dcat-us-11/pull/32)
