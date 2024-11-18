@@ -10,7 +10,7 @@ export = class OutputDcatUs11 {
   static version = version;
   static routes = [
     {
-      path: '/dcat-us/1.1',
+      path: '/dcat-us/3.0',
       methods: ['get'],
       handler: 'serve',
     },

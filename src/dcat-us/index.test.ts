@@ -1,6 +1,7 @@
 import { readableFromArray, streamToString } from '../test-helpers/stream-utils';
 import { getDataStreamDcatUs11 } from './';
 import * as datasetFromApi from '../test-helpers/mock-dataset.json';
+import { HEADER_V3 } from './constants/contexts';
 
 async function generateDcatFeed(dataset, template, templateTransforms) {
   const { stream: dcatStream } = getDataStreamDcatUs11(template, templateTransforms);
@@ -10,15 +11,14 @@ async function generateDcatFeed(dataset, template, templateTransforms) {
   return { feed: JSON.parse(feedString) };
 }
 
-describe('generating DCAT-US 1.1 feed', () => {
+describe('generating DCAT-US 3.0 feed', () => {
   it('formats catalog correctly', async function () {
     const { feed } = await generateDcatFeed([], {}, {});
 
-    expect(feed['@context']).toBe('https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld');
+    expect(feed['@context']).toStrictEqual(HEADER_V3['@context']);
+    expect(feed['conformsTo']).toBe('https://resource.data.gov/profile/dcat-us#');
     expect(feed['@type']).toBe('dcat:Catalog');
-    expect(feed['conformsTo']).toBe('https://project-open-data.cio.gov/v1.1/schema');
-    expect(feed['describedBy']).toBe('https://project-open-data.cio.gov/v1.1/schema/catalog.json');
-    expect(Array.isArray(feed['dataset'])).toBeTruthy();
+    expect(Array.isArray(feed['dcat:dataset'])).toBeTruthy();
   });
 
   it('should interprolate dataset stream to feed based upon template', async function () {
@@ -35,6 +35,9 @@ describe('generating DCAT-US 1.1 feed', () => {
         '@type': 'vcard:Contact',
         fn: '{{owner}}',
         hasEmail: '{{orgContactEmail:optional}}'
+      },
+      header: {
+        '@id': 'hub.arcgis.com'
       }
     }, {
       toISO: (_key, val) => {
@@ -42,13 +45,13 @@ describe('generating DCAT-US 1.1 feed', () => {
       }
     });
 
-    expect(feed['@context']).toBe('https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld');
+    expect(feed['@context']).toStrictEqual(HEADER_V3['@context']);
     expect(feed['@type']).toBe('dcat:Catalog');
-    expect(feed['conformsTo']).toBe('https://project-open-data.cio.gov/v1.1/schema');
-    expect(feed['describedBy']).toBe('https://project-open-data.cio.gov/v1.1/schema/catalog.json');
-    expect(Array.isArray(feed['dataset'])).toBeTruthy();
-    expect(feed['dataset'].length).toBe(1);
-    const feedResponse = feed['dataset'][0];
+    expect(feed['@id']).toBe('hub.arcgis.com');
+    expect(feed['conformsTo']).toBe('https://resource.data.gov/profile/dcat-us#');
+    expect(Array.isArray(feed['dcat:dataset'])).toBeTruthy();
+    expect(feed['dcat:dataset'].length).toBe(1);
+    const feedResponse = feed['dcat:dataset'][0];
     expect(feedResponse.title).toBe('Tahoe places of interest');
     expect(feedResponse.description).toBe('Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.<div><br /></div><div>with more words</div><div><br /></div><div>adding a few more to test how long it takes for our jobs to execute.</div><div><br /></div><div>Tom was here!</div>');
     expect(feedResponse.issued).toBe('2021-01-29T15:34:38.000Z');

@@ -14,8 +14,9 @@ export function compileDcatFeedEntry(geojsonFeature: Feature | undefined, feedTe
     const dcatFeedItem = generateDcatItem(feedTemplate, feedTemplateTransforms, geojsonFeature);
     return indent(JSON.stringify({
       ...dcatFeedItem,
-      distribution: Array.isArray(dcatFeedItem.distribution) && removeUninterpolatedDistributions(_.flatten(dcatFeedItem.distribution)),
-      theme: dcatFeedItem.spatial && ['geospatial']
+      'dcat:distribution': 
+        Array.isArray(dcatFeedItem['dcat:distribution']) && 
+        removeUninterpolatedDistributions(_.flatten(dcatFeedItem['dcat:distribution'])),
     }, null, '\t'), 2);
   } catch (err) {
     throw new DcatUsError(err.message, 400);

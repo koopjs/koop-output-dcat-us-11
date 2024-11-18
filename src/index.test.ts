@@ -60,7 +60,7 @@ describe('Output Plugin', () => {
       title: '{{name}}',
       description: '{{description}}',
       keyword: '{{tags}}',
-      issued: '{{created}}'
+      issued: '{{created}}',
     }
 
     mockConfigModule = mocked(require('config'), true);
@@ -82,7 +82,7 @@ describe('Output Plugin', () => {
     expect(plugin.constructor.version).toBeDefined();
     expect(plugin.constructor.routes).toEqual([
       {
-        path: '/dcat-us/1.1',
+        path: '/dcat-us/3.0',
         methods: ['get'],
         handler: 'serve',
       },
@@ -124,8 +124,8 @@ describe('Output Plugin', () => {
         const dcatStream = res.body;
         expect(dcatStream['@context']).toBeDefined();
         expect(dcatStream['@type']).toBe('dcat:Catalog');
-        expect(dcatStream['dataset']).toBeInstanceOf(Array);
-        expect(dcatStream['dataset'].length).toBe(1);
+        expect(dcatStream['dcat:dataset']).toBeInstanceOf(Array);
+        expect(dcatStream['dcat:dataset'].length).toBe(1);
       });
   });
 
