@@ -9,15 +9,33 @@ type Feature = {
   properties: Record<string, any>
 };
 
-export function compileDcatFeedEntry(geojsonFeature: Feature | undefined, feedTemplate: DcatDatasetTemplate, feedTemplateTransforms: TransformsList): string {
+export function compileDcatFeedEntry(
+  geojsonFeature: Feature | undefined,
+  feedTemplate: DcatDatasetTemplate,
+  feedTemplateTransforms: TransformsList,
+  version: string
+): string {
   try {
     const dcatFeedItem = generateDcatItem(feedTemplate, feedTemplateTransforms, geojsonFeature);
-    return indent(JSON.stringify({
-      ...dcatFeedItem,
-      'dcat:distribution': 
-        Array.isArray(dcatFeedItem['dcat:distribution']) && 
-        removeUninterpolatedDistributions(_.flatten(dcatFeedItem['dcat:distribution'])),
-    }, null, '\t'), 2);
+    let feedEntry: Record<string, any>;
+    if (version === '1.1') {
+      feedEntry = {
+        ...dcatFeedItem,
+        distribution: Array.isArray(dcatFeedItem.distribution) && removeUninterpolatedDistributions(_.flatten(dcatFeedItem.distribution)),
+        theme: dcatFeedItem.spatial && ['geospatial']
+      };
+    }
+
+    if (version === '3.0') {
+      feedEntry = {
+        ...dcatFeedItem,
+        'dcat:distribution':
+          Array.isArray(dcatFeedItem['dcat:distribution']) &&
+          removeUninterpolatedDistributions(_.flatten(dcatFeedItem['dcat:distribution'])),
+      };
+    }
+
+    return indent(JSON.stringify(feedEntry, null, '\t'), 2);
   } catch (err) {
     throw new DcatUsError(err.message, 400);
   }
