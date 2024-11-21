@@ -8,7 +8,7 @@ import { createMockKoopApp } from './test-helpers/create-mock-koop-app';
 import { readableFromArray } from './test-helpers/stream-utils';
 import { DcatUsError } from './dcat-us/dcat-us-error';
 import { PassThrough } from 'stream';
-import { HEADER_V_3 } from './dcat-us/constants/contexts';
+import { HEADER_V_3X } from './dcat-us/constants/contexts';
 
 function buildPluginAndApp(feedTemplate, feedTemplateTransforms) {
   let Output;
@@ -166,7 +166,7 @@ describe('Output Plugin', () => {
         expect(res.body).toBeDefined();
         const dcatStream = res.body;
         expect(dcatStream['@context']).toBeDefined();
-        expect(dcatStream['@context']).toStrictEqual(HEADER_V_3['@context']);
+        expect(dcatStream['@context']).toStrictEqual(HEADER_V_3X['@context']);
         expect(dcatStream['@type']).toBe('dcat:Catalog');
         expect(dcatStream['conformsTo']).toBe('https://resource.data.gov/profile/dcat-us#');
         expect(dcatStream['@type']).toBe('dcat:Catalog');

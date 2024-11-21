@@ -1,5 +1,5 @@
 // Context header for DCAT US 1.1
-export const HEADER_V_1_1 = {
+export const HEADER_V_1X = {
     '@context':
         'https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld',
     '@type': 'dcat:Catalog',
@@ -9,7 +9,7 @@ export const HEADER_V_1_1 = {
 
 // Context header for DCAT US 3.0
 // source: https://raw.githubusercontent.com/DOI-DO/dcat-us/refs/heads/main/context/dcat-us-3.0.jsonld
-export const HEADER_V_3 = {
+export const HEADER_V_3X = {
     '@context': {
         '@version': 1.1,
         '@protected': true,
