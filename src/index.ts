@@ -45,11 +45,11 @@ export = class OutputDcatUs {
         }
       } = req;
 
-      if (!feedTemplate) {
-        throw new DcatUsError('DCAT-US 1.1 feed template is not provided.', 400);
-      }
-
       const version = this.getVersion(_.get(req, 'path', ''));
+
+      if (!feedTemplate) {
+        throw new DcatUsError(`DCAT-US ${version} feed template is not provided.`, 400);
+      }
 
       const { stream: dcatStream } = getDataStreamDcatUs(feedTemplate, feedTemplateTransforms, version);
 

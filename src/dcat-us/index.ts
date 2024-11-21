@@ -1,7 +1,7 @@
 import { compileDcatFeedEntry } from './compile-dcat-feed';
 import { FeedFormatterStream } from './feed-formatter-stream';
 import { TransformsList } from 'adlib';
-import { HEADER_V_3X, HEADER_V_1X } from './constants/contexts';
+import { HEADER_V_3_0, HEADER_V_1X } from './constants/contexts';
 
 export function getDataStreamDcatUs(feedTemplate: any, feedTemplateTransforms: TransformsList, version: string) {
   const footer = '\n\t]\n}';
@@ -37,6 +37,6 @@ function generateDcatUs1XHeader() {
 }
 
 function generateDcatUs3XHeader(header: Record<string, any>) {
-  const catalogStr = JSON.stringify({ ...HEADER_V_3X, ...header }, null, '\t');
+  const catalogStr = JSON.stringify({ ...HEADER_V_3_0, ...header }, null, '\t');
   return `${catalogStr.substring(0, catalogStr.length - 2)},\n\t"dcat:dataset": [\n`;
 }

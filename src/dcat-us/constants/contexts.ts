@@ -9,7 +9,7 @@ export const HEADER_V_1X = {
 
 // Context header for DCAT US 3.0
 // source: https://raw.githubusercontent.com/DOI-DO/dcat-us/refs/heads/main/context/dcat-us-3.0.jsonld
-export const HEADER_V_3X = {
+export const HEADER_V_3_0 = {
     '@context': {
         '@version': 1.1,
         '@protected': true,
