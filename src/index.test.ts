@@ -8,6 +8,7 @@ import { createMockKoopApp } from './test-helpers/create-mock-koop-app';
 import { readableFromArray } from './test-helpers/stream-utils';
 import { DcatUsError } from './dcat-us/dcat-us-error';
 import { PassThrough } from 'stream';
+import { HEADER_V_3_0 } from './dcat-us/constants/contexts';
 
 function buildPluginAndApp(feedTemplate, feedTemplateTransforms) {
   let Output;
@@ -23,7 +24,7 @@ function buildPluginAndApp(feedTemplate, feedTemplateTransforms) {
 
   const app = createMockKoopApp();
 
-  app.get('/dcat', function (req, res, next) {
+  app.get('/dcat/:version', function (req, res, next) {
     req.app.locals.feedTemplateTransforms = feedTemplateTransforms;
     res.locals.feedTemplate = feedTemplate;
     app.use((err, _req, res, _next) => {
@@ -60,7 +61,7 @@ describe('Output Plugin', () => {
       title: '{{name}}',
       description: '{{description}}',
       keyword: '{{tags}}',
-      issued: '{{created}}'
+      issued: '{{created}}',
     }
 
     mockConfigModule = mocked(require('config'), true);
@@ -82,6 +83,11 @@ describe('Output Plugin', () => {
     expect(plugin.constructor.version).toBeDefined();
     expect(plugin.constructor.routes).toEqual([
       {
+        path: '/dcat-us/3.0',
+        methods: ['get'],
+        handler: 'serve',
+      },
+      {
         path: '/dcat-us/1.1',
         methods: ['get'],
         handler: 'serve',
@@ -99,7 +105,7 @@ describe('Output Plugin', () => {
     const [plugin, localApp] = buildPluginAndApp(undefined, undefined);
     try {
       await request(localApp)
-        .get('/dcat')
+        .get('/dcat/1.1')
         .set('host', siteHostName)
         .expect('Content-Type', /application\/json/);
     } catch (error) {
@@ -109,10 +115,10 @@ describe('Output Plugin', () => {
     }
   });
 
-  it('handles a DCAT US request', async () => {
+  it('handles a DCAT US 1.1 request', async () => {
     // rebuild plugin to trigger initialization code
     await request(app)
-      .get('/dcat')
+      .get('/dcat/1.1')
       .set('host', siteHostName)
       .expect('Content-Type', /application\/json/)
       .expect(200)
@@ -129,11 +135,51 @@ describe('Output Plugin', () => {
       });
   });
 
+  it('handles a DCAT US data.json request', async () => {
+    // rebuild plugin to trigger initialization code
+    await request(app)
+      .get('/dcat/data.json')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+      .expect(res => {
+        expect(res.body).toBeDefined();
+
+        // perform some basic checks to make sure we have
+        // something that looks like a DCAT feed
+        const dcatStream = res.body;
+        expect(dcatStream['@context']).toBeDefined();
+        expect(dcatStream['@type']).toBe('dcat:Catalog');
+        expect(dcatStream['dataset']).toBeInstanceOf(Array);
+        expect(dcatStream['dataset'].length).toBe(1);
+      });
+  });
+
+  it('handles a DCAT US 3.0 request', async () => {
+    // rebuild plugin to trigger initialization code
+    await request(app)
+      .get('/dcat/3.0')
+      .set('host', siteHostName)
+      .expect('Content-Type', /application\/json/)
+      .expect(200)
+      .expect(res => {
+        expect(res.body).toBeDefined();
+        const dcatStream = res.body;
+        expect(dcatStream['@context']).toBeDefined();
+        expect(dcatStream['@context']).toStrictEqual(HEADER_V_3_0['@context']);
+        expect(dcatStream['@type']).toBe('dcat:Catalog');
+        expect(dcatStream['conformsTo']).toBe('https://resource.data.gov/profile/dcat-us#');
+        expect(dcatStream['@type']).toBe('dcat:Catalog');
+        expect(dcatStream['dcat:dataset']).toBeInstanceOf(Array);
+        expect(dcatStream['dcat:dataset'].length).toBe(1);
+      });
+  });
+
   it('sets status to 500 if something blows up', async () => {
     plugin.model.pullStream.mockRejectedValue(Error('Couldnt get stream'));
 
     await request(app)
-      .get('/dcat')
+      .get('/dcat/1.1')
       .set('host', siteHostName)
       .expect('Content-Type', /application\/json/)
       .expect(500)
@@ -154,7 +200,7 @@ describe('Output Plugin', () => {
       mockReadable.emit('error', mockError)
     }, 200)
     await request(app)
-      .get('/dcat')
+      .get('/dcat/1.1')
       .set('host', siteHostName)
       .expect('Content-Type', /application\/json/)
       .expect(500)
@@ -171,7 +217,7 @@ describe('Output Plugin', () => {
     }
 
     await request(app)
-      .get('/dcat')
+      .get('/dcat/1.1')
       .set('host', siteHostName)
       .expect('Content-Type', /application\/json/)
       .expect(400)

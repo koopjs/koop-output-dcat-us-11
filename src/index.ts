@@ -1,14 +1,19 @@
 import { Request, Response } from 'express';
 import * as _ from 'lodash';
 import { version } from '../package.json';
-import { getDataStreamDcatUs11 } from './dcat-us';
+import { getDataStreamDcatUs } from './dcat-us';
 import { TransformsList } from 'adlib';
 import { DcatUsError } from './dcat-us/dcat-us-error';
 
-export = class OutputDcatUs11 {
+export = class OutputDcatUs {
   static type = 'output';
   static version = version;
   static routes = [
+    {
+      path: '/dcat-us/3.0', // DCAT US 3.0 is beta
+      methods: ['get'],
+      handler: 'serve',
+    },
     {
       path: '/dcat-us/1.1',
       methods: ['get'],
@@ -40,11 +45,13 @@ export = class OutputDcatUs11 {
         }
       } = req;
 
+      const version = this.getVersion(_.get(req, 'path', ''));
+
       if (!feedTemplate) {
-        throw new DcatUsError('DCAT-US 1.1 feed template is not provided.', 400);
+        throw new DcatUsError(`DCAT-US ${version} feed template is not provided.`, 400);
       }
 
-      const { stream: dcatStream } = getDataStreamDcatUs11(feedTemplate, feedTemplateTransforms);
+      const { stream: dcatStream } = getDataStreamDcatUs(feedTemplate, feedTemplateTransforms, version);
 
       const datasetStream = await this.getDatasetStream(req);
       datasetStream.on('error', (err) => {
@@ -77,5 +84,10 @@ export = class OutputDcatUs11 {
         'Encountered error while processing request',
       ),
     };
+  }
+
+  private getVersion(reqPath: string) {
+    const version = reqPath.substring(reqPath.lastIndexOf('/') + 1);
+    return ['1.1', '3.0'].includes(version) ? version : '1.1';
   }
 };
