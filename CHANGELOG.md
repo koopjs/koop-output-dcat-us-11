@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.1.0
+Added
+- DCAT US 3.0 [#67](https://github.com/koopjs/koop-output-dcat-us-11/pull/67)
+
 ## 2.0.1
 Fixed
 - Handle steam error [#43](https://github.com/koopjs/koop-output-dcat-ap-201/pull/43)
