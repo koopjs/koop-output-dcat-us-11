@@ -1,7 +1,6 @@
 import { readableFromArray, streamToString } from '../test-helpers/stream-utils';
 import { getDataStreamDcatUs } from './';
 import * as datasetFromApi from '../test-helpers/mock-dataset.json';
-import { HEADER_V_3_0 } from './constants/contexts';
 
 async function generateDcatFeed(dataset, template, templateTransforms, version) {
   const { stream: dcatStream } = getDataStreamDcatUs(template, templateTransforms, version);
@@ -68,9 +67,12 @@ describe('generating DCAT-US 3.0 feed', () => {
   it('formats catalog correctly', async function () {
     const { feed } = await generateDcatFeed([], {}, {}, version);
 
-    expect(feed['@context']).toStrictEqual(HEADER_V_3_0['@context']);
-    expect(feed['conformsTo']).toBe('https://resource.data.gov/profile/dcat-us#');
     expect(feed['@type']).toBe('dcat:Catalog');
+    expect(feed['conformsTo']).toEqual({
+      '@type': 'Standard',
+      title: 'DCAT-US 3.0',
+      identifier: 'https://resources.data.gov/dcat-us/3.0.0'
+    });
     expect(Array.isArray(feed['dcat:dataset'])).toBeTruthy();
   });
 
@@ -100,10 +102,12 @@ describe('generating DCAT-US 3.0 feed', () => {
       },
       version);
 
-    expect(feed['@context']).toStrictEqual(HEADER_V_3_0['@context']);
     expect(feed['@type']).toBe('dcat:Catalog');
-    expect(feed['@id']).toBe('hub.arcgis.com');
-    expect(feed['conformsTo']).toBe('https://resource.data.gov/profile/dcat-us#');
+    expect(feed['conformsTo']).toEqual({
+      '@type': 'Standard',
+      title: 'DCAT-US 3.0',
+      identifier: 'https://resources.data.gov/dcat-us/3.0.0'
+    });
     expect(Array.isArray(feed['dcat:dataset'])).toBeTruthy();
     expect(feed['dcat:dataset'].length).toBe(1);
     const feedResponse = feed['dcat:dataset'][0];
