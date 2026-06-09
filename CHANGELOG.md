@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+
+## 2.2.1
+Fixed
+- Resolve build issue
+
 ## 2.2.0
 Fixed
 - DCAT US 3.0 header [#68](https://github.com/koopjs/koop-output-dcat-us-11/pull/68)

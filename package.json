@@ -1,6 +1,6 @@
 {
   "name": "@koopjs/koop-output-dcat-us-11",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A Koop output plugin for the DCAT-US 1.1 specification",
   "main": "src/index.js",
   "engines": {
@@ -17,7 +17,6 @@
     "@types/express": "^4.17.13",
     "@types/faker": "^5.5.7",
     "@types/jest": "~26.0.23",
-    "@types/lodash": "^4.14.171",
     "@types/node": "~14.14.45",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "~4.28.2",
