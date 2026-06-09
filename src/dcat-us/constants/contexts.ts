@@ -9,10 +9,10 @@ export const HEADER_V_1X = {
 
 // Context header for DCAT US 3.0
 export const HEADER_V_3_0 = {
-    "@type": "Catalog",
-	"conformsTo": {
-		"@type": "Standard",
-		"title": "DCAT-US 3.0",
-		"identifier": "https://resources.data.gov/dcat-us/3.0.0"
+    '@type': 'Catalog',
+	conformsTo: {
+		'@type': 'Standard',
+		title: 'DCAT-US 3.0',
+		identifier: 'https://resources.data.gov/dcat-us/3.0.0'
 	},
 };
