@@ -67,7 +67,7 @@ describe('generating DCAT-US 3.0 feed', () => {
   it('formats catalog correctly', async function () {
     const { feed } = await generateDcatFeed([], {}, {}, version);
 
-    expect(feed['@type']).toBe('Catalog');
+    expect(feed['@type']).toBe('dcat:Catalog');
     expect(feed['conformsTo']).toEqual({
       '@type': 'Standard',
       title: 'DCAT-US 3.0',
@@ -102,7 +102,7 @@ describe('generating DCAT-US 3.0 feed', () => {
       },
       version);
 
-    expect(feed['@type']).toBe('Catalog');
+    expect(feed['@type']).toBe('dcat:Catalog');
     expect(feed['conformsTo']).toEqual({
       '@type': 'Standard',
       title: 'DCAT-US 3.0',

@@ -164,7 +164,7 @@ describe('Output Plugin', () => {
       .expect(res => {
         expect(res.body).toBeDefined();
         const dcatStream = res.body;
-        expect(dcatStream['@type']).toBe('Catalog');
+        expect(dcatStream['@type']).toBe('dcat:Catalog');
         expect(dcatStream['conformsTo']).toEqual({
           '@type': 'Standard',
           title: 'DCAT-US 3.0',
