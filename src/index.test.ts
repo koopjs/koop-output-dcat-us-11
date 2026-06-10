@@ -170,8 +170,8 @@ describe('Output Plugin', () => {
           title: 'DCAT-US 3.0',
           identifier: 'https://resources.data.gov/dcat-us/3.0.0'
         });
-        expect(dcatStream['dcat:dataset']).toBeInstanceOf(Array);
-        expect(dcatStream['dcat:dataset'].length).toBe(1);
+        expect(dcatStream['dataset']).toBeInstanceOf(Array);
+        expect(dcatStream['dataset'].length).toBe(1);
       });
   });
 

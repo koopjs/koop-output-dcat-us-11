@@ -38,5 +38,5 @@ function generateDcatUs1XHeader() {
 
 function generateDcatUs3XHeader(header: Record<string, any>) {
   const catalogStr = JSON.stringify({ ...HEADER_V_3_0, ...header }, null, '\t');
-  return `${catalogStr.substring(0, catalogStr.length - 2)},\n\t"dcat:dataset": [\n`;
+  return `${catalogStr.substring(0, catalogStr.length - 2)},\n\t"dataset": [\n`;
 }

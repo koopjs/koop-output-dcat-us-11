@@ -73,7 +73,7 @@ describe('generating DCAT-US 3.0 feed', () => {
       title: 'DCAT-US 3.0',
       identifier: 'https://resources.data.gov/dcat-us/3.0.0'
     });
-    expect(Array.isArray(feed['dcat:dataset'])).toBeTruthy();
+    expect(Array.isArray(feed['dataset'])).toBeTruthy();
   });
 
   it('should interprolate dataset stream to feed based upon template', async function () {
@@ -108,9 +108,9 @@ describe('generating DCAT-US 3.0 feed', () => {
       title: 'DCAT-US 3.0',
       identifier: 'https://resources.data.gov/dcat-us/3.0.0'
     });
-    expect(Array.isArray(feed['dcat:dataset'])).toBeTruthy();
-    expect(feed['dcat:dataset'].length).toBe(1);
-    const feedResponse = feed['dcat:dataset'][0];
+    expect(Array.isArray(feed['dataset'])).toBeTruthy();
+    expect(feed['dataset'].length).toBe(1);
+    const feedResponse = feed['dataset'][0];
     expect(feedResponse.title).toBe('Tahoe places of interest');
     expect(feedResponse.description).toBe('Description. Here be Tahoe things. You can do a lot here. Here are some more words. And a few more.<div><br /></div><div>with more words</div><div><br /></div><div>adding a few more to test how long it takes for our jobs to execute.</div><div><br /></div><div>Tom was here!</div>');
     expect(feedResponse.issued).toBe('2021-01-29T15:34:38.000Z');
