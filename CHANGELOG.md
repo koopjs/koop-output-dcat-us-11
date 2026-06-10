@@ -1,6 +1,10 @@
 # CHANGELOG.md
 
 
+## 2.2.2
+Fixed
+- Resolve DCAT US header
+
 ## 2.2.1
 Fixed
 - Resolve build issue
