@@ -99,7 +99,7 @@ describe('generating DCAT-US 3.0 feed', () => {
       title: '{{name}}',
       description: '{{description}}',
       keyword: '{{tags}}',
-      'dcat:distribution': [
+      'distribution': [
         'distro1',
         'distro2',
         ['distro3', 'distro4']
@@ -107,8 +107,8 @@ describe('generating DCAT-US 3.0 feed', () => {
     }
 
     const dcatDataset = JSON.parse(compileDcatFeedEntry(datasetFromApi, dcatTemplate, {}, version));
-    expect(dcatDataset['dcat:distribution']).toBeDefined();
-    expect(dcatDataset['dcat:distribution']).toStrictEqual(['distro1', 'distro2', 'distro3', 'distro4']);
+    expect(dcatDataset['distribution']).toBeDefined();
+    expect(dcatDataset['distribution']).toStrictEqual(['distro1', 'distro2', 'distro3', 'distro4']);
   });
 
   it('show not return uninterpolated distribution in dataset', async function () {
@@ -116,10 +116,10 @@ describe('generating DCAT-US 3.0 feed', () => {
       title: '{{name}}',
       description: '{{description}}',
       keyword: '{{tags}}',
-      'dcat:distribution': ['distro1', '{{distroname}}']
+      'distribution': ['distro1', '{{distroname}}']
     }
     const dcatDataset = JSON.parse(compileDcatFeedEntry(datasetFromApi, dcatTemplate, {}, version));
-    expect(dcatDataset['dcat:distribution']).toStrictEqual(['distro1']);
+    expect(dcatDataset['distribution']).toStrictEqual(['distro1']);
   });
 
   it('should throw error if geojson from provider is missing', async function () {

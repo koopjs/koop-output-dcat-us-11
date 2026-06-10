@@ -1,6 +1,10 @@
 # CHANGELOG.md
 
 
+## 2.2.3
+Fixed
+- Resolve DCAT US 3 distributions
+
 ## 2.2.2
 Fixed
 - Resolve DCAT US header

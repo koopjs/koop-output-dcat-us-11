@@ -29,9 +29,9 @@ export function compileDcatFeedEntry(
     if (version === '3.0') {
       feedEntry = {
         ...dcatFeedItem,
-        'dcat:distribution':
-          Array.isArray(dcatFeedItem['dcat:distribution']) &&
-          removeUninterpolatedDistributions(_.flatten(dcatFeedItem['dcat:distribution'])),
+        'distribution':
+          Array.isArray(dcatFeedItem['distribution']) &&
+          removeUninterpolatedDistributions(_.flatten(dcatFeedItem['distribution'])),
       };
     }
 
